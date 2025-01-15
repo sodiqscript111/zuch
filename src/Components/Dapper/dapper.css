@@ -129,4 +129,9 @@
         width: 100%; /* Matches the width of the image */
         cursor: pointer; /* Makes it clear the button is clickable */
     }
+    .product-image-dapper {
+        width: 150px;
+        height: auto;
+        object-fit: cover;
+    }
 }
