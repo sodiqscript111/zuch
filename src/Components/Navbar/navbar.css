@@ -97,6 +97,7 @@ body {
 
 .link:hover {
   color: #007bff;
+  flex-direction: row;
 }
 
 /* Responsive Design */
