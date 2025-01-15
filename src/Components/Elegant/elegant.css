@@ -101,10 +101,8 @@
 
     }
 
-    .elegant-container-elegant {
-        width: 100%; /* Adjust container width for smaller screens */
-        margin: 0;
-        padding: 0;
+    .dapper-container-elegant {
+        width: 90%; /* Adjust container width for smaller screens */
         
     }
 
@@ -113,12 +111,26 @@
         margin-top: 24px;
     }
 
-    .product-meta-elegant, .product-cost-elegant {
+    .product-meta-elegant, .elegant {
         font-size: 0.9rem; /* Reduce font size for meta details */
     }
 
     .see-all-elegant a {
         font-size: 1rem; /* Smaller font for mobile "See All" link */
     }
-    
+    .product-card-container-elegant{
+
+        width: 150px;
+    }
+    .product-card-elegant button {
+        all: unset; /* Removes all default button styles */
+        display: block; /* Ensures it acts like a block container for the image */
+        width: 100%; /* Matches the width of the image */
+        cursor: pointer; /* Makes it clear the button is clickable */
+    }
+    .product-image-elegant {
+        width: 150px;
+        height: auto;
+        object-fit: cover;
+    }
 }
