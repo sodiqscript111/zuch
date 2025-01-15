@@ -15,17 +15,8 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="wrapper">
-        {/* Left Section */}
+        {/* Left Section (Logo) */}
         <div className="left">
-          <div className={`links ${menuOpen ? 'open' : ''}`}>
-            <Link to="/" className="link">Shop</Link>
-            <Link to="/about" className="link">About</Link>
-            <Link to="/contact" className="link">Contact</Link>
-          </div>
-        </div>
-
-        {/* Center Section */}
-        <div className="center">
           <Link to="/">
             <img 
               src="https://i.ibb.co/3pbkQt5/walklogoo-removebg-preview.png" 
@@ -35,7 +26,10 @@ function Navbar() {
           </Link>
         </div>
 
-        {/* Right Section */}
+        {/* Center Section (Empty - For spacing) */}
+        <div className="center"></div>
+
+        {/* Right Section (Cart & Menu Icon) */}
         <div className="right">
           <div className="cart-icon">
             <ShoppingBagOutlinedIcon />
@@ -45,6 +39,13 @@ function Navbar() {
             {menuOpen ? <CancelOutlinedIcon /> : <MenuOutlinedIcon />}
           </div>
         </div>
+      </div>
+
+      {/* Links (Mobile Menu) */}
+      <div className={`links ${menuOpen ? 'open' : ''}`}>
+        <Link to="/" className="link">Shop</Link>
+        <Link to="/about" className="link">About</Link>
+        <Link to="/contact" className="link">Contact</Link>
       </div>
     </nav>
   );
