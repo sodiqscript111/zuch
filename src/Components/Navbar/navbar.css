@@ -73,7 +73,7 @@ body {
   top: 0;
   left: 0;
   height: 100vh;
-  width: 250px;
+  width: 100%;
   background-color: white;
   flex-direction: column;
   justify-content: center;
@@ -81,6 +81,7 @@ body {
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
   z-index: -1; /* Initially hide */
+  padding: 0 20px; /* Add padding to avoid text touching edges */
 }
 
 .links.open {
@@ -90,9 +91,11 @@ body {
 .link {
   text-decoration: none;
   color: black;
-  font-size: 18px;
+  font-size: 22px; /* Increased font size */
   margin: 20px 0;
   transition: color 0.3s;
+  text-align: center; /* Center text */
+  width: 100%; /* Make links take full width for better centering */
 }
 
 .link:hover {
@@ -130,5 +133,6 @@ body {
   .links {
     width: 100%;
     transform: translateX(-100%);
+    padding: 0 20px; /* Added padding to avoid text touching edges */
   }
 }
