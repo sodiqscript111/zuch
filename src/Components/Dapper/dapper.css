@@ -121,7 +121,7 @@
     }
     .product-card-container-dapper{
 
-        width: 100%;
+        width: 70%;
     }
     .product-card-dapper button {
         all: unset; /* Removes all default button styles */
