@@ -12,7 +12,7 @@ const Dapper = () => {
 
     return (
         <div className="dapper-container-dapper">
-            <h1>Dapper Component</h1>
+            <h1>Dapper Collection</h1>
             <div className="product-grid-dapper">
                 {products.map((item) => (
                     <div className="product-card-container-dapper" key={item.id}>
