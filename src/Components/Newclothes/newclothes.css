@@ -10,6 +10,7 @@
   .most-popular header h3 {
     display: flex;
     width: 25%;
+
     justify-content: space-between;
     align-items: center;
     font-size: 24px;
@@ -113,6 +114,7 @@
     display: none;
   }
   header h3{
+    background: red;
     width: 500px;
     font-size: 16px;
   }
@@ -120,11 +122,6 @@
     margin-left: 10px;
 
   }
-  .most-popular header h3 {
-    display: flex;
-    width: 100%;
-
+  ;
   }
-  };
-  }
-  }
+  
