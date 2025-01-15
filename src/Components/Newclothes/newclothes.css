@@ -89,4 +89,23 @@
     color: #000;
     font-weight: lighter;
   }
-  
+  @media (max-width: 768px) {
+    
+  .product-card-container{
+    display: grid;
+    grid-template-columns: repeat( 1fr 1fr);
+    width: 331px;
+    align-items: center;
+  }
+  figcaption {
+    padding: 0px;
+  }
+  .most-popular{
+    padding: 0px;
+  }
+  .product-card{
+    width: 85%;
+    align-self: center;
+    margin-left: 10px;
+  }
+  }

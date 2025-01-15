@@ -14,17 +14,21 @@
     width: 100%; /* Matches the width of the image */
     cursor: pointer; /* Makes it clear the button is clickable */
 }
+
 .product-grid-elegant {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Default: 3 columns */
     gap: 1rem;
     width: 100%;
 }
-.heading-elegant{
+
+.heading-elegant {
     font-size: 24px;
     margin-top: 32px;
     font-weight: lighter;
+    text-align: center;
 }
+
 .product-card-container-elegant {
     display: flex;
     justify-content: center;
@@ -86,4 +90,28 @@
 
 .see-all-elegant a:hover {
     color: #0056b3;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .product-grid-elegant {
+        grid-template-columns: repeat(2, 1fr); /* Two products per row */
+    }
+
+    .elegant-container-elegant {
+        width: 90%; /* Adjust container width for smaller screens */
+    }
+
+    .heading-elegant {
+        font-size: 20px; /* Slightly smaller font for mobile headings */
+        margin-top: 24px;
+    }
+
+    .product-meta-elegant, .product-cost-elegant {
+        font-size: 0.9rem; /* Reduce font size for meta details */
+    }
+
+    .see-all-elegant a {
+        font-size: 1rem; /* Smaller font for mobile "See All" link */
+    }
 }

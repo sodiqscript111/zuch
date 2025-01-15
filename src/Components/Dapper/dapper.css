@@ -87,8 +87,33 @@
 .see-all-dapper a:hover {
     color: #0056b3;
 }
+
 .dapper-container-dapper h1 {
     font-size: 24px;
     margin-top: 32px;
     font-weight: lighter;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .product-grid-dapper {
+        grid-template-columns: repeat(2, 1fr); /* Two products per row */
+    }
+
+    .dapper-container-dapper {
+        width: 90%; /* Adjust container width for smaller screens */
+    }
+
+    .heading-dapper {
+        font-size: 20px; /* Slightly smaller font for mobile headings */
+        margin-top: 24px;
+    }
+
+    .product-meta-dapper, .product-cost-dapper {
+        font-size: 0.9rem; /* Reduce font size for meta details */
+    }
+
+    .see-all-dapper a {
+        font-size: 1rem; /* Smaller font for mobile "See All" link */
+    }
 }
