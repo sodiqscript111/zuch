@@ -42,14 +42,43 @@
     background-color: #e6e6e6;
   }
   @media (max-width: 768px) {
-    
-    .poise-collection-container{
-      background-position: right;
+    .poise-collection-container {
+      /* Background blur */
+      backdrop-filter: blur(10px); /* Adjust blur amount as needed */
+      background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+  
+      /* Position at bottom */
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%; 
+      align-items: end;
+      justify-content: center; /* Center content horizontally */
     }
-    .poise-content{
+  
+    .poise-content {
       padding: 1rem;
-      align-items: center;
-      max-width: 300px;
-      margin-left: -30px;
+      max-width: 90%; /* Adjust width as needed */
+       /* Center content horizontally */
+      text-align: center; /* Center text */
+      background-color: rgba(255, 255, 255, 0.8); /* White background with opacity */
+      color: #000; /* Black text color */
     }
+  
+    .poise-heading {
+      font-size: 1.5rem; /* Adjust font size as needed */
     }
+  
+    .poise-description {
+      font-size: 0.9rem; /* Adjust font size as needed */
+    }
+  
+    .poise-link {
+      color: #fff; /* White link color */
+      background-color: #000; /* Black button background */
+    }
+  
+    .poise-link:hover {
+      background-color: #333; /* Darker background on hover */
+    }
+  }

@@ -6,7 +6,6 @@
     align-items: center;
     width: 75%;
     margin: 0 auto;
-   
 }
 
 .product-card-elegant button {
@@ -15,21 +14,17 @@
     width: 100%; /* Matches the width of the image */
     cursor: pointer; /* Makes it clear the button is clickable */
 }
-
 .product-grid-elegant {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Default: 3 columns */
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     width: 100%;
 }
-
-.heading-elegant {
+.heading-elegant{
     font-size: 24px;
     margin-top: 32px;
     font-weight: lighter;
-    text-align: center;
 }
-
 .product-card-container-elegant {
     display: flex;
     justify-content: center;
@@ -93,6 +88,12 @@
     color: #0056b3;
 }
 
+.elegant-container-elegant h1 {
+    font-size: 24px;
+    margin-top: 32px;
+    font-weight: lighter;
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
     .product-grid-elegant {
@@ -101,7 +102,7 @@
 
     }
 
-    .dapper-container-elegant {
+    .elegant-container-elegant {
         width: 90%; /* Adjust container width for smaller screens */
         
     }
@@ -111,7 +112,7 @@
         margin-top: 24px;
     }
 
-    .product-meta-elegant, .elegant {
+    .product-meta-elegant, .product-cost-elegant {
         font-size: 0.9rem; /* Reduce font size for meta details */
     }
 
