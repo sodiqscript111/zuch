@@ -98,10 +98,13 @@
 @media (max-width: 768px) {
     .product-grid-dapper {
         grid-template-columns: repeat(2, 1fr); /* Two products per row */
+        gap: 0.2rem;
+
     }
 
     .dapper-container-dapper {
-        width: 90%; /* Adjust container width for smaller screens */
+        width: 100%; /* Adjust container width for smaller screens */
+        
     }
 
     .heading-dapper {
@@ -115,5 +118,15 @@
 
     .see-all-dapper a {
         font-size: 1rem; /* Smaller font for mobile "See All" link */
+    }
+    .product-card-container-dapper{
+
+        width: 100%;
+    }
+    .product-card-dapper button {
+        all: unset; /* Removes all default button styles */
+        display: block; /* Ensures it acts like a block container for the image */
+        width: 100%; /* Matches the width of the image */
+        cursor: pointer; /* Makes it clear the button is clickable */
     }
 }

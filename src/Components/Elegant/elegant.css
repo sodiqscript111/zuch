@@ -6,6 +6,7 @@
     align-items: center;
     width: 75%;
     margin: 0 auto;
+   
 }
 
 .product-card-elegant button {
@@ -96,10 +97,15 @@
 @media (max-width: 768px) {
     .product-grid-elegant {
         grid-template-columns: repeat(2, 1fr); /* Two products per row */
+        gap: 0.2rem;
+
     }
 
     .elegant-container-elegant {
-        width: 90%; /* Adjust container width for smaller screens */
+        width: 100%; /* Adjust container width for smaller screens */
+        margin: 0;
+        padding: 0;
+        
     }
 
     .heading-elegant {
@@ -114,4 +120,5 @@
     .see-all-elegant a {
         font-size: 1rem; /* Smaller font for mobile "See All" link */
     }
+    
 }
