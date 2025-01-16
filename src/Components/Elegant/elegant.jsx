@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { Link } from 'react-router-dom';
 import './elegant.css';
 
@@ -12,35 +12,35 @@ const Elegant = () => {
 
     return (
         <div className="elegant-container-elegant">
-            <h1 className='heading-elegant'> Elegant Collection</h1>
+            <h1 className="heading-elegant">Elegant Collection</h1>
             <div className="product-grid-elegant">
                 {products.map((item) => (
-                    <div className="product-card-container-elegant" key={item.id}>
+                    <Link 
+                        to={`/product/${item.id}`} 
+                        key={item.id} 
+                        className="product-card-container-elegant"
+                    >
                         <figure className="product-card-elegant">
-                            <button title="View larger">
-                                <img
-                                    src={item.imageUrl}
-                                    alt={item.name}
-                                    loading="lazy"
-                                    className="product-image-elegant"
-                                />
-                            </button>
-                            <figcaption className='figcaption-elegant'>
+                            <img
+                                src={item.imageUrl}
+                                alt={item.name}
+                                loading="lazy"
+                                className="product-image-elegant"
+                            />
+                            <figcaption className="figcaption-elegant">
                                 <div className="product-meta-elegant">
-                                    <Link to={`/product/${item.id}`} className="product-name-elegant">
-                                        {item.name}
-                                    </Link>
+                                    <span className="product-name-elegant">{item.name}</span>
                                 </div>
                                 <div className="product-cost-elegant">
                                     <data money>${item.price}</data>
                                 </div>
                             </figcaption>
                         </figure>
-                    </div>
+                    </Link>
                 ))}
             </div>
             <div className="see-all-elegant">
-                <Link to="/products">See All</Link>
+                <Link to="/clothes">See All</Link>
             </div>
         </div>
     );

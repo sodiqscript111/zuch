@@ -50,9 +50,10 @@ const Slider= ()=> {
 
   return (
     <div id="app">
+      <h1 className="heading">Our Collections</h1>
       <Swiper
         slidesPerView={1}
-        spaceBetween={20}
+        spaceBetween={10}
         breakpoints={{
           768: { slidesPerView: 3 }, // 3 slides on desktop
         }}

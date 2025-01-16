@@ -4,28 +4,27 @@
     background-color: #f9f9f9;
   }
   .most-popular header{
-    margin-left: 50px;
+    margin-left: 19px;
 
   }
   .most-popular header h3 {
     display: flex;
-    width: 25%;
-
+    width: 15%;
+    font-size: 14px;
     justify-content: space-between;
     align-items: center;
-    font-size: 24px;
     margin-bottom: 10px;
   }
   
   .most-popular header a {
     text-decoration: none;
-    color: #007bff;
+    color: black;
     font-size: 16px;
     display: flex;
     flex-direction: row;
     margin-left: 20PX;
     align-items: center;
-    gap: 5px;
+    gap: 0;
   }
  
   .secondary{
@@ -90,6 +89,10 @@
   .product-cost data {
     color: #000;
     font-weight: lighter;
+  }
+
+  span{
+   color: #888;
   }
   @media (max-width: 768px) {
     

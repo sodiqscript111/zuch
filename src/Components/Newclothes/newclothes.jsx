@@ -7,9 +7,10 @@ const Newclothes = ({ shopData }) => {
   return (
     <section className="most-popular">
       <header>
-        <h3>
+  
+          <Link to="/clothes">
+          <h3>
           Most Popular
-          <Link to="/shop">
             <span>See All </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -25,8 +26,9 @@ const Newclothes = ({ shopData }) => {
                 d="M12 14H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h5V8a1 1 0 0 1 1.7-.7l4 4a1 1 0 0 1 0 1.4l-4 4A1 1 0 0 1 12 16v-2z"
               />
             </svg>
+            </h3>
           </Link>
-        </h3>
+
       </header>
       <div className="most-popular-scroller">
         {shopData.map((item) => (

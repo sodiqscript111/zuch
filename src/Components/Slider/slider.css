@@ -1,8 +1,9 @@
 
   
   .swiper {
-    width: 100%;
+    width: 90%;
     height: 100%;
+    padding-top: 16px;
   }
   
   .collection-slide {
@@ -15,8 +16,14 @@
   .collection-content {
     position: relative;
     width: 100%;
-    height: 300px;
+    height: 70%; /* Reduced default height */
     background-position: 50% 30%;
+  }
+  .heading {
+    display: flex;
+    justify-content:center;
+    padding-top:8px;
+    padding-bottom: 8px;
   }
   
   .collection-image {
@@ -27,28 +34,28 @@
   
   .collection-overlay {
     position: absolute;
-    top: 50%;
+    top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     color: white;
-
     padding: 20px;
     border-radius: 10px;
   }
   
   .collection-overlay h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: 1rem; /* Increased font size */
     font-weight: 200;
   }
   
   .explore-button {
     margin-top: 10px;
     padding: 5px 10px;
-    font-size: 16px;
+    font-size: 1rem; 
     background-color: black;
     color: white;
+    font-weight: 200;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -57,5 +64,37 @@
   .explore-button:hover {
     background-color: black;
     color: white;
+  }
+  .swiper-button-next {
+    color: #000; /* Change arrow color */
+    width: 40px; /* Change arrow width */
+    height: 40px; /* Change arrow height */
+  }
+  .swiper-button-prev {
+    color: #000; /* Change arrow color */
+    width: 40px; /* Change arrow width */
+    height: 40px; /* Change arrow height */
+
+  }
+  
+  /* Optional: Add hover effects */
+  .swiper-button-next:hover, 
+  .swiper-button-prev:hover {
+    color: #4e4e4d; /* Change color on hover */
+    
+  }
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .collection-content {
+      height: 70%; /* Further reduced height for smaller screens */
+    }
+.collection-overlay {
+      padding: 10px;
+      top: 80%;
+    }
+  
+    .collection-overlay h3 {
+      font-size: 1.2rem; /* Slightly smaller font size on smaller screens */
+    }
   }
   

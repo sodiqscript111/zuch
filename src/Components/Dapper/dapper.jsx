@@ -15,32 +15,32 @@ const Dapper = () => {
             <h1>Dapper Collection</h1>
             <div className="product-grid-dapper">
                 {products.map((item) => (
-                    <div className="product-card-container-dapper" key={item.id}>
+                    <Link
+                        to={`/product/${item.id}`}
+                        key={item.id}
+                        className="product-card-container-dapper"
+                    >
                         <figure className="product-card-dapper">
-                            <button title="View larger">
-                                <img
-                                    src={item.imageUrl}
-                                    alt={item.name}
-                                    loading="lazy"
-                                    className="product-image-dapper"
-                                />
-                            </button>
+                            <img
+                                src={item.imageUrl}
+                                alt={item.name}
+                                loading="lazy"
+                                className="product-image-dapper"
+                            />
                             <figcaption>
                                 <div className="product-meta-dapper">
-                                    <Link to={`/product/${item.id}`} className="product-name-dapper">
-                                        {item.name}
-                                    </Link>
+                                    <span className="product-name-dapper">{item.name}</span>
                                 </div>
                                 <div className="product-cost-dapper">
                                     <data money>${item.price}</data>
                                 </div>
                             </figcaption>
                         </figure>
-                    </div>
+                    </Link>
                 ))}
             </div>
             <div className="see-all-dapper">
-                <Link to="/products">See All</Link>
+                <Link to="/clothes">See All</Link>
             </div>
         </div>
     );

@@ -1,0 +1,91 @@
+
+  
+  .all-clothes header h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .all-clothes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 85%;
+    justify-content: center;
+    justify-self: center;
+  }
+  
+  .all-clothes-grid button {
+    border: none;
+    background: none;
+  }
+  
+  .all-product-card-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .all-product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align to the left */
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .all-product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .all-product-meta {
+    margin-top: 0.5rem;
+    text-align: left; /* Align text to the left */
+    width: 100%; /* Make sure the meta takes up the full width */
+  }
+  
+  .all-product-name {
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 0.5rem; /* Add space between name and price */
+  }
+  
+  .all-product-cost {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .figcaption-all {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0.5rem 0;
+  }
+  
+  .all-product-meta {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+  
+  .all-product-name {
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .all-product-cost {
+    margin-top: 6px;
+    font-size: 1rem;
+    color: #666;
+  }
+  .allhead{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    font-weight: 200;
+    padding-top: 3rem;
+  }
+  
