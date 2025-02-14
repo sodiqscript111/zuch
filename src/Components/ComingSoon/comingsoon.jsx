@@ -10,7 +10,7 @@ const ComingSoon = () => {
   ];
 
   const handlePreOrderClick = () => {
-    window.location.href = "https://www.instagram.com/direct/t/110794600313360";
+    window.location.href = "https://www.instagram.com/zuch_collection/";
   };
 
   return (
