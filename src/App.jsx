@@ -7,6 +7,7 @@ import "./App.css"
 import Home from "./Components/Home/home"
 import Allclothes from "./Components/Shopall/shop";
 import ProductDetail from "./Components/Product/product";
+import Cart from "./Components/Cart/cart";
 
 const router = createBrowserRouter([
   {
@@ -21,15 +22,17 @@ const router = createBrowserRouter([
   {
     path:"/product/:id",
     element: <ProductDetail/>,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   }
 ]);
 
-function App() {
-
-
+function App({ user }) {
   return (
- <div> <RouterProvider router={router}/></div>
-  )
+    <RouterProvider router={router} />
+  );
 }
 
 export default App

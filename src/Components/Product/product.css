@@ -34,16 +34,16 @@
     margin: 1rem 0;
 }
 
-.colors, .sizes {
+.colors, .size-selection, .standard-sizes, .custom-sizes {
     margin-bottom: 1rem;
 }
 
-.color-options, .size-options {
+.color-options, .size-options, .size-toggle {
     display: flex;
     gap: 0.5rem;
 }
 
-.color-button, .size-button {
+.color-button, .size-button, .toggle-button {
     border: 1px solid #ccc;
     background: #f9f9f9;
     padding: 0.5rem 1rem;
@@ -52,8 +52,34 @@
     transition: background 0.3s ease;
 }
 
-.color-button:hover, .size-button:hover {
+.color-button:hover, .size-button:hover, .toggle-button:hover {
     background: #e0e0e0;
+}
+
+.toggle-button.active {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.custom-size-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.custom-size-inputs input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.custom-size-inputs input:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .add-to-cart-button {
@@ -64,8 +90,18 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s ease;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 1rem;
 }
 
 .add-to-cart-button:hover {
     background: #0056b3;
+}
+
+/* Selected state for buttons */
+.color-button.selected, .size-button.selected {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
 }
