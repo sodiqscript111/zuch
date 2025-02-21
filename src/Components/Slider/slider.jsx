@@ -19,32 +19,20 @@ const Slider= ()=> {
       name: "Collection One",
     },
     {
-      image: "https://i.ibb.co/cbxgbmF/Whats-App-Image-2025-01-13-at-12-35-01-PM-2.jpg",
-      name: "Collection Two",
+      image: "https://i.ibb.co/y2wMWJD/NUDE-COVER-1.jpg",
+      name: "Nude Collection",
     },
     {
-      image: "https://i.ibb.co/QJbzDtB/Whats-App-Image-2025-01-13-at-12-35-01-PM-3.jpg",
-      name: "Collection Three",
+      image: "https://i.ibb.co/GQsGsYKV/Lumin-Collection-Cover-1.jpg",
+      name: "Lumin Collection",
     },
     {
-      image: "https://i.ibb.co/FkQ1dz4/Whats-App-Image-2025-01-13-at-12-34-59-PM.jpg",
-      name: "Collection Four",
+      image: "https://i.ibb.co/XfggfzMS/COVER-PICTURE-2.jpg",
+      name: "Custom Native",
     },
     {
-      image: "https://i.ibb.co/FkQ1dz4/Whats-App-Image-2025-01-13-at-12-34-59-PM.jpg",
-      name: "Collection Five",
-    },
-    {
-      image: "https://i.ibb.co/FkQ1dz4/Whats-App-Image-2025-01-13-at-12-34-59-PM.jpg",
-      name: "Collection Six",
-    },
-    {
-      image: "https://i.ibb.co/FkQ1dz4/Whats-App-Image-2025-01-13-at-12-34-59-PM.jpg",
-      name: "Collection Seven",
-    },
-    {
-      image: "https://i.ibb.co/FkQ1dz4/Whats-App-Image-2025-01-13-at-12-34-59-PM.jpg",
-      name: "Collection Eight",
+      image: "https://i.ibb.co/GvL5BBT8/BT-02-80-000.jpg",
+      name: "Beach Time Collection",
     },
   ];
 
