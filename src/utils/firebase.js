@@ -1,15 +1,14 @@
-// Import the functions you need from the SDKs you need
+// Import the functions you need from the SDKs
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-const firebaseConfig = { // Removed export
-  apiKey: process.env.REACT_APP_API_KEY,
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC_SEOAL5JNJtJP4C6M3SvyD2lgBq70TxQ",
   authDomain: "zuch-72a11.firebaseapp.com",
   projectId: "zuch-72a11",
-  storageBucket: "zuch-72a11.firebasestorage.app",
+  storageBucket: "zuch-72a11.appspot.com",
   messagingSenderId: "522778278047",
   appId: "1:522778278047:web:262db82ce20b76b6d4caaa"
 };
@@ -17,5 +16,6 @@ const firebaseConfig = { // Removed export
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Authentication and get a reference to the service
+// Export Firebase services
 export const auth = getAuth(app);
+export const db = getFirestore(app);

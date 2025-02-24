@@ -1,137 +1,170 @@
-/* Dapper.css */
+/* dapper.css */
 
+/* Root-level container */
 .dapper-container-dapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 75%;
+    width: 85%; /* Slightly wider for a modern feel */
+    max-width: 1400px; /* Cap width for large screens */
     margin: 0 auto;
+    padding: 2rem 0; /* Add vertical padding for breathing room */
 }
 
-.product-card-dapper button {
-    all: unset; /* Removes all default button styles */
-    display: block; /* Ensures it acts like a block container for the image */
-    width: 100%; /* Matches the width of the image */
-    cursor: pointer; /* Makes it clear the button is clickable */
-}
+/* Product grid */
 .product-grid-dapper {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adaptive columns */
+    gap: 2rem; /* Increased spacing for clarity */
     width: 100%;
 }
-.heading-dapper{
-    font-size: 24px;
-    margin-top: 32px;
-    font-weight: lighter;
+
+/* Heading */
+.dapper-container-dapper h1 {
+    font-family: 'Inter', sans-serif; /* Clean, modern font */
+    font-size: 2.5rem; /* Larger for impact */
+    font-weight: 500; /* Medium weight for elegance */
+    margin: 1.5rem 0 2.5rem; /* Balanced spacing */
+    color: #1a1a1a; /* Darker for contrast */
+    letter-spacing: -0.02em; /* Slight tightening for style */
 }
+
+/* Product card container */
 .product-card-container-dapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: none;
+    text-decoration: none; /* Remove underline from Link */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
 }
 
+.product-card-container-dapper:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Product card */
 .product-card-dapper {
     display: flex;
     flex-direction: column;
-    position: relative;
     width: 100%;
-    border: none;
+    background: #fff; /* White background for cleanliness */
+    border-radius: 8px; /* Soft corners */
+    overflow: hidden; /* Ensure image fits neatly */
 }
 
+/* Product image */
 .product-image-dapper {
     width: 100%;
-    height: auto;
+    height: 320px; /* Fixed height for uniformity */
     object-fit: cover;
+    transition: transform 0.3s ease; /* Zoom effect */
 }
 
+.product-card-container-dapper:hover .product-image-dapper {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Caption */
 .figcaption-dapper {
+    padding: 1rem; /* More internal spacing */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 0.5rem 0;
 }
 
+/* Product meta (name) */
 .product-meta-dapper {
-    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem; /* Slightly larger for readability */
+    font-weight: 600; /* Bold but not too heavy */
     color: #333;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 
+/* Product name */
 .product-name-dapper {
-    font-weight: bold;
     text-decoration: none;
     color: inherit;
 }
 
+/* Product cost */
 .product-cost-dapper {
-    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.125rem; /* Balanced size */
     color: #666;
+    font-weight: 400;
 }
 
+/* See All link */
 .see-all-dapper {
-    margin-top: 0.5rem;
+    margin-top: 2rem; /* More space above */
     text-align: center;
 }
 
 .see-all-dapper a {
+    font-family: 'Inter', sans-serif;
     font-size: 1.25rem;
-    font-weight: bold;
-    color: #007bff;
+    font-weight: 600;
+    color: #2c5282; /* Modern blue */
     text-decoration: none;
-    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .see-all-dapper a:hover {
-    color: #0056b3;
-}
-
-.dapper-container-dapper h1 {
-    font-size: 24px;
-    margin-top: 32px;
-    font-weight: lighter;
+    background-color: #2c5282;
+    color: #fff; /* White text on hover */
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-    .product-grid-dapper {
-        grid-template-columns: repeat(2, 1fr); /* Two products per row */
-        gap: 0.2rem;
-
-    }
-
     .dapper-container-dapper {
-        width: 90%; /* Adjust container width for smaller screens */
-        
+        width: 90%;
+        padding: 1rem 0; /* Reduced padding */
     }
 
-    .heading-dapper {
-        font-size: 20px; /* Slightly smaller font for mobile headings */
-        margin-top: 24px;
+    .product-grid-dapper {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Smaller cards */
+        gap: 1rem;
     }
 
-    .product-meta-dapper, .product-cost-dapper {
-        font-size: 0.9rem; /* Reduce font size for meta details */
+    .dapper-container-dapper h1 {
+        font-size: 1.75rem; /* Scaled down */
+        margin: 1rem 0 1.5rem;
+    }
+
+    .product-image-dapper {
+        height: 220px; /* Smaller height for mobile */
+    }
+
+    .product-meta-dapper {
+        font-size: 1rem;
+    }
+
+    .product-cost-dapper {
+        font-size: 0.875rem;
+    }
+
+    .see-all-dapper {
+        margin-top: 1.5rem;
     }
 
     .see-all-dapper a {
-        font-size: 1rem; /* Smaller font for mobile "See All" link */
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
     }
-    .product-card-container-dapper{
+}
 
-        width: 150px;
+@media (max-width: 480px) {
+    .product-grid-dapper {
+        grid-template-columns: 1fr; /* Stack cards on very small screens */
+        gap: 0.75rem;
     }
-    .product-card-dapper button {
-        all: unset; /* Removes all default button styles */
-        display: block; /* Ensures it acts like a block container for the image */
-        width: 100%; /* Matches the width of the image */
-        cursor: pointer; /* Makes it clear the button is clickable */
-    }
+
     .product-image-dapper {
-        width: 150px;
-        height: auto;
-        object-fit: cover;
+        height: 200px;
     }
 }

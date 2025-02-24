@@ -7,7 +7,7 @@ const Poise = () => {
     <div 
       className="poise-collection-container"
       style={{ 
-        backgroundImage: 'url(https://i.ibb.co/61HgGV6/Whats-App-Image-2025-01-13-at-12-35-00-PM-1.jpg)', 
+        backgroundImage: 'url(https://i.ibb.co/gMy244tL/POISE-BLACK-1-100k.jpg)', 
         backgroundSize: 'cover', 
         width: '100%', 
         height: '100vh',

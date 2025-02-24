@@ -1,13 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { db } from '../../utils/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import Navbar from '../Navbar/navbar';
 import './product.css';
 import { CartContext } from '../../context/cart';
+import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper
+import 'swiper/css'; // Swiper base styles
+import 'swiper/css/navigation'; // Navigation styles
+import 'swiper/css/pagination'; // Pagination styles (optional)
+import { Navigation, Pagination } from 'swiper/modules'; // Swiper modules
 
 const ProductDetail = () => {
-  const { id } = useParams(); // Extract the product ID from the URL
-  const { addItemToCart } = useContext(CartContext); // Access `addItemToCart` from context
-  const [selectedColor, setSelectedColor] = useState(null);
+  const { id } = useParams(); // Extract product ID from URL
+  const { addItemToCart } = useContext(CartContext); // Access cart function
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [customSize, setCustomSize] = useState({
     chest: '',
     waist: '',
@@ -17,39 +26,54 @@ const ProductDetail = () => {
   const [selectedStandardSize, setSelectedStandardSize] = useState(null);
   const [isCustomSize, setIsCustomSize] = useState(false);
 
-  const products = [
-    {
-      id: 1,
-      name: 'Product 1',
-      price: 29.99,
-      description: 'Elegant and stylish.',
-      imageUrl: 'https://i.ibb.co/mc6hSTy/Whats-App-Image-2025-01-13-at-12-35-01-PM.jpg',
-      colors: ['Red', 'Blue'],
-      standardSizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      price: 39.99,
-      description: 'Casual and comfortable.',
-      imageUrl: 'https://i.ibb.co/61HgGV6/Whats-App-Image-2025-01-13-at-12-35-00-PM-1.jpg',
-      colors: ['Green', 'Black'],
-      standardSizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    },
-  ];
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const productRef = doc(db, "collections", "customnative", "products", id);
+        const productSnap = await getDoc(productRef);
 
-  const product = products.find((item) => item.id === parseInt(id));
+        if (!productSnap.exists()) {
+          console.warn("⚠️ Product not found in Firestore:", id);
+          setError("Product not found");
+          setLoading(false);
+          return;
+        }
 
-  if (!product) {
-    return <div>Product not found</div>;
-  }
+        const data = productSnap.data();
+        console.log("🛍️ Product Data:", data);
+
+        // Handle all images from imageUrls or fallback
+        const images = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
+          ? data.imageUrls
+          : Array.isArray(data.imageUrl) && data.imageUrl.length > 0
+          ? data.imageUrl
+          : data.imageUrl ? [data.imageUrl] // Convert single string to array
+          : data.image ? [data.image] : []; // Fallback to empty array
+
+        setProduct({
+          id: productSnap.id,
+          name: data.name || "Unknown",
+          price: data.price || "N/A",
+          description: data.description || "No description available",
+          imageUrls: images, // Store all images
+          standardSizes: data.standardSizes || ["S", "M", "L", "XL"], // Default sizes
+        });
+        setLoading(false);
+      } catch (error) {
+        console.error("❌ Error fetching product:", error);
+        setError("Failed to load product details");
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!product) return <div>Product not found</div>;
 
   const handleAddToCart = () => {
-    if (!selectedColor) {
-      alert('Please select a color.');
-      return;
-    }
-
     if (!isCustomSize && !selectedStandardSize) {
       alert('Please select a standard size.');
       return;
@@ -64,10 +88,9 @@ const ProductDetail = () => {
       id: product.id,
       name: product.name,
       price: product.price,
-      imageUrl: product.imageUrl,
+      imageUrl: product.imageUrls[0], // Use first image for cart
       quantity: 1,
       options: {
-        color: selectedColor,
         size: isCustomSize ? customSize : selectedStandardSize,
       },
     });
@@ -87,7 +110,26 @@ const ProductDetail = () => {
       <Navbar />
       <div className="product-detail-container">
         <div className="product-detail-image">
-          <img src={product.imageUrl} alt={product.name} />
+          <Swiper
+            modules={[Navigation, Pagination]} // Enable navigation and pagination
+            spaceBetween={10}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            className="product-image-slider"
+          >
+            {product.imageUrls.length > 0 ? (
+              product.imageUrls.map((url, index) => (
+                <SwiperSlide key={index}>
+                  <img src={url} alt={`${product.name} ${index + 1}`} className="swiper-image" />
+                </SwiperSlide>
+              ))
+            ) : (
+              <SwiperSlide>
+                <div className="no-image-placeholder">No Images Available</div>
+              </SwiperSlide>
+            )}
+          </Swiper>
         </div>
         <div className="product-detail-info">
           <h1>{product.name}</h1>
@@ -97,21 +139,6 @@ const ProductDetail = () => {
           </p>
 
           <div className="product-options">
-            <div className="colors">
-              <label>Colors:</label>
-              <div className="color-options">
-                {product.colors.map((color, index) => (
-                  <button
-                    key={index}
-                    className={`color-button ${selectedColor === color ? 'selected' : ''}`}
-                    onClick={() => setSelectedColor(color)}
-                  >
-                    {color}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             <div className="size-selection">
               <label>Do you want to customize your size?</label>
               <div className="size-toggle">
@@ -147,33 +174,33 @@ const ProductDetail = () => {
               </div>
             ) : (
               <div className="custom-sizes">
-                <label>Custom Measurements:</label>
+                <label>Custom Measurements (in cm):</label>
                 <div className="custom-size-inputs">
                   <input
                     type="number"
                     name="chest"
-                    placeholder="Chest (in cm)"
+                    placeholder="Chest"
                     value={customSize.chest}
                     onChange={handleCustomSizeChange}
                   />
                   <input
                     type="number"
                     name="waist"
-                    placeholder="Waist (in cm)"
+                    placeholder="Waist"
                     value={customSize.waist}
                     onChange={handleCustomSizeChange}
                   />
                   <input
                     type="number"
                     name="hips"
-                    placeholder="Hips (in cm)"
+                    placeholder="Hips"
                     value={customSize.hips}
                     onChange={handleCustomSizeChange}
                   />
                   <input
                     type="number"
                     name="length"
-                    placeholder="Length (in cm)"
+                    placeholder="Length"
                     value={customSize.length}
                     onChange={handleCustomSizeChange}
                   />

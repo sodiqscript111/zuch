@@ -1,100 +1,169 @@
+/* collection-slider.css */
 
-  
-  .swiper {
-    width: 90%;
-    height: 100%;
-    padding-top: 16px;
-  }
-  
-  .collection-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  
-  .collection-content {
-    position: relative;
-    width: 100%;
-    height: 70%; /* Reduced default height */
-    background-position: 50% 30%;
-  }
-  .heading {
-    display: flex;
-    justify-content:center;
-    padding-top:8px;
-    padding-bottom: 8px;
-  }
-  
-  .collection-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .collection-overlay {
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .collection-overlay h3 {
-    margin: 0;
-    font-size: 1rem; /* Increased font size */
-    font-weight: 200;
-  }
-  
-  .explore-button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    font-size: 1rem; 
-    background-color: black;
-    color: white;
-    font-weight: 200;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .explore-button:hover {
-    background-color: black;
-    color: white;
-  }
-  .swiper-button-next {
-    color: #000; /* Change arrow color */
-    width: 40px; /* Change arrow width */
-    height: 40px; /* Change arrow height */
-  }
-  .swiper-button-prev {
-    color: #000; /* Change arrow color */
-    width: 40px; /* Change arrow width */
-    height: 40px; /* Change arrow height */
+/* Swiper container */
+.swiper {
+  width: 90%;
+  max-width: 1400px; /* Cap width for large screens */
+  margin: 0 auto; /* Center it */
+  padding: 2rem 0; /* More vertical space */
+}
 
-  }
-  
-  /* Optional: Add hover effects */
-  .swiper-button-next:hover, 
-  .swiper-button-prev:hover {
-    color: #4e4e4d; /* Change color on hover */
-    
-  }
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .collection-content {
-      height: 70%; /* Further reduced height for smaller screens */
-    }
+/* Slide */
+.collection-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 500px; /* Fixed height for consistency */
+}
+
+/* Content wrapper */
+.collection-content {
+  position: relative;
+  width: 100%;
+  height: 100%; /* Full height of slide */
+  background-position: center; /* Cleaner centering */
+  overflow: hidden; /* Prevent overflow */
+  border-radius: 12px; /* Soft corners */
+}
+
+/* Heading (if outside slider) */
+.heading {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+/* Collection image */
+.collection-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease; /* Smooth zoom effect */
+}
+
+.collection-slide:hover .collection-image {
+  transform: scale(1.05); /* Subtle zoom on hover */
+}
+
+/* Overlay */
 .collection-overlay {
-      padding: 10px;
-      top: 80%;
-    }
-  
-    .collection-overlay h3 {
-      font-size: 1.2rem; /* Slightly smaller font size on smaller screens */
-    }
+  position: absolute;
+  bottom: 0%; /* Position from bottom instead of top */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  padding: 1rem 2rem; /* More padding for elegance */
+  background: linear-gradient(to top, rgba(35, 35, 36, 0.7), rgba(44, 82, 130, 0)); /* Blue tint */  border-radius: 4.44444px;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Animation */
+}
+
+.collection-slide:hover .collection-overlay {
+  transform: translateX(-50%) translateY(-5px); /* Slight lift */
+  opacity: 0.9; /* Increase visibility on hover */
+}
+
+/* Overlay title */
+.collection-overlay h3 {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem; /* Larger for impact */
+  font-weight: 400; /* Lighter for elegance */
+  letter-spacing: 0.02em; /* Subtle spacing */
+}
+
+/* Explore button */
+.explore-button {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1.5rem; /* More clickable area */
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #1a1a1a; /* Darker, sophisticated black */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.explore-button:hover {
+  background-color: #333; /* Lighter shade on hover */
+  transform: scale(1.05); /* Slight grow effect */
+}
+
+/* Navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #333; /* Softer dark color */
+  width: 48px; /* Slightly larger */
+  height: 48px;
+  background: rgba(255, 255, 255, 0.8); /* Light backdrop */
+  border-radius: 50%; /* Circular buttons */
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #1a1a1a; /* Darker on hover */
+  background-color: #fff; /* Solid white */
+}
+
+/* Hide arrows on small screens if desired */
+@media (max-width: 480px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+      display: none;
   }
-  
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .collection-slide {
+      height: 400px; /* Reduced height */
+  }
+
+  .collection-overlay {
+      padding: 0.75rem 1.5rem;
+      bottom: 1.5rem;
+  }
+
+  .collection-overlay h3 {
+      font-size: 1.25rem; /* Slightly smaller */
+  }
+
+  .explore-button {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.875rem;
+  }
+
+  .swiper {
+      padding: 1.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-slide {
+      height: 300px; /* Further reduced */
+  }
+
+  .collection-overlay {
+      padding: 0.5rem 1rem;
+      bottom: 1rem;
+  }
+
+  .collection-overlay h3 {
+      font-size: 1rem;
+  }
+
+  .explore-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+  }
+}

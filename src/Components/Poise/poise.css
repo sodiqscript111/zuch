@@ -1,84 +1,128 @@
+/* poise-collection.css */
+
+/* Main container */
 .poise-collection-container {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    background-position: 50% 30%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  background-position: center; /* Cleaner centering */
+  background-size: cover; /* Ensure image fills container */
+  width: 100%;
+  min-height: 600px; /* Fixed height for consistency */
+  position: relative; /* For overlay positioning */
+}
+
+/* Content wrapper */
+.poise-content {
+  padding: 2rem; /* More padding for elegance */
+  border-radius: 12px;
+  max-width: 450px; /* Slightly wider for balance */
+  margin: 2rem; /* Increased margin for breathing room */
+  text-align: right;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Transparent gradient */
+  color: #fff; /* White text for contrast */
+  transition: transform 0.3s ease; /* Subtle animation */
+}
+
+.poise-collection-container:hover .poise-content {
+  transform: translateY(-10px); /* Lift effect on hover */
+}
+
+/* Heading */
+.poise-heading {
+  font-family: 'Inter', sans-serif; /* Modern font */
+  font-size: 2.25rem; /* Slightly larger for impact */
+  font-weight: 500; /* Medium weight for elegance */
+  color: #fff; /* White for gradient contrast */
+  margin: 0 0 0.75rem; /* Adjusted spacing */
+  letter-spacing: -0.02em; /* Tightened for style */
+}
+
+/* Description */
+.poise-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* Larger for readability */
+  margin: 0 0 1.25rem; /* More space below */
+  color: rgba(255, 255, 255, 0.9); /* Slightly opaque white */
+}
+
+/* Link/Button */
+.poise-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem; /* Larger clickable area */
+  background-color: #fff;
+  color: #1a1a1a; /* Dark text for contrast */
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600; /* Bold but refined */
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.poise-link:hover {
+  background-color: #e0e0e0; /* Softer hover color */
+  transform: scale(1.05); /* Subtle grow effect */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .poise-collection-container {
+      min-height: 400px; /* Reduced height */
+      position: relative; /* Remove fixed positioning unless needed */
+      align-items: flex-end; /* Keep content at bottom */
+      justify-content: center; /* Center horizontally */
   }
-  
+
   .poise-content {
-  
-    padding: 1.5rem;
-    border-radius: 10px;
-    max-width: 400px;
-    margin: 1rem;
-    text-align: right;
-  }
-  
-  .poise-heading {
-    font-size: 2rem;
-    margin: 0 0 0.5rem;
-    font-weight: bold;
-    color: #000;
-  }
-  
-  .poise-description {
-    font-size: 1rem;
-    margin: 0 0 1rem;
-    color: rgba(41, 41, 41, 0.904);
-  }
-  
-  .poise-link {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #fff;
-    color: #000;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .poise-link:hover {
-    background-color: #e6e6e6;
-  }
-  @media (max-width: 768px) {
-    .poise-collection-container {
-      /* Background blur */
-      backdrop-filter: blur(10px); /* Adjust blur amount as needed */
-      background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
-  
-      /* Position at bottom */
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%; 
-      align-items: end;
-      justify-content: center; /* Center content horizontally */
-    }
-  
-    .poise-content {
-      padding: 1rem;
-      max-width: 90%; /* Adjust width as needed */
-       /* Center content horizontally */
+      padding: 1.5rem;
+      max-width: 90%;
+      margin: 1rem auto; /* Center with auto margins */
       text-align: center; /* Center text */
-      background-color: rgba(255, 255, 255, 0.8); /* White background with opacity */
-      color: #000; /* Black text color */
-    }
-  
-    .poise-heading {
-      font-size: 1.5rem; /* Adjust font size as needed */
-    }
-  
-    .poise-description {
-      font-size: 0.9rem; /* Adjust font size as needed */
-    }
-  
-    .poise-link {
-      color: #fff; /* White link color */
-      background-color: #000; /* Black button background */
-    }
-  
-    .poise-link:hover {
-      background-color: #333; /* Darker background on hover */
-    }
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Same gradient */
+      border-radius: 8px;
   }
+
+  .poise-heading {
+      font-size: 1.75rem; /* Scaled down */
+  }
+
+  .poise-description {
+      font-size: 1rem;
+  }
+
+  .poise-link {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.875rem;
+      background-color: #fff;
+      color: #1a1a1a; /* Keep white button with dark text */
+  }
+
+  .poise-link:hover {
+      background-color: #e0e0e0; /* Consistent hover */
+  }
+}
+
+@media (max-width: 480px) {
+  .poise-collection-container {
+      min-height: 300px; /* Further reduced */
+  }
+
+  .poise-content {
+      padding: 1rem;
+      margin: 0.5rem auto;
+  }
+
+  .poise-heading {
+      font-size: 1.5rem;
+  }
+
+  .poise-description {
+      font-size: 0.875rem;
+  }
+
+  .poise-link {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+  }
+}

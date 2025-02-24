@@ -3,6 +3,7 @@ import Poise from '../Poise/poise';
 import Elegant from '../Elegant/elegant';
 import Dapper from '../Dapper/dapper';
 import Slider from '../Slider/slider';
+import PoiseCollection from '../poisecollection/poisecollection';
 import './collection.css';
 
 const Collection = () => {
@@ -18,6 +19,7 @@ const Collection = () => {
                         <Slider/>
                         <Elegant/>
                         <Dapper/>
+                        <PoiseCollection/>
                     </div>
                 </div>
             </div>
