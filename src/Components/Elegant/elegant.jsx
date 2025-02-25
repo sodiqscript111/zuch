@@ -13,42 +13,31 @@ const Elegant = () => {
         const fetchProducts = async () => {
             try {
                 const fetchedProducts = [];
-
                 const productsRef = collection(db, "collections", "customnative", "products");
                 const productsSnapshot = await getDocs(productsRef);
 
-                console.log("📌 Firestore Documents Retrieved:", productsSnapshot.docs.map(doc => doc.id));
-
                 if (productsSnapshot.empty) {
-                    console.warn("⚠️ No products found in customnative > products");
-                    console.log("Firestore path checked:", "collections/customnative/products");
                     setLoading(false);
                     return;
                 }
 
                 productsSnapshot.forEach((doc) => {
                     const data = doc.data();
-                    console.log("🛍️ Product Data:", data);
-
                     const image = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
                         ? data.imageUrls[0]
-                        : Array.isArray(data.imageUrl) && data.imageUrl.length > 0
-                        ? data.imageUrl[0]
-                        : data.imageUrl || data.image || "";
+                        : data.imageUrl || "";
 
                     fetchedProducts.push({
-                        id: doc.id, // Use Firestore doc ID
+                        id: doc.id,
                         name: data.name || "Unknown",
                         price: data.price || "N/A",
                         imageUrl: image,
                     });
                 });
 
-                console.log("✅ Processed Products:", fetchedProducts);
                 setProducts(fetchedProducts);
                 setLoading(false);
             } catch (error) {
-                console.error("❌ Error fetching products:", error);
                 setError("Failed to fetch products. Please try again later.");
                 setLoading(false);
             }
@@ -66,40 +55,25 @@ const Elegant = () => {
                 <p className="error-message">{error}</p>
             ) : (
                 <div className="product-grid-elegant">
-                    {products.length > 0 ? (
-                        products.map((item) => (
-                            <Link 
-                                to={`/product/${item.id}`} // Links to ProductDetail with Firestore ID
-                                key={item.id} 
-                                className="product-card-container-elegant"
-                            >
-                                <figure className="product-card-elegant">
-                                    {item.imageUrl ? (
-                                        <img
-                                            src={item.imageUrl}
-                                            alt={item.name}
-                                            loading="lazy"
-                                            className="product-image-elegant"
-                                        />
-                                    ) : (
-                                        <div className="no-image-placeholder">No Image Available</div>
-                                    )}
-                                    <figcaption className="figcaption-elegant">
-                                        <div className="product-meta-elegant">
-                                            <span className="product-name-elegant">{item.name}</span>
-                                        </div>
-                                        <div className="product-cost-elegant">
-                                            <data>
-                                                {item.price !== "N/A" ? `$${item.price}` : "Price Unavailable"}
-                                            </data>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </Link>
-                        ))
-                    ) : (
-                        <p>No products available.</p>
-                    )}
+                    {products.map((item) => (
+                        <Link to={`/product/customnative/${item.id}`} key={item.id} className="product-card-container-elegant">
+                            <figure className="product-card-elegant">
+                                {item.imageUrl ? (
+                                    <img src={item.imageUrl} alt={item.name} loading="lazy" className="product-image-elegant" />
+                                ) : (
+                                    <div className="no-image-placeholder">No Image Available</div>
+                                )}
+                                <figcaption className="figcaption-elegant">
+                                    <div className="product-meta-elegant">
+                                        <span className="product-name-elegant">{item.name}</span>
+                                    </div>
+                                    <div className="product-cost-elegant">
+                                        <data>{item.price !== "N/A" ? `$${item.price}` : "Price Unavailable"}</data>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </Link>
+                    ))}
                 </div>
             )}
             <div className="see-all-elegant">

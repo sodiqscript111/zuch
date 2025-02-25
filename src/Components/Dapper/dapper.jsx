@@ -62,9 +62,9 @@ const Dapper = () => {
                     {products.length > 0 ? (
                         products.map((item) => (
                             <Link
-                                to={`/product/${item.id}`}
-                                key={item.id}
-                                className="product-card-container-dapper"
+                            to={`/product/lumincolection/${item.id}`} // Updated link with collectionName
+                            key={item.id} 
+                            className="poise-product-card-container"
                             >
                                 <figure className="product-card-dapper">
                                     {item.imageUrl ? (

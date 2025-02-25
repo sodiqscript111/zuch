@@ -5,15 +5,15 @@ import { doc, getDoc } from 'firebase/firestore';
 import Navbar from '../Navbar/navbar';
 import './product.css';
 import { CartContext } from '../../context/cart';
-import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper
-import 'swiper/css'; // Swiper base styles
-import 'swiper/css/navigation'; // Navigation styles
-import 'swiper/css/pagination'; // Pagination styles (optional)
-import { Navigation, Pagination } from 'swiper/modules'; // Swiper modules
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 
 const ProductDetail = () => {
-  const { id } = useParams(); // Extract product ID from URL
-  const { addItemToCart } = useContext(CartContext); // Access cart function
+  const { collectionName, id } = useParams(); // Get collection name dynamically
+  const { addItemToCart } = useContext(CartContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,12 +29,20 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const productRef = doc(db, "collections", "customnative", "products", id);
+        if (!collectionName || !id) {
+          setError("Invalid product request.");
+          setLoading(false);
+          return;
+        }
+
+        console.log(`🔍 Fetching product from: collections/${collectionName}/products/${id}`);
+
+        const productRef = doc(db, "collections", collectionName, "products", id);
         const productSnap = await getDoc(productRef);
 
         if (!productSnap.exists()) {
-          console.warn("⚠️ Product not found in Firestore:", id);
-          setError("Product not found");
+          console.warn("⚠️ Product not found:", id);
+          setError("Product not found.");
           setLoading(false);
           return;
         }
@@ -42,32 +50,28 @@ const ProductDetail = () => {
         const data = productSnap.data();
         console.log("🛍️ Product Data:", data);
 
-        // Handle all images from imageUrls or fallback
         const images = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
           ? data.imageUrls
-          : Array.isArray(data.imageUrl) && data.imageUrl.length > 0
-          ? data.imageUrl
-          : data.imageUrl ? [data.imageUrl] // Convert single string to array
-          : data.image ? [data.image] : []; // Fallback to empty array
+          : data.imageUrl ? [data.imageUrl] : [];
 
         setProduct({
           id: productSnap.id,
           name: data.name || "Unknown",
           price: data.price || "N/A",
           description: data.description || "No description available",
-          imageUrls: images, // Store all images
-          standardSizes: data.standardSizes || ["S", "M", "L", "XL"], // Default sizes
+          imageUrls: images,
+          standardSizes: data.standardSizes || ["S", "M", "L", "XL"],
         });
         setLoading(false);
       } catch (error) {
         console.error("❌ Error fetching product:", error);
-        setError("Failed to load product details");
+        setError("Failed to load product details.");
         setLoading(false);
       }
     };
 
     fetchProduct();
-  }, [id]);
+  }, [collectionName, id]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -88,7 +92,7 @@ const ProductDetail = () => {
       id: product.id,
       name: product.name,
       price: product.price,
-      imageUrl: product.imageUrls[0], // Use first image for cart
+      imageUrl: product.imageUrls[0],
       quantity: 1,
       options: {
         size: isCustomSize ? customSize : selectedStandardSize,
@@ -111,7 +115,7 @@ const ProductDetail = () => {
       <div className="product-detail-container">
         <div className="product-detail-image">
           <Swiper
-            modules={[Navigation, Pagination]} // Enable navigation and pagination
+            modules={[Navigation, Pagination]}
             spaceBetween={10}
             slidesPerView={1}
             navigation

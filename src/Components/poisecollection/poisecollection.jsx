@@ -70,7 +70,7 @@ const PoiseCollection = () => {
                     {products.length > 0 ? (
                         products.map((item) => (
                             <Link 
-                                to={`/product/${item.id}`} // Links to ProductDetail with Firestore ID
+                                to={`/product/poisecollection/${item.id}`} // Updated link with collectionName
                                 key={item.id} 
                                 className="poise-product-card-container"
                             >
