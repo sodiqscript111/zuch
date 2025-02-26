@@ -7,10 +7,10 @@ const Poise = () => {
     <div 
       className="poise-collection-container"
       style={{ 
-        backgroundImage: 'url(https://i.ibb.co/gMy244tL/POISE-BLACK-1-100k.jpg)', 
+        backgroundImage: 'url(https://i.ibb.co/Z17k3LhS/POISE-BLUE-GREY-100k.jpg)', 
         backgroundSize: 'cover', 
         width: '100%', 
-        height: '750px',
+        height: '70vh',
         position: 'relative',
         overflowY: 'hidden',
         color: '#fff', 

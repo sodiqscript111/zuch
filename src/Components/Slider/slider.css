@@ -16,7 +16,9 @@
   position: relative;
   height: 500px; /* Fixed height for consistency */
 }
-
+#app{
+  background: rgb(27, 27, 27);
+}
 /* Content wrapper */
 .collection-content {
   position: relative;

@@ -45,7 +45,6 @@ const Elegant = () => {
 
         fetchProducts();
     }, []);
-
     return (
         <div className="elegant-container-elegant">
             <h1>Custom Native Collection</h1>

@@ -2,169 +2,181 @@
 
 /* Root-level container */
 .elegant-container-elegant {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 85%; /* Wider for a modern layout */
-    max-width: 1400px; /* Cap for large screens */
-    margin: 0 auto;
-    padding: 2rem 0; /* Vertical breathing room */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 85%; /* Wider for a modern layout */
+  max-width: 1400px; /* Cap for large screens */
+  margin: 0 auto;
+  padding: 2rem 0; /* Vertical breathing room */
+  background: #fff; /* White background */
 }
 
 /* Product grid */
 .product-grid-elegant {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adaptive columns */
-    gap: 2rem; /* Increased spacing for elegance */
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adaptive columns on desktop */
+  gap: 2rem; /* Increased spacing for elegance */
+  width: 100%;
 }
 
 /* Heading */
 .elegant-container-elegant h1 {
-    font-family: 'Inter', sans-serif; /* Sophisticated, modern font */
-    font-size: 2.5rem; /* Bold and impactful */
-    font-weight: 500; /* Medium weight for refinement */
-    margin: 1.5rem 0 2.5rem; /* Balanced spacing */
-    color: #1a1a1a; /* Darker for contrast */
-    letter-spacing: -0.02em; /* Subtle tightening */
+  font-family: 'Inter', sans-serif; /* Sophisticated, modern font */
+  font-size: 2.5rem; /* Bold and impactful */
+  font-weight: 500; /* Medium weight for refinement */
+  margin: 1.5rem 0 2.5rem; /* Balanced spacing */
+  color: #1a1a1a; /* Darker for contrast */
+  letter-spacing: -0.02em; /* Subtle tightening */
 }
 
 /* Product card container */
 .product-card-container-elegant {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none; /* Remove underline from Link */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none; /* Remove underline from Link */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
 }
 
 .product-card-container-elegant:hover {
-    transform: translateY(-5px); /* Lift on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transform: translateY(-5px); /* Lift on hover */
+
 }
 
 /* Product card */
 .product-card-elegant {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    background: #fff; /* Clean white background */
-    border-radius: 8px; /* Soft corners */
-    overflow: hidden; /* Neat image containment */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fff; /* Clean white background */
+  border-radius: 8px; /* Soft corners */
+  overflow: hidden; /* Neat image containment */
 }
 
 /* Product image */
 .product-image-elegant {
-    width: 100%;
-    height: 320px; /* Consistent height */
-    object-fit: cover;
-    transition: transform 0.3s ease; /* Zoom effect */
+  width: 70%; /* 70% of container width */
+  height: auto; /* Full natural height */
+  object-fit: contain; /* Preserve aspect ratio, show full image */
+  align-self: center; /* Center within card */
+  transition: transform 0.3s ease; /* Zoom effect */
 }
 
 .product-card-container-elegant:hover .product-image-elegant {
-    transform: scale(1.05); /* Slight zoom on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
 }
 
 /* Caption */
 .figcaption-elegant {
-    padding: 1rem; /* More internal space */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+  padding: 1rem; /* More internal space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically if needed */
+  align-items: center; /* Center horizontally */
+  width: 100%; /* Full width for centering */
 }
 
 /* Product meta (name) */
 .product-meta-elegant {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.25rem; /* Larger for readability */
-    font-weight: 600; /* Bold yet elegant */
-    color: #333;
-    margin-bottom: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem; /* Larger for readability */
+  font-weight: 600; /* Bold yet elegant */
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-align: center; /* Ensure text is centered */
 }
 
 /* Product name */
 .product-name-elegant {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Product cost */
 .product-cost-elegant {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.125rem; /* Balanced size */
-    color: #666;
-    font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* Balanced size */
+  color: #666;
+  font-weight: 400;
+  text-align: center; /* Ensure text is centered */
 }
 
 /* See All link */
 .see-all-elegant {
-    margin-top: 2rem; /* More space above */
-    text-align: center;
+  margin-top: 2rem; /* More space above */
+  text-align: center;
 }
 
 .see-all-elegant a {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #2c5282; /* Refined blue */
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c5282; /* Refined blue */
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .see-all-elegant a:hover {
-    background-color: #2c5282;
-    color: #fff; /* White text on hover */
+  background-color: #2c5282;
+  color: #fff; /* White text on hover */
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-    .elegant-container-elegant {
-        width: 90%;
-        padding: 1rem 0; /* Reduced padding */
-    }
+  .elegant-container-elegant {
+    width: 90%;
+    padding: 1rem 0; /* Reduced padding */
+  }
 
-    .product-grid-elegant {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Smaller cards */
-        gap: 1rem;
-    }
+  .product-grid-elegant {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 1rem;
+  }
 
-    .elegant-container-elegant h1 {
-        font-size: 1.75rem; /* Scaled down */
-        margin: 1rem 0 1.5rem;
-    }
+  .elegant-container-elegant h1 {
+    font-size: 1.75rem; /* Scaled down */
+    margin: 1rem 0 1.5rem;
+  }
 
-    .product-image-elegant {
-        height: 220px; /* Smaller height for mobile */
-    }
+  .product-image-elegant {
+    width: 80%; /* Slightly wider on mobile */
+    height: auto; /* Full natural height */
+  }
 
-    .product-meta-elegant {
-        font-size: 1rem;
-    }
+  .product-meta-elegant {
+    font-size: 1rem;
+  }
 
-    .product-cost-elegant {
-        font-size: 0.875rem;
-    }
+  .product-cost-elegant {
+    font-size: 0.875rem;
+  }
 
-    .see-all-elegant {
-        margin-top: 1.5rem;
-    }
+  .see-all-elegant {
+    margin-top: 1.5rem;
+  }
 
-    .see-all-elegant a {
-        font-size: 1rem;
-        padding: 0.4rem 0.8rem;
-    }
+  .see-all-elegant a {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .product-grid-elegant {
-        grid-template-columns: 1fr; /* Stack cards on tiny screens */
-        gap: 0.75rem;
-    }
+  .product-grid-elegant {
+    grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns unless too narrow */
+    gap: 0.75rem;
+  }
 
-    .product-image-elegant {
-        height: 200px;
-    }
+  .product-image-elegant {
+    width: 90%; /* Wider for tiny screens */
+  }
+}
+
+@media (max-width: 360px) {
+  .product-grid-elegant {
+    grid-template-columns: 1fr; /* Fallback to 1 column on very small screens */
+  }
 }
