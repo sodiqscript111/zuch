@@ -155,8 +155,8 @@
   }
 
   .product-grid-elegant {
-    grid-template-columns: 1fr; /* 1 column on mobile */
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 1.5rem; /* Slightly reduced for mobile */
   }
 
   .elegant-container-elegant h1 {
@@ -188,7 +188,8 @@
 
 @media (max-width: 480px) {
   .product-grid-elegant {
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns */
+    gap: 1rem; /* Further reduced for smaller screens */
   }
 
   .product-image-elegant {
@@ -201,5 +202,12 @@
 
   .product-cost-elegant {
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-grid-elegant {
+    grid-template-columns: 1fr; /* Fallback to 1 column on very small screens */
+    gap: 1rem;
   }
 }

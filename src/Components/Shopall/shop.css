@@ -90,7 +90,7 @@
 
 @media (max-width: 768px) {
   .products-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile (already set, kept for clarity) */
     gap: 15px;
   }
 
@@ -115,7 +115,20 @@
 /* Extra small screens (e.g., very narrow phones) */
 @media (max-width: 480px) {
   .products-grid {
-    grid-template-columns: 1fr; /* 1 column on very small screens */
+    grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns */
+    gap: 10px; /* Slightly reduced for smaller screens */
+  }
+
+  .no-products,
+  .loading {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 360px) {
+  .products-grid {
+    grid-template-columns: 1fr; /* Fallback to 1 column on very small screens */
+    gap: 10px;
   }
 
   .no-products,
