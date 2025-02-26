@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 
 const ProductDetail = () => {
-  const { collectionName, id } = useParams(); // Get collection name dynamically
+  const { collectionName, id } = useParams();
   const { addItemToCart } = useContext(CartContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -50,16 +50,24 @@ const ProductDetail = () => {
         const data = productSnap.data();
         console.log("🛍️ Product Data:", data);
 
-        const images = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
-          ? data.imageUrls
-          : data.imageUrl ? [data.imageUrl] : [];
+        // Ensure imageUrl is always an array
+        let images = [];
+        if (Array.isArray(data.imageUrl)) {
+          images = data.imageUrl;
+        } else if (typeof data.imageUrl === 'string' && data.imageUrl.includes(',')) {
+          images = data.imageUrl.split(',').map(url => url.trim()); // Convert comma-separated string to array
+        } else if (typeof data.imageUrl === 'string') {
+          images = [data.imageUrl]; // Wrap single string in an array
+        }
+
+        console.log("📸 Processed Image URLs:", images);
 
         setProduct({
           id: productSnap.id,
           name: data.name || "Unknown",
           price: data.price || "N/A",
           description: data.description || "No description available",
-          imageUrls: images,
+          imageUrls: images, // Use imageUrls to match cart expectation
           standardSizes: data.standardSizes || ["S", "M", "L", "XL"],
         });
         setLoading(false);
@@ -92,7 +100,7 @@ const ProductDetail = () => {
       id: product.id,
       name: product.name,
       price: product.price,
-      imageUrl: product.imageUrls[0],
+      imageUrls: product.imageUrls, // Pass array of image URLs
       quantity: 1,
       options: {
         size: isCustomSize ? customSize : selectedStandardSize,
@@ -139,7 +147,7 @@ const ProductDetail = () => {
           <h1>{product.name}</h1>
           <p>{product.description}</p>
           <p>
-            Price: <strong>${product.price}</strong>
+            Price: <strong>₦{typeof product.price === "number" ? product.price.toFixed(2) : product.price}</strong>
           </p>
 
           <div className="product-options">

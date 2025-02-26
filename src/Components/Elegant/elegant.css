@@ -1,33 +1,36 @@
 /* Elegant.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 /* Root-level container */
 .elegant-container-elegant {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 85%; /* Wider for a modern layout */
-  max-width: 1400px; /* Cap for large screens */
+  width: 90%; /* Clean, wide layout */
+  max-width: 1480px; /* Slightly larger cap */
   margin: 0 auto;
-  padding: 2rem 0; /* Vertical breathing room */
-  background: #fff; /* White background */
+  padding: 4rem 0; /* Balanced vertical space */
+  background: #ffffff; /* Pure white background */
 }
 
 /* Product grid */
 .product-grid-elegant {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adaptive columns on desktop */
-  gap: 2rem; /* Increased spacing for elegance */
+  grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+  gap: 2.5rem; /* Elegant spacing */
   width: 100%;
+  padding: 0 1rem; /* Minimal horizontal padding */
 }
 
 /* Heading */
 .elegant-container-elegant h1 {
-  font-family: 'Inter', sans-serif; /* Sophisticated, modern font */
-  font-size: 1.7rem; /* Bold and impactful */
-  font-weight: 500; /* Medium weight for refinement */
-  margin: 1.5rem 0 2.5rem; /* Balanced spacing */
-  color: #1a1a1a; /* Darker for contrast */
-  letter-spacing: -0.02em; /* Subtle tightening */
+  font-family: 'Playfair Display', serif; /* Luxurious serif font */
+  font-size: 2.8rem; /* Bold yet refined */
+  font-weight: 600; /* Sophisticated weight */
+  margin: 2rem 0 3rem; /* Balanced spacing */
+  color: #000000; /* Black for theme */
+  letter-spacing: 0.02em; /* Slight expansion */
+  text-align: center; /* Centered */
 }
 
 /* Product card container */
@@ -35,56 +38,60 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  text-decoration: none; /* Remove underline from Link */
+  text-decoration: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  border-radius: 12px; /* Gentle corners */
 }
 
+/* Hover effect for card */
 .product-card-container-elegant:hover {
-  transform: translateY(-5px); /* Lift on hover */
- 
+  transform: translateY(-5px); /* Subtle lift */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Minimal shadow */
 }
 
 /* Product card */
 .product-card-elegant {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Center all content */
   width: 100%;
-  background: #fff; /* Clean white background */
-  border-radius: 8px; /* Soft corners */
-  overflow: hidden; /* Neat image containment */
+  background: #ffffff; /* White card */
+  border-radius: 12px; /* Match container */
+  overflow: hidden;
+  padding: 1rem 0; /* Minimal padding, centered */
 }
 
 /* Product image */
 .product-image-elegant {
-  width: 70%; /* 70% of container width */
+  width: 90%; /* Larger image on desktop */
   height: auto; /* Full natural height */
-  object-fit: contain; /* Preserve aspect ratio, show full image */
-  align-self: center; /* Center within card */
-  transition: transform 0.3s ease; /* Zoom effect */
+  object-fit: contain; /* Preserve aspect ratio */
+  transition: transform 0.4s ease; /* Smooth zoom */
 }
 
+/* Hover effect for image */
 .product-card-container-elegant:hover .product-image-elegant {
-  transform: scale(1.05); /* Slight zoom on hover */
+  transform: scale(1.05); /* Gentle zoom */
 }
 
 /* Caption */
 .figcaption-elegant {
-  padding: 1rem; /* More internal space */
+  padding: 1rem 0; /* Minimal, centered padding */
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center vertically if needed */
-  align-items: center; /* Center horizontally */
-  width: 100%; /* Full width for centering */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 /* Product meta (name) */
 .product-meta-elegant {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.25rem; /* Larger for readability */
-  font-weight: 600; /* Bold yet elegant */
-  color: #333;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; /* Reduced size for balance */
+  font-weight: 500; /* Refined weight */
+  color: #000000; /* Black for theme */
   margin-bottom: 0.5rem;
-  text-align: center; /* Ensure text is centered */
+  text-align: center; /* Centered */
 }
 
 /* Product name */
@@ -95,88 +102,104 @@
 
 /* Product cost */
 .product-cost-elegant {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.125rem; /* Balanced size */
-  color: #666;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; /* Slightly smaller */
+  color: #000000; /* Black for theme */
   font-weight: 400;
-  text-align: center; /* Ensure text is centered */
+  text-align: center; /* Centered */
 }
 
 /* See All link */
 .see-all-elegant {
-  margin-top: 2rem; /* More space above */
+  margin-top: 3rem; /* Prominent spacing */
   text-align: center;
 }
 
 .see-all-elegant a {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2c5282; /* Refined blue */
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; /* Balanced size */
+  font-weight: 600; /* Bold */
+  color: #000000; /* Black for theme */
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 0.8rem 2rem; /* Spacious clickable area */
+  border-radius: 6px;
+  border: 2px solid #000000; /* Black border */
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .see-all-elegant a:hover {
-  background-color: #2c5282;
-  color: #fff; /* White text on hover */
+  background: #000000; /* Black fill */
+  color: #ffffff; /* White text */
+  transform: scale(1.03); /* Subtle lift */
+}
+
+/* Loading/Error/No Products Messages */
+.elegant-container-elegant p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #666; /* Soft gray for contrast */
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Error message specific styling */
+.error-message {
+  color: #d32f2f; /* Soft red for errors */
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
   .elegant-container-elegant {
-    width: 90%;
-    padding: 1rem 0; /* Reduced padding */
+    width: 95%;
+    padding: 2rem 0;
   }
 
   .product-grid-elegant {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
-    gap: 1rem;
+    grid-template-columns: 1fr; /* 1 column on mobile */
+    gap: 2rem;
   }
 
   .elegant-container-elegant h1 {
-    font-size: 1.75rem; /* Scaled down */
-    margin: 1rem 0 1.5rem;
+    font-size: 2.2rem;
+    margin: 1.5rem 0 2.5rem;
   }
 
   .product-image-elegant {
-    width: 80%; /* Slightly wider on mobile */
-    height: auto; /* Full natural height */
+    width: 95%; /* Larger on mobile */
   }
 
   .product-meta-elegant {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .product-cost-elegant {
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
   .see-all-elegant {
-    margin-top: 1.5rem;
+    margin-top: 2.5rem;
   }
 
   .see-all-elegant a {
-    font-size: 1rem;
-    padding: 0.4rem 0.8rem;
+    font-size: 1.2rem;
+    padding: 0.7rem 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .product-grid-elegant {
-    grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns unless too narrow */
-    gap: 0.75rem;
+    gap: 1.5rem;
   }
 
   .product-image-elegant {
-    width: 90%; /* Wider for tiny screens */
+    width: 98%; /* Max width on small screens */
   }
-}
 
-@media (max-width: 360px) {
-  .product-grid-elegant {
-    grid-template-columns: 1fr; /* Fallback to 1 column on very small screens */
+  .product-meta-elegant {
+    font-size: 1.1rem;
+  }
+
+  .product-cost-elegant {
+    font-size: 0.9rem;
   }
 }

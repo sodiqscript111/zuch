@@ -1,222 +1,259 @@
 /* product.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 /* Container */
 .product-detail-container {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1400px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    gap: 2rem;
+  display: flex;
+  flex-direction: column; /* Stack vertically for centering */
+  align-items: center; /* Center everything horizontally */
+  max-width: 1480px; /* Match Dapper's cap */
+  margin: 4rem auto; /* Generous vertical spacing */
+  padding: 0 1rem;
+  gap: 2.5rem; /* Elegant spacing */
+  background: #ffffff; /* Pure white background */
 }
 
 /* Image Slider */
 .product-detail-image {
-    flex: 1;
-    min-width: 300px;
+  width: 100%;
+  max-width: 600px; /* Limit width for balance */
+  height: auto; /* Flexible height */
 }
 
 .product-image-slider {
-    width: 100%;
-    height: 500px; /* Fixed height for consistency */
+  width: 100%;
+  height: 500px; /* Fixed height for consistency, larger for prominence */
 }
 
 .swiper-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px; /* Soft corners */
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Preserve image proportions */
+  border-radius: 12px; /* Match Dapper's gentle corners */
 }
 
+/* No Image Placeholder */
 .no-image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f5f5f5;
-    color: #666;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.25rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0; /* Slightly softer gray */
+  color: #666;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  border-radius: 12px;
 }
 
 /* Swiper Navigation */
 .swiper-button-next,
 .swiper-button-prev {
-    color: #333;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
+  color: #000000; /* Black to match theme */
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
 }
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-    background-color: #fff;
+  background-color: #ffffff;
 }
 
 .swiper-pagination-bullet {
-    background: #666;
+  background: #666;
 }
 
 .swiper-pagination-bullet-active {
-    background: #1a1a1a;
+  background: #000000; /* Black for theme */
 }
 
 /* Info Section */
 .product-detail-info {
-    flex: 1;
-    min-width: 300px;
-    padding: 1rem;
+  width: 100%;
+  max-width: 600px; /* Match image width for balance */
+  padding: 1rem 0;
+  text-align: center; /* Center all text */
 }
 
 .product-detail-info h1 {
-    font-family: 'Inter', sans-serif;
-    font-size: 2rem;
-    font-weight: 500;
-    color: #1a1a1a;
-    margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; /* Match Dapper's bold heading */
+  font-weight: 600; /* Sophisticated weight */
+  color: #000000; /* Black for theme */
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em; /* Slight expansion */
 }
 
 .product-detail-info p {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; /* Slightly larger for readability */
+  color: #000000; /* Black for theme */
+  margin-bottom: 1.5rem;
 }
 
 /* Size Selection */
 .size-selection label {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.125rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-    display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #000000; /* Black for theme */
+  margin-bottom: 0.75rem;
+  display: block;
 }
 
 .size-toggle {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: center; /* Center toggle buttons */
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .toggle-button {
-    padding: 0.5rem 1rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    background: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  border: 1px solid #000000; /* Black border */
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .toggle-button.active {
-    background-color: #2c5282;
-    color: #fff;
-    border-color: #2c5282;
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
 }
 
 .toggle-button:hover:not(.active) {
-    background-color: #f5f5f5;
+  background-color: #f0f0f0;
 }
 
 /* Standard Sizes */
 .standard-sizes label,
 .custom-sizes label {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.125rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-    display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #000000; /* Black for theme */
+  margin-bottom: 0.75rem;
+  display: block;
 }
 
 .size-options {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center; /* Center size buttons */
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .size-button {
-    padding: 0.5rem 1rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    background: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  border: 1px solid #000000; /* Black border */
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .size-button.selected {
-    background-color: #2c5282;
-    color: #fff;
-    border-color: #2c5282;
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
 }
 
 .size-button:hover:not(.selected) {
-    background-color: #f5f5f5;
+  background-color: #f0f0f0;
 }
 
 /* Custom Sizes */
 .custom-size-inputs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  justify-content: center; /* Center input fields */
 }
 
 .custom-size-inputs input {
-    padding: 0.5rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
+  padding: 0.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  border: 1px solid #000000; /* Black border */
+  border-radius: 6px;
+  width: 100%;
+  text-align: center; /* Center input text */
 }
 
 /* Add to Cart Button */
 .add-to-cart-button {
-    margin-top: 2rem;
-    padding: 0.75rem 2rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.125rem;
-    font-weight: 600;
-    background-color: #1a1a1a;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 2.5rem;
+  padding: 0.8rem 2rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  background-color: #000000; /* Black to match theme */
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .add-to-cart-button:hover {
-    background-color: #333;
-    transform: scale(1.05);
+  background-color: #333333; /* Slightly lighter black */
+  transform: scale(1.03); /* Subtle lift */
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .product-image-slider {
-        height: 400px;
-    }
+  .product-detail-container {
+    padding: 2rem 0;
+    gap: 2rem;
+  }
 
-    .product-detail-info h1 {
-        font-size: 1.75rem;
-    }
+  .product-image-slider {
+    height: 400px; /* Adjusted for mobile */
+  }
 
-    .add-to-cart-button {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
-    }
+  .product-detail-info h1 {
+    font-size: 2rem;
+  }
+
+  .product-detail-info p {
+    font-size: 1.1rem;
+  }
+
+  .size-selection label,
+  .standard-sizes label,
+  .custom-sizes label {
+    font-size: 1.2rem;
+  }
+
+  .toggle-button,
+  .size-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .add-to-cart-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .product-image-slider {
-        height: 300px;
-    }
+  .product-image-slider {
+    height: 300px; /* Further adjusted */
+  }
 
-    .custom-size-inputs {
-        grid-template-columns: 1fr;
-    }
+  .custom-size-inputs {
+    grid-template-columns: 1fr; /* Stack inputs */
+  }
+
+  .product-detail-info h1 {
+    font-size: 1.8rem;
+  }
 }

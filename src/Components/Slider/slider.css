@@ -16,9 +16,7 @@
   position: relative;
   height: 500px; /* Fixed height for consistency */
 }
-#app{
-  background: rgb(27, 27, 27);
-}
+
 /* Content wrapper */
 .collection-content {
   position: relative;
@@ -103,10 +101,9 @@
 /* Navigation arrows */
 .swiper-button-next,
 .swiper-button-prev {
-  color: #333; /* Softer dark color */
+  color: #f8f4f4; /* Softer dark color */
   width: 48px; /* Slightly larger */
   height: 48px;
-  background: rgba(255, 255, 255, 0.8); /* Light backdrop */
   border-radius: 50%; /* Circular buttons */
   transition: color 0.3s ease, background-color 0.3s ease;
 }
@@ -114,14 +111,13 @@
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
   color: #1a1a1a; /* Darker on hover */
-  background-color: #fff; /* Solid white */
 }
 
 /* Hide arrows on small screens if desired */
 @media (max-width: 480px) {
   .swiper-button-next,
   .swiper-button-prev {
-      display: none;
+      
   }
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/firebase";
-import Navbar from "../Navbar/navbar"; // Adjust path based on your structure
+import Navbar from "../Navbar/navbar";
 import "./shop.css";
 
 const AllProducts = () => {
@@ -31,18 +31,18 @@ const AllProducts = () => {
           const productsList = productsSnapshot.docs.map((doc) => {
             const data = doc.data();
             const price = typeof data.price === "number" ? data.price : parseFloat(data.price) || 0;
-            const popularity = typeof data.popularity === "number" 
-              ? data.popularity 
+            const popularity = typeof data.popularity === "number"
+              ? data.popularity
               : parseInt(data.popularity || data["popularity "]) || 0;
             return {
               id: doc.id,
               collectionId: collectionDoc.id,
               name: data.name || "Unnamed Product",
               price,
-              imageUrl: data.imageUrl && Array.isArray(data.imageUrl) 
-                ? data.imageUrl 
-                : data.imageurl && Array.isArray(data.imageurl) 
-                ? data.imageurl 
+              imageUrl: data.imageUrl && Array.isArray(data.imageUrl)
+                ? data.imageUrl
+                : data.imageurl && Array.isArray(data.imageurl)
+                ? data.imageurl
                 : ["https://via.placeholder.com/300"],
               popularity,
             };
@@ -73,7 +73,7 @@ const AllProducts = () => {
 
   return (
     <div className="all-products-page">
-      <Navbar /> {/* Add Navbar here */}
+      <Navbar />
       <h1 className="all-products-title">All Products</h1>
       <div className="products-grid">
         {products.length === 0 ? (
@@ -93,7 +93,7 @@ const AllProducts = () => {
               />
               <div className="product-info">
                 <h2 className="product-name">{item.name}</h2>
-                <p className="product-price">${item.price.toFixed(2)}</p>
+                <p className="product-price">₦{item.price.toFixed(2)}</p>
               </div>
             </Link>
           ))
