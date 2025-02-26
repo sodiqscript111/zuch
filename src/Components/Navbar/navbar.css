@@ -135,15 +135,17 @@
   }
   .navbar-container {
     padding: 0 15px;
+    padding-right: 60px;
   }
   .logo-img {
-    height: 45px;
+    height: 65px;
   }
   .cart-icon {
-    font-size: 24px;
+    font-size: 40px;
+    
   }
   .mobile-toggle {
-    font-size: 26px;
+    font-size: 40px;
   }
 }
 

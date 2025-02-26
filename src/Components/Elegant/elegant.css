@@ -23,7 +23,7 @@
 /* Heading */
 .elegant-container-elegant h1 {
   font-family: 'Inter', sans-serif; /* Sophisticated, modern font */
-  font-size: 2.5rem; /* Bold and impactful */
+  font-size: 1.7rem; /* Bold and impactful */
   font-weight: 500; /* Medium weight for refinement */
   margin: 1.5rem 0 2.5rem; /* Balanced spacing */
   color: #1a1a1a; /* Darker for contrast */
@@ -41,7 +41,7 @@
 
 .product-card-container-elegant:hover {
   transform: translateY(-5px); /* Lift on hover */
-
+ 
 }
 
 /* Product card */
