@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../../context/cart";
-import { PaystackButton } from "react-paystack";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,13 +15,41 @@ const Cart = () => {
     phone: "",
     address: "",
   });
+  const [isPaystackLoaded, setIsPaystackLoaded] = useState(false);
 
-  const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY; // Updated for Vite
+  const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+  console.log("Paystack Key:", paystackKey);
+
   const amount = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity * 100,
+    (total, item) => total + (item.price || 0) * (item.quantity || 0) * 100,
     0
   );
   const reference = new Date().getTime().toString();
+
+  console.log("Amount:", amount);
+  console.log("Cart Items:", cartItems);
+  console.log("User Info:", userInfo);
+
+  useEffect(() => {
+    console.log("Starting Paystack script load");
+    const script = document.createElement("script");
+    script.src = "https://js.paystack.co/v1/inline.js";
+    script.async = true;
+    script.onload = () => {
+      console.log("Paystack script loaded successfully");
+      setIsPaystackLoaded(true);
+    };
+    script.onerror = (error) => {
+      console.error("Paystack script failed to load:", error);
+      toast.error("Failed to load Paystack. Check your network or ad blocker.");
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      console.log("Cleaning up Paystack script");
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,7 +67,7 @@ const Cart = () => {
 
   const sendNotification = async (ref) => {
     try {
-      const response = await fetch("/api/notify", { // Update to Vercel URL after deployment
+      const response = await fetch("/api/notify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -74,21 +101,41 @@ const Cart = () => {
     toast.info("Payment window closed.");
   };
 
-  const paystackProps = {
-    reference,
-    email: userInfo.email,
-    amount,
-    publicKey,
-    text: "Pay with Paystack",
-    onSuccess,
-    onClose,
-    metadata: {
-      phone: userInfo.phone,
-      address: userInfo.address,
-      cartItems: JSON.stringify(cartItems),
-    },
-    className: "paystack-btn",
+  const handlePaystackPayment = () => {
+    if (!isPaystackLoaded || !window.PaystackPop) {
+      toast.error("Paystack is not loaded yet. Please wait or refresh the page.");
+      setTimeout(() => {
+        if (window.PaystackPop) handlePaystackPayment(); // Retry after 1s
+      }, 1000);
+      return;
+    }
+    if (!paystackKey || !userInfo.email || amount <= 0) {
+      toast.error("Please ensure all details are filled and cart is not empty.");
+      return;
+    }
+
+    const handler = window.PaystackPop.setup({
+      key: paystackKey,
+      email: userInfo.email,
+      amount,
+      ref: reference,
+      metadata: {
+        phone: userInfo.phone,
+        address: userInfo.address,
+        cartItems: JSON.stringify(cartItems),
+      },
+      callback: (response) => {
+        if (response.status === "success") {
+          onSuccess(response);
+        }
+      },
+      onClose: onClose,
+    });
+
+    handler.openIframe();
   };
+
+  const isFormValid = userInfo.email && userInfo.phone && userInfo.address && paystackKey && amount > 0;
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -307,14 +354,21 @@ const Cart = () => {
                 >
                   Cancel
                 </motion.button>
-                <motion.div
-                  variants={buttonVariants}
-                  initial="rest"
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <PaystackButton {...paystackProps} />
-                </motion.div>
+                {isFormValid ? (
+                  <motion.button
+                    type="button"
+                    className="paystack-btn"
+                    onClick={handlePaystackPayment}
+                    variants={buttonVariants}
+                    initial="rest"
+                    whileHover="hover"
+                    whileTap="tap"
+                  >
+                    Pay with Paystack
+                  </motion.button>
+                ) : (
+                  <button disabled>Fill form to pay</button>
+                )}
               </div>
             </form>
           </motion.div>

@@ -10,10 +10,11 @@ const Poise = () => {
         backgroundImage: 'url(https://i.ibb.co/gMy244tL/POISE-BLACK-1-100k.jpg)', 
         backgroundSize: 'cover', 
         width: '100%', 
-        height: '100vh',
+        height: '750px',
         position: 'relative',
         overflowY: 'hidden',
-        color: '#fff' 
+        color: '#fff', 
+        backgroundPosition: 'left',
       }}
     >
       <div className="poise-content">

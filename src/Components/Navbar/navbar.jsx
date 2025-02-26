@@ -1,67 +1,131 @@
 import React, { useState } from "react";
-import "./navbar.css";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../context/cart";
+import { motion, AnimatePresence } from "framer-motion";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import "./navbar.css";
 
-function Navbar() {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  // Access `cartItems` from `CartContext`
   const { cartItems } = useContext(CartContext);
 
+  const handleMenuToggle = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
+  // Menu animation variants for mobile
+  const menuVariants = {
+    hidden: { x: "100%", opacity: 0 },
+    visible: { x: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } },
+    exit: { x: "100%", opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } },
+  };
+
+  // Link animation variants
+  const linkVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.1, duration: 0.3, ease: "easeOut" },
+    }),
+  };
+
+  const navItems = [
+    { path: "/shopall", label: "Shop" },
+    { path: "/about", label: "About Us" },
+    { path: "/contact", label: "Contact" },
+  ];
+
   return (
-    <nav className="navbar">
-      <div className="wrapper">
-        {/* Left Section (Logo) */}
-        <div className="left">
-          <Link to="/">
-            <img
-              src="https://i.ibb.co/3pbkQt5/walklogoo-removebg-preview.png"
-              className="logo"
-              alt="Logo"
-            />
-          </Link>
+    <nav className="modern-navbar">
+      <div className="navbar-container">
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          <motion.img
+            src="https://i.ibb.co/3pbkQt5/walklogoo-removebg-preview.png"
+            alt="Logo"
+            className="logo-img"
+            initial={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+          />
+        </Link>
+
+        {/* Desktop Navigation */}
+        <div className="desktop-nav">
+          {navItems.map((item) => (
+            <motion.div
+              key={item.path}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <NavLink
+                to={item.path}
+                className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+              >
+                {item.label}
+              </NavLink>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Center Section (Empty - For spacing) */}
-        <div className="center"></div>
-
-        {/* Right Section (Cart & Menu Icon) */}
-        <div className="right">
-          <Link to="/cart">
-            <div className="cart-icon">
+        {/* Right Section (Cart and Mobile Toggle) */}
+        <div className="navbar-right">
+          <Link to="/cart" className="cart-action">
+            <motion.div
+              className="cart-icon"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <ShoppingBagOutlinedIcon />
-              <span className="cart-badge">{cartItems.length}</span>
-            </div>
+              {cartItems.length > 0 && (
+                <span className="cart-count">{cartItems.length}</span>
+              )}
+            </motion.div>
           </Link>
-          <div className="menu-icon" onClick={handleMenuToggle}>
-            {menuOpen ? <CancelOutlinedIcon /> : <MenuOutlinedIcon />}
-          </div>
+          <motion.div
+            className="mobile-toggle"
+            onClick={handleMenuToggle}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {menuOpen ? <CloseOutlinedIcon /> : <MenuOutlinedIcon />}
+          </motion.div>
         </div>
-      </div>
 
-      {/* Links (Mobile Menu) */}
-      <div className={`links ${menuOpen ? "open" : ""}`}>
-        <Link to="/clothes" className="link">
-          Shop
-        </Link>
-        <Link to="/about" className="link">
-          About
-        </Link>
-        <Link to="/contact" className="link">
-          Contact
-        </Link>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              className="mobile-menu"
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.path}
+                  custom={index}
+                  variants={linkVariants}
+                >
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) => `mobile-link ${isActive ? "active" : ""}`}
+                    onClick={handleMenuToggle}
+                  >
+                    {item.label}
+                  </NavLink>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

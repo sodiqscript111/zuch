@@ -1,206 +1,186 @@
-/* most-popular.css */
-
-/* Main section */
-.most-popular {
-  padding: 2.5rem 1.5rem;
-  background-color: #f5f5f5;
+/* newclothes.css */
+.newclothes-container {
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+  max-width: 1440px;
+  margin: 0 auto;
+  border-radius: 16px;
 }
 
-/* Header */
-.most-popular header {
-  margin-left: 1.5rem;
-  margin-bottom: 2rem;
+.newclothes-title {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.most-popular header h3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.75rem;
-  font-weight: 500;
-  color: #1a1a1a;
+.newclothes-title h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #1a202c;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.see-all-link {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #319795;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin: 0; /* Reset margin */
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(49, 151, 149, 0.1);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Header link */
-.most-popular header a {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.75rem; /* Match h3 for consistency */
-  font-weight: 500;
-  color: #2c5282;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.3s ease, transform 0.3s ease;
+.see-all-link:hover {
+  background: rgba(49, 151, 149, 0.2);
+  color: #2c7a7b;
 }
 
-.most-popular header a:hover {
-  color: #1a365d;
-  transform: translateX(5px);
-}
-
-/* SVG styling */
-.icon-arrow-thick-right-circle {
-  width: 20px;
-  height: 20px;
-}
-
-.icon-arrow-thick-right-circle circle {
-  fill: #fff; /* White circle background */
-}
-
-.icon-arrow-thick-right-circle .primary {
-  fill: #2c5282; /* Match link color */
-}
-
-/* Scroller */
-.most-popular-scroller {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Product card container */
-.product-card-container {
-  flex: 0 0 auto;
-  width: 450px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-/* Product card */
-.product-card {
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* Button inside product card */
-.product-card button {
-  all: unset; /* Reset all default styles */
-  display: block;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* Product image */
-.product-image {
-  width: 100%;
-  height: 360px;
-  object-fit: cover;
-  display: block; /* Remove any gaps */
+.arrow-icon {
+  fill: #319795;
   transition: transform 0.3s ease;
 }
 
-.product-card-container:hover .product-image {
+.see-all-link:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+.newclothes-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.newclothes-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newclothes-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 320px;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.newclothes-card:hover .card-image {
   transform: scale(1.05);
 }
 
-/* Caption */
-figcaption {
-  padding: 1rem;
-}
-
-/* Product meta */
-.product-meta {
-  margin-bottom: 0.5rem;
-}
-
-.product-meta .product-name {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(49, 151, 149, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.2rem;
   font-weight: 600;
-  color: #333;
-  text-decoration: none;
+  text-transform: uppercase;
 }
 
-.product-meta small {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  color: #888;
+.card-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* Product cost */
-.product-cost {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.125rem;
-  font-weight: 400;
-  color: #666;
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 10px;
+  line-height: 1.2;
 }
 
-.product-cost data {
-  color: #1a1a1a;
-  font-weight: 500;
+.card-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #319795;
+  margin: 0 0 8px;
 }
 
-/* Span (See All text) */
-span {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.125rem;
-  color: #888;
+.card-popularity {
+  font-size: 0.95rem;
+  color: #718096;
+  margin: 0;
 }
 
-/* Mobile Styles */
+.no-products {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #718096;
+  padding: 20px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #718096;
+  padding: 20px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .most-popular {
-      padding: 1.5rem 1rem;
+  .newclothes-title h2 {
+    font-size: 2.2rem;
   }
 
-  .most-popular header {
-      margin-left: 1rem;
-      margin-bottom: 1.5rem;
+  .newclothes-products {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
   }
 
-  .most-popular header h3,
-  .most-popular header a {
-      font-size: 1.5rem;
+  .card-image-wrapper {
+    height: 260px;
   }
 
-  .most-popular-scroller {
-      gap: 1rem;
-  }
-
-  .product-card-container {
-      width: 220px;
-  }
-
-  .product-image {
-      height: 280px;
-  }
-
-  figcaption {
-      padding: 0.75rem;
-  }
-
-  .product-meta .product-name {
-      font-size: 1rem;
-  }
-
-  .product-cost {
-      font-size: 0.875rem;
-  }
-
-  span {
-      font-size: 0.875rem;
+  .card-title {
+    font-size: 1.3rem;
   }
 }
 
 @media (max-width: 480px) {
-  .product-card-container {
-      width: 180px;
+  .newclothes-products {
+    grid-template-columns: 1fr;
   }
 
-  .product-image {
-      height: 240px;
+  .card-image-wrapper {
+    height: 220px;
   }
 }

@@ -6,7 +6,6 @@ const Home = () => {
     return (
         <>
             <Navbar />
-            <Newclothes shopData={shopData} />
             <Collection />
         </>
     );

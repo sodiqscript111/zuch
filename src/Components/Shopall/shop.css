@@ -1,91 +1,125 @@
+/* allProducts.css */
+.all-products-page {
+  padding: 80px 20px 20px; /* Offset for fixed navbar */
+  max-width: 1280px;
+  margin: 0 auto;
+  background: #fff; /* White background */
+}
 
-  
-  .all-clothes header h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+.all-products-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+  gap: 20px;
+}
+
+.product-item {
+  text-decoration: none;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+}
+
+.product-img {
+  width: 70%; /* 70% of container width */
+  height: auto; /* Full natural height */
+  object-fit: contain; /* Preserve aspect ratio, show full image */
+}
+
+.product-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 5px;
+}
+
+.product-price {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  margin: 0;
+}
+
+.no-products {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 20px;
+  grid-column: span 3; /* Span all columns on desktop */
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 20px;
+  grid-column: span 3; /* Span all columns on desktop */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
   }
-  
-  .all-clothes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    width: 85%;
-    justify-content: center;
-    justify-self: center;
+
+  .no-products,
+  .loading {
+    grid-column: span 2; /* Adjust span for 2 columns */
   }
-  
-  .all-clothes-grid button {
-    border: none;
-    background: none;
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 15px;
   }
-  
-  .all-product-card-container {
-    display: flex;
-    justify-content: center;
+
+  .product-img {
+    width: 80%; /* Slightly wider on mobile */
   }
-  
-  .all-product-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align to the left */
-    width: 100%;
-    padding: 1rem;
+
+  .product-name {
+    font-size: 1.1rem;
   }
-  
-  .all-product-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+
+  .product-price {
+    font-size: 0.9rem;
   }
-  
-  .all-product-meta {
-    margin-top: 0.5rem;
-    text-align: left; /* Align text to the left */
-    width: 100%; /* Make sure the meta takes up the full width */
+
+  .no-products,
+  .loading {
+    grid-column: span 2; /* Adjust span for 2 columns */
   }
-  
-  .all-product-name {
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-    margin-bottom: 0.5rem; /* Add space between name and price */
+}
+
+/* Extra small screens (e.g., very narrow phones) */
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr; /* 1 column on very small screens */
   }
-  
-  .all-product-cost {
-    font-size: 1rem;
-    color: #666;
+
+  .no-products,
+  .loading {
+    grid-column: span 1;
   }
-  
-  .figcaption-all {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 0.5rem 0;
-  }
-  
-  .all-product-meta {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 0.25rem;
-  }
-  
-  .all-product-name {
-    font-weight: bold;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .all-product-cost {
-    margin-top: 6px;
-    font-size: 1rem;
-    color: #666;
-  }
-  .allhead{
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    font-weight: 200;
-    padding-top: 3rem;
-  }
-  
+}
