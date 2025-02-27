@@ -1,22 +1,18 @@
+// components/Slider.jsx
 import React from "react";
-// Import Swiper React components
+import { Link } from "react-router-dom"; // Add Link import
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-// Import required modules
 import { Navigation, Pagination } from "swiper/modules";
-
 import "./slider.css";
 
-const Slider= ()=> {
+const Slider = () => {
   const collections = [
     {
       image: "https://i.ibb.co/NsHKvHh/Whats-App-Image-2025-01-13-at-12-35-01-PM-1.jpg",
-      name: "Collection One",
+      name: "Poise Collection",
     },
     {
       image: "https://i.ibb.co/y2wMWJD/NUDE-COVER-1.jpg",
@@ -60,7 +56,9 @@ const Slider= ()=> {
               />
               <div className="collection-overlay">
                 <h3>{collection.name}</h3>
-                <button className="explore-button">Explore Collection</button>
+                <Link to="/shopall">
+                  <button className="explore-button">Explore Collection</button>
+                </Link>
               </div>
             </div>
           </SwiperSlide>
@@ -68,6 +66,6 @@ const Slider= ()=> {
       </Swiper>
     </div>
   );
-}
+};
 
 export default Slider;

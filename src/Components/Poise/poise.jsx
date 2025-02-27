@@ -18,11 +18,11 @@ const Poise = () => {
       }}
     >
       <div className="poise-content">
-        <h1 className="poise-heading">Poise Collection</h1>
+        <h1 className="poise-heading">SHOP OUR TOP NOTCH CLASSIC WEARS</h1>
         <p className="poise-description">
-          The new collection is the synthesis of harmonious elements of playful elegance.
+          Our collection is the synthesis of harmonious elements of playful elegance.
         </p>
-        <Link to="/collections/poise" className="poise-link">Explore New Collection</Link>
+        <Link to="/shopall" className="poise-link">Explore New Collection</Link>
       </div>
     </div>
   );

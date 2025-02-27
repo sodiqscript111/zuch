@@ -45,7 +45,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="navbar-logo">
           <motion.img
-            src="https://i.ibb.co/3pbkQt5/walklogoo-removebg-preview.png"
+            src="https://i.ibb.co/Fq362M1t/Whats-App-Image-2025-02-16-at-10-54-10-65e00f92.jpg"
             alt="Logo"
             className="logo-img"
             initial={{ scale: 1 }}
