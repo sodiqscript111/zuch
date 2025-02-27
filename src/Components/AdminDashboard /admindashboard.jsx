@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('products');
   const navigate = useNavigate();
 
-  const IMGBB_API_KEY = VITE_IMAGE_KEY; // Replace with your ImgBB API key
+  const IMGBB_API_KEY = '2386a4f1aefbdd7f77313a69597fa947'; // Replace with your ImgBB API key
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
