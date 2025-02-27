@@ -4,32 +4,32 @@
 /* Container */
 .product-detail-container {
   display: flex;
-  flex-direction: column; /* Stack vertically for centering */
-  align-items: center; /* Center everything horizontally */
-  max-width: 1480px; /* Match Dapper's cap */
-  margin: 4rem auto; /* Generous vertical spacing */
+  flex-direction: column;
+  align-items: center;
+  max-width: 1480px;
+  margin: 4rem auto;
   padding: 0 1rem;
-  gap: 2.5rem; /* Elegant spacing */
-  background: #ffffff; /* Pure white background */
+  gap: 2.5rem;
+  background: #ffffff;
 }
 
 /* Image Slider */
 .product-detail-image {
   width: 100%;
-  max-width: 600px; /* Limit width for balance */
-  height: auto; /* Flexible height */
+  max-width: 600px;
+  height: auto;
 }
 
 .product-image-slider {
   width: 100%;
-  height: 500px; /* Fixed height for consistency, larger for prominence */
+  height: 500px;
 }
 
 .swiper-image {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Preserve image proportions */
-  border-radius: 12px; /* Match Dapper's gentle corners */
+  object-fit: contain;
+  border-radius: 12px;
 }
 
 /* No Image Placeholder */
@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f0f0; /* Slightly softer gray */
+  background: #f0f0f0;
   color: #666;
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
@@ -49,7 +49,7 @@
 /* Swiper Navigation */
 .swiper-button-next,
 .swiper-button-prev {
-  color: #000000; /* Black to match theme */
+  color: #000000;
   width: 40px;
   height: 40px;
   background: rgba(255, 255, 255, 0.9);
@@ -67,30 +67,30 @@
 }
 
 .swiper-pagination-bullet-active {
-  background: #000000; /* Black for theme */
+  background: #000000;
 }
 
 /* Info Section */
 .product-detail-info {
   width: 100%;
-  max-width: 600px; /* Match image width for balance */
+  max-width: 600px;
   padding: 1rem 0;
-  text-align: center; /* Center all text */
+  text-align: center;
 }
 
 .product-detail-info h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem; /* Match Dapper's bold heading */
-  font-weight: 600; /* Sophisticated weight */
-  color: #000000; /* Black for theme */
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #000000;
   margin-bottom: 1.5rem;
-  letter-spacing: 0.02em; /* Slight expansion */
+  letter-spacing: 0.02em;
 }
 
 .product-detail-info p {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem; /* Slightly larger for readability */
-  color: #000000; /* Black for theme */
+  font-size: 1.2rem;
+  color: #000000;
   margin-bottom: 1.5rem;
 }
 
@@ -98,14 +98,14 @@
 .size-selection label {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
-  color: #000000; /* Black for theme */
+  color: #000000;
   margin-bottom: 0.75rem;
   display: block;
 }
 
 .size-toggle {
   display: flex;
-  justify-content: center; /* Center toggle buttons */
+  justify-content: center;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
@@ -114,7 +114,7 @@
   padding: 0.75rem 1.5rem;
   font-family: 'Playfair Display', serif;
   font-size: 1.1rem;
-  border: 1px solid #000000; /* Black border */
+  border: 1px solid #000000;
   background: #ffffff;
   cursor: pointer;
   border-radius: 6px;
@@ -136,14 +136,14 @@
 .custom-sizes label {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
-  color: #000000; /* Black for theme */
+  color: #000000;
   margin-bottom: 0.75rem;
   display: block;
 }
 
 .size-options {
   display: flex;
-  justify-content: center; /* Center size buttons */
+  justify-content: center;
   gap: 0.75rem;
   flex-wrap: wrap;
 }
@@ -152,7 +152,7 @@
   padding: 0.75rem 1.5rem;
   font-family: 'Playfair Display', serif;
   font-size: 1.1rem;
-  border: 1px solid #000000; /* Black border */
+  border: 1px solid #000000;
   background: #ffffff;
   cursor: pointer;
   border-radius: 6px;
@@ -174,17 +174,17 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1rem;
-  justify-content: center; /* Center input fields */
+  justify-content: center;
 }
 
 .custom-size-inputs input {
   padding: 0.75rem;
   font-family: 'Playfair Display', serif;
   font-size: 1rem;
-  border: 1px solid #000000; /* Black border */
+  border: 1px solid #000000;
   border-radius: 6px;
   width: 100%;
-  text-align: center; /* Center input text */
+  text-align: center;
 }
 
 /* Add to Cart Button */
@@ -194,7 +194,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
   font-weight: 600;
-  background-color: #000000; /* Black to match theme */
+  background-color: #000000;
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -203,8 +203,61 @@
 }
 
 .add-to-cart-button:hover {
-  background-color: #333333; /* Slightly lighter black */
-  transform: scale(1.03); /* Subtle lift */
+  background-color: #333333;
+  transform: scale(1.03);
+}
+
+/* Image Modal */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.image-modal {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.enlarged-image {
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* Limit height to fit screen */
+  object-fit: contain;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  background: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.close-modal-btn:hover {
+  background-color: #f0f0f0;
 }
 
 /* Responsive */
@@ -215,7 +268,7 @@
   }
 
   .product-image-slider {
-    height: 400px; /* Adjusted for mobile */
+    height: 400px;
   }
 
   .product-detail-info h1 {
@@ -246,11 +299,11 @@
 
 @media (max-width: 480px) {
   .product-image-slider {
-    height: 300px; /* Further adjusted */
+    height: 300px;
   }
 
   .custom-size-inputs {
-    grid-template-columns: 1fr; /* Stack inputs */
+    grid-template-columns: 1fr;
   }
 
   .product-detail-info h1 {

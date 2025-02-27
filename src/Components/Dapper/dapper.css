@@ -156,7 +156,7 @@
   }
 
   .product-grid-dapper {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 columns on mobile */
     gap: 1.5rem; /* Slightly reduced for mobile */
   }
 
@@ -189,7 +189,7 @@
 
 @media (max-width: 480px) {
   .product-grid-dapper {
-    grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns */
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 columns on mobile */
     gap: 1rem; /* Further reduced for smaller screens */
   }
 
@@ -208,7 +208,7 @@
 
 @media (max-width: 360px) {
   .product-grid-dapper {
-    grid-template-columns: 1fr; /* Fallback to 1 column on very small screens */
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 columns on mobile */
     gap: 1rem;
   }
 }

@@ -7,14 +7,14 @@ const Poise = () => {
     <div 
       className="poise-collection-container"
       style={{ 
-        backgroundImage: 'url(https://i.ibb.co/Z17k3LhS/POISE-BLUE-GREY-100k.jpg)', 
+        backgroundImage: 'url(https://i.ibb.co/bR26RNfk/POISE-WHITE-100k.webp)', 
         backgroundSize: 'cover', 
         width: '100%', 
-        height: '70vh',
+        height: '85vh',
         position: 'relative',
         overflowY: 'hidden',
         color: '#fff', 
-        backgroundPosition: 'left',
+        backgroundPosition: '0% 20%',
       }}
     >
       <div className="poise-content">

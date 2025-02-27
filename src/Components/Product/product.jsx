@@ -25,6 +25,7 @@ const ProductDetail = () => {
   });
   const [selectedStandardSize, setSelectedStandardSize] = useState(null);
   const [isCustomSize, setIsCustomSize] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null); // State for enlarged image
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -50,14 +51,13 @@ const ProductDetail = () => {
         const data = productSnap.data();
         console.log("🛍️ Product Data:", data);
 
-        // Ensure imageUrl is always an array
         let images = [];
         if (Array.isArray(data.imageUrl)) {
           images = data.imageUrl;
         } else if (typeof data.imageUrl === 'string' && data.imageUrl.includes(',')) {
-          images = data.imageUrl.split(',').map(url => url.trim()); // Convert comma-separated string to array
+          images = data.imageUrl.split(',').map(url => url.trim());
         } else if (typeof data.imageUrl === 'string') {
-          images = [data.imageUrl]; // Wrap single string in an array
+          images = [data.imageUrl];
         }
 
         console.log("📸 Processed Image URLs:", images);
@@ -67,7 +67,7 @@ const ProductDetail = () => {
           name: data.name || "Unknown",
           price: data.price || "N/A",
           description: data.description || "No description available",
-          imageUrls: images, // Use imageUrls to match cart expectation
+          imageUrls: images,
           standardSizes: data.standardSizes || ["S", "M", "L", "XL"],
         });
         setLoading(false);
@@ -81,9 +81,13 @@ const ProductDetail = () => {
     fetchProduct();
   }, [collectionName, id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (!product) return <div>Product not found</div>;
+  const handleImageClick = (url) => {
+    setSelectedImage(url); // Set the clicked image to enlarge
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null); // Close the modal
+  };
 
   const handleAddToCart = () => {
     if (!isCustomSize && !selectedStandardSize) {
@@ -100,7 +104,7 @@ const ProductDetail = () => {
       id: product.id,
       name: product.name,
       price: product.price,
-      imageUrls: product.imageUrls, // Pass array of image URLs
+      imageUrls: product.imageUrls,
       quantity: 1,
       options: {
         size: isCustomSize ? customSize : selectedStandardSize,
@@ -116,6 +120,10 @@ const ProductDetail = () => {
       [name]: value,
     }));
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!product) return <div>Product not found</div>;
 
   return (
     <>
@@ -133,7 +141,13 @@ const ProductDetail = () => {
             {product.imageUrls.length > 0 ? (
               product.imageUrls.map((url, index) => (
                 <SwiperSlide key={index}>
-                  <img src={url} alt={`${product.name} ${index + 1}`} className="swiper-image" />
+                  <img
+                    src={url}
+                    alt={`${product.name} ${index + 1}`}
+                    className="swiper-image"
+                    onClick={() => handleImageClick(url)} // Make image clickable
+                    style={{ cursor: 'pointer' }} // Indicate clickability
+                  />
                 </SwiperSlide>
               ))
             ) : (
@@ -226,6 +240,16 @@ const ProductDetail = () => {
           </button>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className="image-modal-overlay" onClick={closeModal}>
+          <div className="image-modal" onClick={(e) => e.stopPropagation()}>
+            <img src={selectedImage} alt="Enlarged product view" className="enlarged-image" />
+            <button className="close-modal-btn" onClick={closeModal}>×</button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

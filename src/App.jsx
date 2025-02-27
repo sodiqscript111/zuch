@@ -1,38 +1,39 @@
 import {
   createBrowserRouter,
   RouterProvider,
-  Routes
 } from "react-router-dom";
-import "./App.css"
-import Home from "./Components/Home/home"
+import "./App.css";
+import Home from "./Components/Home/home";
 import Allclothes from "./Components/Shopall/shop";
 import ProductDetail from "./Components/Product/product";
 import Cart from "./Components/Cart/cart";
 import Shopall from "./Components/Shopall/shop";
-
+import AdminDashboard from "./Components/AdminDashboard /admindashboard";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>,
+    element: <Home />,
   },
   {
     path: "/clothes",
-    element: <Allclothes/>,
-  }
-  ,
+    element: <Allclothes />,
+  },
   {
     path: "/product/:collectionName/:id",
     element: <ProductDetail />,
-  }
-  ,
+  },
   {
     path: "/cart",
     element: <Cart />,
-  } ,
+  },
   {
     path: "/shopall",
     element: <Shopall />,
-  }
+  },
+  {
+    path: "/admin9222283373", // Hidden admin route
+    element: <AdminDashboard />,
+  },
 ]);
 
 function App({ user }) {
@@ -41,4 +42,4 @@ function App({ user }) {
   );
 }
 
-export default App
+export default App;

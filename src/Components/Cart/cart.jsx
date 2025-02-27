@@ -1,7 +1,10 @@
+// components/Cart/cart.jsx
 import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../../context/cart";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
+import { db } from "../../utils/firebase";
+import { collection, addDoc } from "firebase/firestore";
 import "react-toastify/dist/ReactToastify.css";
 import "./cart.css";
 
@@ -26,7 +29,7 @@ const Cart = () => {
   );
   const reference = new Date().getTime().toString();
 
-  console.log("Amount:", amount);
+  console.log("Amount (kobo):", amount);
   console.log("Cart Items:", cartItems);
   console.log("User Info:", userInfo);
 
@@ -90,10 +93,45 @@ const Cart = () => {
     }
   };
 
-  const onSuccess = (reference) => {
-    console.log("Payment Successful! Reference:", reference);
-    toast.success(`Payment completed! Reference: ${reference.reference}`);
-    sendNotification(reference.reference);
+  const saveOrderToFirestore = async (reference) => {
+    try {
+      // Sanitize cartItems to remove undefined values
+      const sanitizedCartItems = cartItems.map(item => ({
+        id: item.id || "unknown",
+        name: item.name || "Unnamed Item",
+        price: item.price || 0,
+        quantity: item.quantity || 1,
+        imageUrl: Array.isArray(item.imageUrl) ? item.imageUrl : (item.imageUrl ? [item.imageUrl] : []),
+        options: item.options || { size: "N/A" },
+      }));
+
+      // Ensure all required fields are present and valid
+      const orderData = {
+        reference: reference || "unknown",
+        email: userInfo.email || "",
+        phone: userInfo.phone || "",
+        address: userInfo.address || "",
+        cartItems: sanitizedCartItems.length > 0 ? sanitizedCartItems : [], // Ensure non-empty
+        timestamp: new Date().toISOString(),
+        status: "Pending",
+      };
+
+      console.log("Order Data to Save:", orderData); // Debug log
+
+      const ordersRef = collection(db, "orders");
+      await addDoc(ordersRef, orderData);
+      console.log("Order saved to Firestore with reference:", reference);
+    } catch (err) {
+      console.error("Error saving order to Firestore:", err);
+      toast.error("Failed to save order: " + err.message);
+    }
+  };
+
+  const onSuccess = (response) => {
+    console.log("Payment Successful! Reference:", response);
+    toast.success(`Payment completed! Reference: ${response.reference}`);
+    sendNotification(response.reference);
+    saveOrderToFirestore(response.reference);
   };
 
   const onClose = () => {
@@ -105,7 +143,7 @@ const Cart = () => {
     if (!isPaystackLoaded || !window.PaystackPop) {
       toast.error("Paystack is not loaded yet. Please wait or refresh the page.");
       setTimeout(() => {
-        if (window.PaystackPop) handlePaystackPayment(); // Retry after 1s
+        if (window.PaystackPop) handlePaystackPayment();
       }, 1000);
       return;
     }
@@ -155,6 +193,11 @@ const Cart = () => {
     exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
   };
 
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+  };
+
   return (
     <div className="cart-container">
       <motion.h2
@@ -187,19 +230,34 @@ const Cart = () => {
               variants={itemVariants}
               layout
             >
-              {item.imageUrl && (
-                <motion.img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="cart-item-image"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
+              <div className="cart-item-images">
+                {Array.isArray(item.imageUrl) && item.imageUrl.length > 0 ? (
+                  item.imageUrl.map((url, index) => (
+                    <motion.img
+                      key={index}
+                      src={url}
+                      alt={`${item.name} - Image ${index + 1}`}
+                      className="cart-item-image"
+                      variants={imageVariants}
+                      initial="hidden"
+                      animate="visible"
+                      transition={{ delay: index * 0.1 }}
+                    />
+                  ))
+                ) : item.imageUrl ? (
+                  <motion.img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="cart-item-image"
+                    variants={imageVariants}
+                  />
+                ) : (
+                  <div className="no-image-placeholder">No Image Available</div>
+                )}
+              </div>
               <div className="cart-item-details">
                 <strong className="cart-item-name">{item.name}</strong>
-                <p className="cart-item-price">${item.price}</p>
+                <p className="cart-item-price">₦{item.price}</p>
                 <p className="cart-item-quantity">Quantity: {item.quantity}</p>
                 <p className="cart-item-options">
                   Options:{" "}
@@ -261,9 +319,9 @@ const Cart = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        Total Price: $
+        Total Price: ₦
         {cartItems
-          .reduce((total, item) => total + item.price * item.quantity, 0)
+          .reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0)
           .toFixed(2)}
       </motion.h3>
 
