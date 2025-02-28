@@ -47,6 +47,10 @@ const Slider = () => {
       image: "https://i.ibb.co/XxspVB9f/AMOR-COLLECTION-COVER-1.jpg",
       name: "Amor",
     },
+    {
+      image: "https://i.ibb.co/zWQQj6Fm/IMG-3553.jpg",
+      name: "Zuch Classic",
+    }
   ];
 
   return (
