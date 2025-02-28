@@ -1,3 +1,4 @@
+// src/components/Product/product.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../../utils/firebase';
@@ -25,7 +26,7 @@ const ProductDetail = () => {
   });
   const [selectedStandardSize, setSelectedStandardSize] = useState(null);
   const [isCustomSize, setIsCustomSize] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null); // State for enlarged image
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -62,10 +63,17 @@ const ProductDetail = () => {
 
         console.log("📸 Processed Image URLs:", images);
 
+        const priceRaw = data.price;
+        const price = typeof priceRaw === "number" && !isNaN(priceRaw)
+          ? priceRaw
+          : parseFloat(priceRaw) && !isNaN(parseFloat(priceRaw))
+          ? parseFloat(priceRaw)
+          : 0;
+
         setProduct({
           id: productSnap.id,
           name: data.name || "Unknown",
-          price: data.price || "N/A",
+          price,
           description: data.description || "No description available",
           imageUrls: images,
           standardSizes: data.standardSizes || ["S", "M", "L", "XL"],
@@ -82,11 +90,11 @@ const ProductDetail = () => {
   }, [collectionName, id]);
 
   const handleImageClick = (url) => {
-    setSelectedImage(url); // Set the clicked image to enlarge
+    setSelectedImage(url);
   };
 
   const closeModal = () => {
-    setSelectedImage(null); // Close the modal
+    setSelectedImage(null);
   };
 
   const handleAddToCart = () => {
@@ -145,8 +153,8 @@ const ProductDetail = () => {
                     src={url}
                     alt={`${product.name} ${index + 1}`}
                     className="swiper-image"
-                    onClick={() => handleImageClick(url)} // Make image clickable
-                    style={{ cursor: 'pointer' }} // Indicate clickability
+                    onClick={() => handleImageClick(url)}
+                    style={{ cursor: 'pointer' }}
                   />
                 </SwiperSlide>
               ))
@@ -161,83 +169,92 @@ const ProductDetail = () => {
           <h1>{product.name}</h1>
           <p>{product.description}</p>
           <p>
-            Price: <strong>₦{typeof product.price === "number" ? product.price.toFixed(2) : product.price}</strong>
+            Price: <strong>₦{product.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
           </p>
 
-          <div className="product-options">
-            <div className="size-selection">
-              <label>Do you want to customize your size?</label>
-              <div className="size-toggle">
-                <button
-                  className={`toggle-button ${!isCustomSize ? 'active' : ''}`}
-                  onClick={() => setIsCustomSize(false)}
-                >
-                  Standard Sizes
-                </button>
-                <button
-                  className={`toggle-button ${isCustomSize ? 'active' : ''}`}
-                  onClick={() => setIsCustomSize(true)}
-                >
-                  Custom Size
-                </button>
-              </div>
+          {collectionName === "zuchclassics" ? (
+            <div className="appointment-section">
+              <p>This is a ZUCH Classics item. Book an appointment to customize your order.</p>
+              <a href="https://instagram.com/Zuch_Collection" target="_blank" rel="noopener noreferrer">
+                <button className="book-appointment-button">Book Appointment</button>
+              </a>
             </div>
-
-            {!isCustomSize ? (
-              <div className="standard-sizes">
-                <label>Standard Sizes:</label>
-                <div className="size-options">
-                  {product.standardSizes.map((size, index) => (
-                    <button
-                      key={index}
-                      className={`size-button ${selectedStandardSize === size ? 'selected' : ''}`}
-                      onClick={() => setSelectedStandardSize(size)}
-                    >
-                      {size}
-                    </button>
-                  ))}
+          ) : (
+            <div className="product-options">
+              <div className="size-selection">
+                <label>Do you want to customize your size?</label>
+                <div className="size-toggle">
+                  <button
+                    className={`toggle-button ${!isCustomSize ? 'active' : ''}`}
+                    onClick={() => setIsCustomSize(false)}
+                  >
+                    Standard Sizes
+                  </button>
+                  <button
+                    className={`toggle-button ${isCustomSize ? 'active' : ''}`}
+                    onClick={() => setIsCustomSize(true)}
+                  >
+                    Custom Size
+                  </button>
                 </div>
               </div>
-            ) : (
-              <div className="custom-sizes">
-                <label>Custom Measurements (in cm):</label>
-                <div className="custom-size-inputs">
-                  <input
-                    type="number"
-                    name="chest"
-                    placeholder="Chest"
-                    value={customSize.chest}
-                    onChange={handleCustomSizeChange}
-                  />
-                  <input
-                    type="number"
-                    name="waist"
-                    placeholder="Waist"
-                    value={customSize.waist}
-                    onChange={handleCustomSizeChange}
-                  />
-                  <input
-                    type="number"
-                    name="hips"
-                    placeholder="Hips"
-                    value={customSize.hips}
-                    onChange={handleCustomSizeChange}
-                  />
-                  <input
-                    type="number"
-                    name="length"
-                    placeholder="Length"
-                    value={customSize.length}
-                    onChange={handleCustomSizeChange}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
 
-          <button className="add-to-cart-button" onClick={handleAddToCart}>
-            Add to Cart
-          </button>
+              {!isCustomSize ? (
+                <div className="standard-sizes">
+                  <label>Standard Sizes:</label>
+                  <div className="size-options">
+                    {product.standardSizes.map((size, index) => (
+                      <button
+                        key={index}
+                        className={`size-button ${selectedStandardSize === size ? 'selected' : ''}`}
+                        onClick={() => setSelectedStandardSize(size)}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="custom-sizes">
+                  <label>Custom Measurements (in cm):</label>
+                  <div className="custom-size-inputs">
+                    <input
+                      type="number"
+                      name="chest"
+                      placeholder="Chest"
+                      value={customSize.chest}
+                      onChange={handleCustomSizeChange}
+                    />
+                    <input
+                      type="number"
+                      name="waist"
+                      placeholder="Waist"
+                      value={customSize.waist}
+                      onChange={handleCustomSizeChange}
+                    />
+                    <input
+                      type="number"
+                      name="hips"
+                      placeholder="Hips"
+                      value={customSize.hips}
+                      onChange={handleCustomSizeChange}
+                    />
+                    <input
+                      type="number"
+                      name="length"
+                      placeholder="Length"
+                      value={customSize.length}
+                      onChange={handleCustomSizeChange}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <button className="add-to-cart-button" onClick={handleAddToCart}>
+                Add to Cart
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

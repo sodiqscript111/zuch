@@ -12,7 +12,37 @@
   gap: 2.5rem;
   background: #ffffff;
 }
+/* src/components/Product/product.css */
 
+/* ... (existing styles remain unchanged) */
+
+.appointment-section {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.appointment-section p {
+  font-size: 1rem;
+  color: #8b949e;
+  margin-bottom: 1rem;
+}
+
+.book-appointment-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #58a6ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.book-appointment-button:hover {
+  background: #1a73e8;
+  transform: translateY(-2px);
+}
 /* Image Slider */
 .product-detail-image {
   width: 100%;
