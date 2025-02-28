@@ -134,7 +134,7 @@
     display: block; /* Show hamburger on mobile */
   }
   .navbar-container {
-    padding: 0 15px;
+    padding: 0 10px;
     padding-right: 60px;
   }
   .logo-img {

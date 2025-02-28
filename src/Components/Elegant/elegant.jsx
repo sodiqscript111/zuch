@@ -1,3 +1,4 @@
+// src/components/Elegant.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../utils/firebase";
@@ -41,12 +42,12 @@ const Elegant = () => {
             ? priceRaw
             : parseFloat(priceRaw) && !isNaN(parseFloat(priceRaw))
             ? parseFloat(priceRaw)
-            : "N/A";
+            : 0; // Default to 0 if invalid
 
           fetchedProducts.push({
             id: doc.id,
             name: data.name || "Unknown",
-            price,
+            price, // Store as number
             imageUrl: image,
           });
         });
@@ -98,7 +99,7 @@ const Elegant = () => {
                     <div className="product-cost-elegant">
                       <data>
                         {typeof item.price === "number" && !isNaN(item.price)
-                          ? `₦${item.price.toFixed(2)}`
+                          ? `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                           : "Price Unavailable"}
                       </data>
                     </div>

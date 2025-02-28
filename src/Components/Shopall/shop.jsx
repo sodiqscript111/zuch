@@ -1,3 +1,4 @@
+// src/components/Shopall/shop.jsx (assuming this is the correct path)
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
@@ -93,7 +94,7 @@ const AllProducts = () => {
               />
               <div className="product-info">
                 <h2 className="product-name">{item.name}</h2>
-                <p className="product-price">₦{item.price.toFixed(2)}</p>
+                <p className="product-price">₦{item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
             </Link>
           ))

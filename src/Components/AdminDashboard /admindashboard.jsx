@@ -1,6 +1,6 @@
 // components/AdminDashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Added Link for Explore Collection
 import { auth, db } from '../../utils/firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   const [error, setError] = useState(null);
   const [newProduct, setNewProduct] = useState({
     name: '',
-    price: '',
+    price: '', // String to allow comma input
     description: '',
     imageFiles: [],
     imagePreviews: [],
@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('products');
   const navigate = useNavigate();
 
-  const IMGBB_API_KEY = '2386a4f1aefbdd7f77313a69597fa947'; // Replace with your ImgBB API key
+  const IMGBB_API_KEY = '2386a4f1aefbdd7f77313a69597fa947';
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -80,7 +80,7 @@ const AdminDashboard = () => {
             id: doc.id,
             collectionId: collectionDoc.id,
             name: data.name || "Unknown",
-            price: data.price || "N/A",
+            price: data.price || 0, // Ensure price is a number
             description: data.description || "",
             imageUrl: Array.isArray(data.imageUrl) ? data.imageUrl : [data.imageUrl] || [],
             standardSizes: data.standardSizes || ['S', 'M', 'L', 'XL'],
@@ -163,10 +163,13 @@ const AdminDashboard = () => {
         ? await handleImageUpload(newProduct.imageFiles) 
         : [];
       
+      // Parse price, removing commas before saving
+      const price = parseFloat(newProduct.price.replace(/,/g, '')) || 0;
+
       const productsRef = collection(db, "collections", newProduct.collectionId, "products");
       await addDoc(productsRef, {
         name: newProduct.name,
-        price: parseFloat(newProduct.price) || 0,
+        price, // Save as number
         description: newProduct.description,
         imageUrl: imageUrls,
         standardSizes: newProduct.standardSizes,
@@ -190,9 +193,12 @@ const AdminDashboard = () => {
         ? await handleImageUpload(editProduct.imageFiles) 
         : editProduct.imageUrl;
 
+      // Parse price, removing commas before saving
+      const price = parseFloat(editProduct.price.replace(/,/g, '')) || 0;
+
       await updateDoc(productRef, {
         name: editProduct.name,
-        price: parseFloat(editProduct.price) || 0,
+        price, // Save as number
         description: editProduct.description,
         imageUrl: imageUrls,
         standardSizes: editProduct.standardSizes,
@@ -244,6 +250,15 @@ const AdminDashboard = () => {
     }
   };
 
+  const handlePriceChange = (e, isEdit = false) => {
+    const value = e.target.value.replace(/[^0-9,]/g, ''); // Allow numbers and commas
+    if (isEdit) {
+      setEditProduct(prev => ({ ...prev, price: value }));
+    } else {
+      setNewProduct(prev => ({ ...prev, price: value }));
+    }
+  };
+
   const downloadOrdersAsCSV = () => {
     const headers = [
       "Order ID",
@@ -268,7 +283,7 @@ const AdminDashboard = () => {
         new Date(order.timestamp).toLocaleString(),
         order.status,
         item.name,
-        `₦${item.price}`,
+        `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
         item.quantity,
         item.options?.size || 'N/A',
       ])
@@ -354,6 +369,11 @@ const AdminDashboard = () => {
           <>
             {activeTab === 'products' && (
               <>
+                <div className="section-header">
+                  <Link to="/shopall">
+                    <button className="explore-button">Explore Collection</button>
+                  </Link>
+                </div>
                 {/* Add/Edit Product Form */}
                 <section className="form-section">
                   <h2>{editProduct ? 'Edit Product' : 'Add New Product'}</h2>
@@ -369,12 +389,10 @@ const AdminDashboard = () => {
                       className="form-input"
                     />
                     <input
-                      type="number"
+                      type="text" // Changed to text to allow commas
                       value={editProduct ? editProduct.price : newProduct.price}
-                      onChange={(e) => editProduct 
-                        ? setEditProduct({ ...editProduct, price: e.target.value }) 
-                        : setNewProduct({ ...newProduct, price: e.target.value })}
-                      placeholder="Price (₦)"
+                      onChange={(e) => handlePriceChange(e, !!editProduct)}
+                      placeholder="Price (₦ e.g., 5,000)"
                       required
                       className="form-input"
                     />
@@ -445,11 +463,21 @@ const AdminDashboard = () => {
                         </div>
                         <div className="product-details">
                           <h3>{product.name}</h3>
-                          <p>Price: ₦{product.price}</p>
+                          <p>Price: ₦{product.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                           <p>Collection: {product.collectionId}</p>
                         </div>
                         <div className="product-actions">
-                          <button onClick={() => setEditProduct({ ...product, imageFiles: [], imagePreviews: [] })} className="action-button edit">Edit</button>
+                          <button 
+                            onClick={() => setEditProduct({ 
+                              ...product, 
+                              imageFiles: [], 
+                              imagePreviews: [], 
+                              price: product.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) 
+                            })} 
+                            className="action-button edit"
+                          >
+                            Edit
+                          </button>
                           <button onClick={() => handleDeleteProduct(product.collectionId, product.id)} className="action-button delete">Delete</button>
                         </div>
                       </div>
@@ -483,7 +511,7 @@ const AdminDashboard = () => {
                             <img src={item.imageUrl[0]} alt={item.name} className="order-item-thumbnail" />
                             <div>
                               <p>{item.name}</p>
-                              <p>Price: ₦{item.price}</p>
+                              <p>Price: ₦{item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                               <p>Quantity: {item.quantity}</p>
                               <p>Size: {typeof item.options?.size === 'object' ? JSON.stringify(item.options.size) : item.options?.size || 'N/A'}</p>
                             </div>

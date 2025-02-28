@@ -1,3 +1,4 @@
+// src/components/PoiseCollection.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../utils/firebase";
@@ -30,6 +31,7 @@ const PoiseCollection = () => {
           const data = doc.data();
           console.log("🛍️ Product Data:", data);
 
+          const price = typeof data.price === "number" ? data.price : parseFloat(data.price) || 0;
           const image = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
             ? data.imageUrls[0]
             : Array.isArray(data.imageUrl) && data.imageUrl.length > 0
@@ -39,7 +41,7 @@ const PoiseCollection = () => {
           fetchedProducts.push({
             id: doc.id,
             name: data.name || "Unknown",
-            price: data.price || "N/A",
+            price, // Store as number
             imageUrl: image,
           });
         });
@@ -90,7 +92,9 @@ const PoiseCollection = () => {
                     </div>
                     <div className="poise-product-cost">
                       <data>
-                        {item.price !== "N/A" ? `₦${item.price}` : "Price Unavailable"}
+                        {item.price !== "N/A" && item.price >= 0
+                          ? `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                          : "Price Unavailable"}
                       </data>
                     </div>
                   </figcaption>

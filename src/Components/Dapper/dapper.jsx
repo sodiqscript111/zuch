@@ -1,3 +1,4 @@
+// src/components/Dapper.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../utils/firebase";
@@ -30,14 +31,27 @@ const Dapper = () => {
         productsSnapshot.forEach((doc) => {
           const data = doc.data();
           console.log("🛍️ Product Data:", data);
+
+          const priceRaw = data.price;
+          const price = typeof priceRaw === "number" && !isNaN(priceRaw)
+            ? priceRaw
+            : parseFloat(priceRaw) && !isNaN(parseFloat(priceRaw))
+            ? parseFloat(priceRaw)
+            : 0; // Default to 0 if invalid
+
+          const image = Array.isArray(data.imageUrl) && data.imageUrl.length > 0
+            ? data.imageUrl[0]
+            : data.imageUrl || "";
+
           fetchedProducts.push({
             id: doc.id,
             name: data.name || "Unknown",
-            price: data.price || "N/A",
-            imageUrl: data.imageUrl?.[0] || "",
+            price, // Store as number
+            imageUrl: image,
           });
         });
 
+        console.log("✅ Processed Products:", fetchedProducts);
         setProducts(fetchedProducts);
         setLoading(false);
       } catch (error) {
@@ -62,9 +76,9 @@ const Dapper = () => {
           {products.length > 0 ? (
             products.map((item) => (
               <Link
-                to={`/product/lumincolection/${item.id}`} // Updated link with collectionName
+                to={`/product/lumincolection/${item.id}`}
                 key={item.id}
-                className="poise-product-card-container" // Note: Should this be "product-card-container-dapper"?
+                className="poise-product-card-container" // Consider updating to "product-card-container-dapper" for consistency
               >
                 <figure className="product-card-dapper">
                   {item.imageUrl ? (
@@ -83,7 +97,9 @@ const Dapper = () => {
                     </div>
                     <div className="product-cost-dapper">
                       <data value={item.price}>
-                        {item.price !== "N/A" ? `₦${item.price}` : "Price Unavailable"}
+                        {typeof item.price === "number" && !isNaN(item.price)
+                          ? `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                          : "Price Unavailable"}
                       </data>
                     </div>
                   </figcaption>
