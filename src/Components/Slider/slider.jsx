@@ -30,6 +30,23 @@ const Slider = () => {
       image: "https://i.ibb.co/GvL5BBT8/BT-02-80-000.jpg",
       name: "Beach Time Collection",
     },
+    ,
+    {
+      image: "https://i.ibb.co/2TdktXF/IMG-3663.jpg",
+      name: "Street Vouge (Urban)",
+    },
+    {
+      image: "https://i.ibb.co/MDQLDvjt/IMG-3532.jpg",
+      name: "Street Vouge (Smart & Classy)",
+    },
+    {
+      image: "https://i.ibb.co/DfPVK57W/IMG-3523.jpg",
+      name: "Street Vouge (Casual)",
+    },
+    {
+      image: "https://i.ibb.co/XxspVB9f/AMOR-COLLECTION-COVER-1.jpg",
+      name: "Amor",
+    },
   ];
 
   return (
