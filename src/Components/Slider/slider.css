@@ -134,6 +134,7 @@
   .collection-overlay {
       padding: 1rem 1.5rem;
       bottom: 0rem;
+      background: none;
   }
 
   .collection-overlay h3 {
