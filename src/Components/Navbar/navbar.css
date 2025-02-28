@@ -133,6 +133,15 @@
   .mobile-toggle {
     display: block; /* Show hamburger on mobile */
   }
+  .mobile-link {
+    font-size: 1.3rem;
+  }
+  .mobile-menu{
+    justify-content: left;
+  }
+}
+
+@media (min-width: 769px) {
   .navbar-container {
     padding: 0 10px;
     padding-right: 60px;

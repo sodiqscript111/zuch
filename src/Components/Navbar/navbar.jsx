@@ -1,3 +1,4 @@
+// src/components/Navbar/navbar.jsx
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
@@ -37,7 +38,7 @@ const Navbar = () => {
     { path: "/shopall", label: "Shop" },
     { path: "/about", label: "About Us" },
     { path: "/contact", label: "Contact" },
-  
+    { path: "https://instagram.com/Zuch_Collection", label: "Book Appointment", external: true }, // Added external link
   ];
 
   return (
@@ -62,12 +63,23 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <NavLink
-                to={item.path}
-                className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-              >
-                {item.label}
-              </NavLink>
+              {item.external ? (
+                <a
+                  href={item.path}
+                  className="nav-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                >
+                  {item.label}
+                </NavLink>
+              )}
             </motion.div>
           ))}
         </div>
@@ -112,13 +124,25 @@ const Navbar = () => {
                   custom={index}
                   variants={linkVariants}
                 >
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) => `mobile-link ${isActive ? "active" : ""}`}
-                    onClick={handleMenuToggle}
-                  >
-                    {item.label}
-                  </NavLink>
+                  {item.external ? (
+                    <a
+                      href={item.path}
+                      className="mobile-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleMenuToggle}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <NavLink
+                      to={item.path}
+                      className={({ isActive }) => `mobile-link ${isActive ? "active" : ""}`}
+                      onClick={handleMenuToggle}
+                    >
+                      {item.label}
+                    </NavLink>
+                  )}
                 </motion.div>
               ))}
             </motion.div>
