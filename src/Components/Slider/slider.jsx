@@ -1,3 +1,4 @@
+// src/components/Slider.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,6 +18,13 @@ const Slider = () => {
     const fetchCollections = async () => {
       try {
         console.log("Fetching collections from Firestore...");
+        const cachedData = localStorage.getItem("collectionsCache");
+        if (cachedData) {
+          setCollections(JSON.parse(cachedData));
+          setLoading(false);
+          return;
+        }
+
         const collectionsRef = collection(db, "collections");
         const collectionsSnapshot = await getDocs(collectionsRef);
 
@@ -30,19 +38,18 @@ const Slider = () => {
         const collectionsData = await Promise.all(
           collectionsSnapshot.docs.map(async (doc) => {
             const collectionId = doc.id;
-            // Fetch a representative image from the first product in the collection
             const productsRef = collection(db, "collections", collectionId, "products");
             const productsSnapshot = await getDocs(productsRef);
             const firstProduct = productsSnapshot.docs[0]?.data();
             const imageUrl =
               firstProduct?.imageUrl && Array.isArray(firstProduct.imageUrl)
                 ? firstProduct.imageUrl[0]
-                : firstProduct?.imageUrl || "https://via.placeholder.com/300";
+                : firstProduct?.imageUrl || "https://via.placeholder.com/150"; // Smaller placeholder
 
             console.log(`Collection: ${collectionId}, Image: ${imageUrl}, Products: ${productsSnapshot.size}`);
             return {
               id: collectionId,
-              name: `${collectionId.replace(/collection/i, '').replace(/^\w/, c => c.toUpperCase())} `, // Capitalize and format name
+              name: `${collectionId.replace(/collection/i, '').replace(/^\w/, c => c.toUpperCase())} Collection`,
               image: imageUrl,
             };
           })
@@ -50,6 +57,7 @@ const Slider = () => {
 
         console.log("Fetched collections:", collectionsData);
         setCollections(collectionsData);
+        localStorage.setItem("collectionsCache", JSON.stringify(collectionsData)); // Cache data
       } catch (error) {
         console.error("Error fetching collections:", error);
       } finally {
@@ -61,7 +69,7 @@ const Slider = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading collections...</div>;
+    return <div className="slider-loading">Loading collections...</div>;
   }
 
   return (
@@ -95,6 +103,7 @@ const Slider = () => {
                     src={collection.image}
                     alt={collection.name}
                     className="collection-image"
+                    loading="lazy" // Enable lazy loading
                   />
                   <div className="collection-text">
                     <h3>{collection.name}</h3>
