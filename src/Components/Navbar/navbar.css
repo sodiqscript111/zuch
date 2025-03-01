@@ -1,5 +1,5 @@
 /* src/components/Navbar/navbar.css */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .modern-navbar {
   position: fixed;
@@ -9,7 +9,7 @@
   background: #ffffff;
   padding: 15px 20px;
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .navbar-container {
@@ -20,51 +20,100 @@
   margin: 0 auto;
 }
 
+/* Left Section */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Space between logo and nav links */
+}
+
 .navbar-logo {
   display: flex;
   align-items: center;
 }
 
 .logo-img {
-  height: 50px;
+  height: 40px; /* Slightly smaller logo */
   width: auto;
   object-fit: contain;
 }
 
-/* Desktop Navigation */
-.desktop-nav {
+.nav-links {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  gap: 10px; /* Tight spacing between nav items */
 }
 
-.regular-nav-links {
-  display: flex;
-  gap: 40px;
+.nav-item {
+  position: relative;
+  padding: 0 10px; /* Padding for each item */
+}
+
+/* Dividing Line */
+.nav-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 20px;
+  background: #1a1919; /* Red accent line */
 }
 
 .nav-link {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.2rem;
+  font-size: 0.9rem; /* Smaller font */
   font-weight: 600;
   color: #333;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   transition: color 0.3s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
+  color: #464343;
+}
+
+/* Collections Dropdown */
+.collections-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  min-width: 200px;
+  z-index: 1001;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 15px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
   color: #e63946;
 }
 
-/* Desktop Search */
-.search-container {
-  position: relative;
+/* Right Section */
+.navbar-right {
   display: flex;
   align-items: center;
+  gap: 20px; /* Increased spacing */
+}
+
+.search-container {
+  position: relative;
 }
 
 .search-wrapper {
@@ -72,38 +121,33 @@
   align-items: center;
   background: #f5f5f5;
   border-radius: 20px;
-  padding: 5px 10px;
+  padding: 6px 10px;
 }
 
 .search-icon {
   color: #333;
-  font-size: 20px;
-  margin-right: 5px;
+  font-size: 18px;
+  margin-right: 6px;
 }
 
 .search-input {
   border: none;
   background: transparent;
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #333;
   outline: none;
-  width: 150px;
-  transition: width 0.3s ease;
-}
-
-.search-input:focus {
-  width: 200px;
+  width: 120px;
 }
 
 .search-results {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  width: 250px;
   max-height: 300px;
   overflow-y: auto;
   z-index: 1000;
@@ -113,7 +157,7 @@
 .search-result-item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 8px 10px;
   cursor: pointer;
   transition: background 0.2s ease;
 }
@@ -123,11 +167,11 @@
 }
 
 .search-result-image {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   border-radius: 4px;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .search-result-info {
@@ -137,45 +181,14 @@
 
 .search-result-info span:first-child {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #333;
 }
 
 .search-result-info span:last-child {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #666;
-}
-
-/* Book Appointment */
-.book-appointment-wrapper {
-  margin-left: auto;
-}
-
-.book-appointment-link {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #e63946;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: color 0.3s ease, background 0.3s ease;
-}
-
-.book-appointment-link:hover {
-  color: #ffffff;
-  background: rgba(230, 57, 70, 0.1);
-}
-
-/* Right Section */
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: relative;
 }
 
 .cart-action {
@@ -183,269 +196,154 @@
 }
 
 .cart-icon {
-  position: relative;
-  font-size: 28px;
-}
-
-/* Mobile Search */
-.mobile-search-wrapper {
-  display: none; /* Hidden by default, shown on mobile */
-  align-items: center;
-  background: #f5f5f5;
-  border-radius: 20px;
-  padding: 5px 8px;
-}
-
-.mobile-search-icon {
-  color: #333;
-  font-size: 18px;
-  margin-right: 5px;
-}
-
-.mobile-search-input {
-  border: none;
-  background: transparent;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  color: #333;
-  outline: none;
-  width: 80px;
-  transition: width 0.3s ease;
-}
-
-.mobile-search-input:focus {
-  width: 100px;
-}
-
-.mobile-search-results {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 200px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000;
-  margin-top: 5px;
-}
-
-.mobile-search-result-item {
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.mobile-search-result-item:hover {
-  background: #f5f5f5;
-}
-
-.mobile-search-result-image {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-right: 8px;
-}
-
-.mobile-search-result-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.mobile-search-result-info span:first-child {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.mobile-search-result-info span:last-child {
-  font-size: 0.75rem;
-  color: #666;
+  font-size: 24px;
 }
 
 .cart-count {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: -8px;
+  right: -8px;
   background: #e63946;
   color: #fff;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
 }
 
 .mobile-toggle {
-  color: #333;
-  font-size: 30px;
-  cursor: pointer;
   display: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
 }
 
 /* Mobile Menu */
 .mobile-menu {
   position: fixed;
-  top: 70px;
-  right: 0;
-  width: 100%;
-  height: calc(100vh - 70px);
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
+  padding: 20px;
   z-index: 999;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-link {
   font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: #333;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
+  padding: 10px 0;
   transition: color 0.3s ease;
 }
 
 .mobile-link:hover,
 .mobile-link.active {
-  color: #e63946;
+  color: #1b1a1a;
 }
 
-.book-appointment-link-mobile {
+.mobile-collections {
+  cursor: pointer;
+}
+
+.mobile-collections-dropdown {
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+}
+
+.mobile-dropdown-item {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #e63946;
+  font-size: 0.75rem;
+  color: #333;
   text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 0.5rem 0;
+  padding: 8px 0;
   transition: color 0.3s ease;
 }
 
-.book-appointment-link-mobile:hover {
-  color: #c62828;
+.mobile-dropdown-item:hover {
+  color: #1f1c1c;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .desktop-nav {
-    display: none;
-  }
-
-  .mobile-toggle {
-    display: block;
-    font-size: 24px; /* Slightly smaller for balance */
+  .modern-navbar {
+    padding: 10px 15px;
   }
 
   .navbar-container {
-    padding: 10px 15px; /* Reduced padding for mobile */
-    flex-wrap: nowrap; /* Prevent wrapping */
+    flex-direction: row;
+    justify-content: space-between;
+    height: 50px;
+  }
+
+  .navbar-left {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .nav-links {
+    display: none; /* Hidden on mobile, shown in menu */
   }
 
   .navbar-right {
-    gap: 10px; /* Tighter spacing */
-    align-items: center;
+    gap: 15px;
   }
 
-  .mobile-search-wrapper {
-    display: flex; /* Show search on mobile */
-    flex-grow: 1; /* Allow it to take available space */
-    max-width: 150px; /* Cap width to avoid overlap */
+  .mobile-toggle {
+    display: block !important;
   }
 
-  .mobile-search-input {
-    width: 100%; /* Full width within wrapper */
-    font-size: 0.8rem; /* Smaller text */
+  .search-wrapper {
+    padding: 5px 8px;
   }
 
-  .mobile-search-input:focus {
-    width: 0%; /* Maintain width on focus */
+  .search-icon {
+    font-size: 16px;
+    margin-right: 5px;
   }
 
-  .mobile-search-results {
-    width: 90vw; /* Full width minus padding */
-    right: 15px; /* Align with container padding */
-    max-height: 50vh; /* Limit height for scrolling */
-    margin-top: 8px; /* Slightly more space */
-  }
-
-  .mobile-search-result-item {
-    padding: 6px;
-  }
-
-  .mobile-search-result-image {
-    width: 30px;
-    height: 30px;
-    margin-right: 6px;
-  }
-
-  .mobile-search-result-info span:first-child {
+  .search-input {
+    width: 100px;
     font-size: 0.8rem;
   }
 
-  .mobile-search-result-info span:last-child {
-    font-size: 0.7rem;
+  .search-results {
+    width: 200px;
+    right: 0;
   }
 
   .cart-icon {
-    font-size: 24px; /* Smaller for mobile */
+    font-size: 20px;
   }
 
   .cart-count {
-    width: 18px;
-    height: 18px;
-    font-size: 10px;
-    top: -8px;
-    right: -8px;
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+    top: -6px;
+    right: -6px;
   }
 
   .logo-img {
-    height: 40px; /* Smaller logo on mobile */
+    height: 35px;
   }
 }
 
 @media (min-width: 769px) {
   .mobile-menu {
-    display: none;
-  }
-  .mobile-search-wrapper,
-  .mobile-search-results {
-    display: none;
-  }
-}
-
-/* Extra small screens */
-@media (max-width: 480px) {
-  .navbar-container {
-    padding: 8px 10px;
-  }
-
-  .mobile-toggle {
-    font-size: 20px;
-  }
-
-  .cart-icon {
-    font-size: 20px;
-  }
-
-  .mobile-search-wrapper {
-    max-width: 120px;
-  }
-
-  .logo-img {
-    height: 35px;
+    display: none !important;
   }
 }

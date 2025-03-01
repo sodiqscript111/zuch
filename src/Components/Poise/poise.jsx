@@ -6,9 +6,9 @@ import './poise.css';
 const Poise = () => {
   const images = [
     'https://i.ibb.co/bR26RNfk/POISE-WHITE-100k.webp',
-    'https://i.ibb.co/XxspVB9f/AMOR-COLLECTION-COVER-1.jpg',
-    'https://i.ibb.co/79gnzfr/Lumin-blue-80k-1.jpg',
-    'https://i.ibb.co/3mkZJJR5/IMG-1449.jpg',
+    'https://i.ibb.co/wDH2f6J/IMG-3663.jpg',
+    'https://i.ibb.co/DPPcQVsv/IMG-1461.jpg',
+    'https://i.ibb.co/TMgS4MQP/Lumin-blue-80k-1.jpg',
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);

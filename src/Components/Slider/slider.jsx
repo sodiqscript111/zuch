@@ -44,7 +44,7 @@ const Slider = () => {
             const imageUrl =
               firstProduct?.imageUrl && Array.isArray(firstProduct.imageUrl)
                 ? firstProduct.imageUrl[0]
-                : firstProduct?.imageUrl || "https://via.placeholder.com/150"; // Smaller placeholder
+                : firstProduct?.imageUrl || "https://via.placeholder.com/150";
 
             console.log(`Collection: ${collectionId}, Image: ${imageUrl}, Products: ${productsSnapshot.size}`);
             return {
@@ -57,7 +57,7 @@ const Slider = () => {
 
         console.log("Fetched collections:", collectionsData);
         setCollections(collectionsData);
-        localStorage.setItem("collectionsCache", JSON.stringify(collectionsData)); // Cache data
+        localStorage.setItem("collectionsCache", JSON.stringify(collectionsData));
       } catch (error) {
         console.error("Error fetching collections:", error);
       } finally {
@@ -103,7 +103,7 @@ const Slider = () => {
                     src={collection.image}
                     alt={collection.name}
                     className="collection-image"
-                    loading="lazy" // Enable lazy loading
+                    loading="lazy"
                   />
                   <div className="collection-text">
                     <h3>{collection.name}</h3>

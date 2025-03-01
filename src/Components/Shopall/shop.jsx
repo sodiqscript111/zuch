@@ -52,7 +52,7 @@ const AllProducts = () => {
           console.log("Fetched products:", productsList);
           setProducts(productsList);
         } else {
-          // Fetch all products (original behavior)
+          // Fetch all products (default behavior)
           const collectionsRef = collection(db, "collections");
           const collectionsSnapshot = await getDocs(collectionsRef);
           console.log("Collections snapshot size:", collectionsSnapshot.size);

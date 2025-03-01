@@ -17,25 +17,32 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+  const [collections, setCollections] = useState([]);
+  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
   const navigate = useNavigate();
 
-  // Fetch all products from Firestore on mount
+  // Fetch products and collections from Firestore
   useEffect(() => {
-    const fetchAllProducts = async () => {
+    const fetchData = async () => {
       try {
         const collectionsRef = collection(db, "collections");
         const collectionsSnapshot = await getDocs(collectionsRef);
-        const productsList = [];
+        const collectionsList = collectionsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          name: `${doc.id.replace(/collection/i, '').replace(/^\w/, c => c.toUpperCase())} Collection`,
+        }));
+        setCollections(collectionsList);
 
-        for (const collectionDoc of collectionsSnapshot.docs) {
-          const productsRef = collection(db, "collections", collectionDoc.id, "products");
+        const productsList = [];
+        for (const doc of collectionsSnapshot.docs) {
+          const productsRef = collection(db, "collections", doc.id, "products");
           const productsSnapshot = await getDocs(productsRef);
-          productsSnapshot.forEach((doc) => {
-            const data = doc.data();
+          productsSnapshot.forEach(productDoc => {
+            const data = productDoc.data();
             productsList.push({
-              id: doc.id,
-              collectionId: collectionDoc.id,
+              id: productDoc.id,
+              collectionId: doc.id,
               name: data.name || "Unknown",
               price: data.price || 0,
               imageUrl: Array.isArray(data.imageUrl) && data.imageUrl.length > 0
@@ -44,48 +51,43 @@ const Navbar = () => {
             });
           });
         }
-
         setAllProducts(productsList);
       } catch (error) {
-        console.error("Error fetching products for search:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchAllProducts();
+    fetchData();
   }, []);
 
-  // Handle search input change
+  // Handle search input
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-
     if (query.trim() === "") {
       setSearchResults([]);
-      return;
+    } else {
+      const filtered = allProducts.filter(product =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filtered);
     }
-
-    const filtered = allProducts.filter((product) =>
-      product.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setSearchResults(filtered);
   };
 
-  // Handle search result click
   const handleSearchResultClick = (collectionId, productId) => {
     setSearchQuery("");
     setSearchResults([]);
     navigate(`/product/${collectionId}/${productId}`);
-    setMenuOpen(false); // Close mobile menu if open
+    setMenuOpen(false);
   };
 
-  const handleMenuToggle = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const handleMenuToggle = () => setMenuOpen(prev => !prev);
+  const toggleCollections = () => setIsCollectionsOpen(prev => !prev);
 
   const menuVariants = {
-    hidden: { x: "100%", opacity: 0 },
+    hidden: { x: "-100%", opacity: 0 },
     visible: { x: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } },
-    exit: { x: "100%", opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } },
+    exit: { x: "-100%", opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } },
   };
 
   const linkVariants = {
@@ -97,6 +99,11 @@ const Navbar = () => {
     }),
   };
 
+  const dropdownVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  };
+
   const navItems = [
     { path: "/shopall", label: "Shop" },
     { path: "/about", label: "About Us" },
@@ -104,41 +111,79 @@ const Navbar = () => {
     { path: "https://instagram.com/Zuch_Collection", label: "Book Appointment", external: true },
   ];
 
-  const regularNavItems = navItems.filter(item => !item.external);
-  const bookAppointmentItem = navItems.find(item => item.external);
-
   return (
     <nav className="modern-navbar">
       <div className="navbar-container">
-        {/* Logo */}
-        <Link to="/" className="navbar-logo">
-          <motion.img
-            src="https://i.ibb.co/Fq362M1t/Whats-App-Image-2025-02-16-at-10-54-10-65e00f92.jpg"
-            alt="Logo"
-            className="logo-img"
-            initial={{ scale: 1 }}
-            whileHover={{ scale: 1.05 }}
-          />
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="desktop-nav">
-          <div className="regular-nav-links">
-            {regularNavItems.map((item) => (
+        {/* Left Section (Logo and Nav Links) */}
+        <div className="navbar-left">
+          <Link to="/" className="navbar-logo">
+            <motion.img
+              src="https://i.ibb.co/Fq362M1t/Whats-App-Image-2025-02-16-at-10-54-10-65e00f92.jpg"
+              alt="Logo"
+              className="logo-img"
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+            />
+          </Link>
+          <div className="nav-links">
+            {navItems.map((item, index) => (
               <motion.div
                 key={item.path}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="nav-item"
+                initial="hidden"
+                animate="visible"
+                variants={linkVariants}
+                custom={index}
               >
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-                >
-                  {item.label}
-                </NavLink>
+                {item.external ? (
+                  <a
+                    href={item.path}
+                    className="nav-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                    onClick={item.hasDropdown ? toggleCollections : null} // Click only
+                  >
+                    {item.label}
+                  </NavLink>
+                )}
+                {item.hasDropdown && (
+                  <AnimatePresence>
+                    {isCollectionsOpen && (
+                      <motion.div
+                        className="collections-dropdown"
+                        variants={dropdownVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                      >
+                        {collections.map((collection) => (
+                          <Link
+                            key={collection.id}
+                            to={`/shopall/${collection.id}`}
+                            className="dropdown-item"
+                            onClick={() => setIsCollectionsOpen(false)}
+                          >
+                            {collection.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )}
               </motion.div>
             ))}
           </div>
+        </div>
+
+        {/* Right Section (Search and Cart) */}
+        <div className="navbar-right">
           <div className="search-container">
             <motion.div
               className="search-wrapper"
@@ -184,26 +229,6 @@ const Navbar = () => {
               )}
             </AnimatePresence>
           </div>
-          {bookAppointmentItem && (
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="book-appointment-wrapper"
-            >
-              <a
-                href={bookAppointmentItem.path}
-                className="book-appointment-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {bookAppointmentItem.label}
-              </a>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Right Section (Cart, Search, and Mobile Toggle) */}
-        <div className="navbar-right">
           <Link to="/cart" className="cart-action">
             <motion.div
               className="cart-icon"
@@ -217,20 +242,6 @@ const Navbar = () => {
             </motion.div>
           </Link>
           <motion.div
-            className="mobile-search-wrapper"
-            initial={{ opacity: 1 }}
-            whileHover={{ opacity: 0.9 }}
-          >
-            <SearchIcon className="mobile-search-icon" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              placeholder="Search..."
-              className="mobile-search-input"
-            />
-          </motion.div>
-          <motion.div
             className="mobile-toggle"
             onClick={handleMenuToggle}
             whileHover={{ scale: 1.1 }}
@@ -238,35 +249,6 @@ const Navbar = () => {
           >
             {menuOpen ? <CloseOutlinedIcon /> : <MenuOutlinedIcon />}
           </motion.div>
-          <AnimatePresence>
-            {searchResults.length > 0 && !menuOpen && (
-              <motion.div
-                className="mobile-search-results"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                {searchResults.map((result) => (
-                  <div
-                    key={`${result.collectionId}-${result.id}`}
-                    className="mobile-search-result-item"
-                    onClick={() => handleSearchResultClick(result.collectionId, result.id)}
-                  >
-                    <img
-                      src={result.imageUrl || "https://via.placeholder.com/50"}
-                      alt={result.name}
-                      className="mobile-search-result-image"
-                    />
-                    <div className="mobile-search-result-info">
-                      <span>{result.name}</span>
-                      <span>₦{result.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
         {/* Mobile Menu */}
@@ -288,13 +270,44 @@ const Navbar = () => {
                   {item.external ? (
                     <a
                       href={item.path}
-                      className="mobile-link book-appointment-link-mobile"
+                      className="mobile-link"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={handleMenuToggle}
                     >
                       {item.label}
                     </a>
+                  ) : item.hasDropdown ? (
+                    <>
+                      <div
+                        className="mobile-link mobile-collections"
+                        onClick={toggleCollections}
+                      >
+                        {item.label}
+                      </div>
+                      <AnimatePresence>
+                        {isCollectionsOpen && (
+                          <motion.div
+                            className="mobile-collections-dropdown"
+                            variants={dropdownVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
+                          >
+                            {collections.map((collection) => (
+                              <Link
+                                key={collection.id}
+                                to={`/shopall/${collection.id}`}
+                                className="mobile-dropdown-item"
+                                onClick={handleMenuToggle}
+                              >
+                                {collection.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
                   ) : (
                     <NavLink
                       to={item.path}
