@@ -1,3 +1,4 @@
+/* src/components/Navbar/navbar.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
 
 .modern-navbar {
@@ -56,7 +57,7 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: #e63946; /* Bold red accent */
+  color: #e63946;
 }
 
 /* Desktop Search */
@@ -173,7 +174,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 15px; /* Reduced gap for compactness */
+  gap: 15px;
   position: relative;
 }
 
@@ -186,25 +187,9 @@
   font-size: 28px;
 }
 
-.cart-count {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background: #e63946;
-  color: #fff;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
-}
-
 /* Mobile Search */
 .mobile-search-wrapper {
-  display: flex;
+  display: none; /* Hidden by default, shown on mobile */
   align-items: center;
   background: #f5f5f5;
   border-radius: 20px;
@@ -213,7 +198,7 @@
 
 .mobile-search-icon {
   color: #333;
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 5px;
 }
 
@@ -221,15 +206,15 @@
   border: none;
   background: transparent;
   font-family: 'Poppins', sans-serif;
-  font-size: 0.8rem; /* Smaller text for mobile */
+  font-size: 0.85rem;
   color: #333;
   outline: none;
-  width: 100px; /* Compact width */
+  width: 80px;
   transition: width 0.3s ease;
 }
 
 .mobile-search-input:focus {
-  width: 120px;
+  width: 100px;
 }
 
 .mobile-search-results {
@@ -239,7 +224,7 @@
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 250px; /* Smaller width for mobile */
+  width: 200px;
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
@@ -283,6 +268,22 @@
   color: #666;
 }
 
+.cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #e63946;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .mobile-toggle {
   color: #333;
   font-size: 30px;
@@ -308,7 +309,7 @@
 
 .mobile-link {
   font-family: 'Poppins', sans-serif;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #333;
   text-decoration: none;
@@ -343,23 +344,76 @@
   .desktop-nav {
     display: none;
   }
+
   .mobile-toggle {
     display: block;
+    font-size: 24px; /* Slightly smaller for balance */
   }
+
   .navbar-container {
-    padding: 0 10px;
+    padding: 10px 15px; /* Reduced padding for mobile */
+    flex-wrap: nowrap; /* Prevent wrapping */
   }
-  .logo-img {
-    height: 65px;
-  }
-  .cart-icon {
-    font-size: 40px;
-  }
-  .mobile-toggle {
-    font-size: 40px;
-  }
+
   .navbar-right {
-    gap: 10px; /* Tighter spacing for mobile */
+    gap: 10px; /* Tighter spacing */
+    align-items: center;
+  }
+
+  .mobile-search-wrapper {
+    display: flex; /* Show search on mobile */
+    flex-grow: 1; /* Allow it to take available space */
+    max-width: 150px; /* Cap width to avoid overlap */
+  }
+
+  .mobile-search-input {
+    width: 100%; /* Full width within wrapper */
+    font-size: 0.8rem; /* Smaller text */
+  }
+
+  .mobile-search-input:focus {
+    width: 100%; /* Maintain width on focus */
+  }
+
+  .mobile-search-results {
+    width: 90vw; /* Full width minus padding */
+    right: 15px; /* Align with container padding */
+    max-height: 50vh; /* Limit height for scrolling */
+    margin-top: 8px; /* Slightly more space */
+  }
+
+  .mobile-search-result-item {
+    padding: 6px;
+  }
+
+  .mobile-search-result-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+  }
+
+  .mobile-search-result-info span:first-child {
+    font-size: 0.8rem;
+  }
+
+  .mobile-search-result-info span:last-child {
+    font-size: 0.7rem;
+  }
+
+  .cart-icon {
+    font-size: 24px; /* Smaller for mobile */
+  }
+
+  .cart-count {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    top: -8px;
+    right: -8px;
+  }
+
+  .logo-img {
+    height: 40px; /* Smaller logo on mobile */
   }
 }
 
@@ -369,6 +423,29 @@
   }
   .mobile-search-wrapper,
   .mobile-search-results {
-    display: none; /* Hide mobile search on desktop */
+    display: none;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 8px 10px;
+  }
+
+  .mobile-toggle {
+    font-size: 20px;
+  }
+
+  .cart-icon {
+    font-size: 20px;
+  }
+
+  .mobile-search-wrapper {
+    max-width: 120px;
+  }
+
+  .logo-img {
+    height: 35px;
   }
 }
