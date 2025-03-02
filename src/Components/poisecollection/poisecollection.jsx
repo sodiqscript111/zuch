@@ -1,111 +1,83 @@
 // src/components/PoiseCollection.jsx
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { db } from "../../utils/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { ProductContext } from "../../context/productContext"; // Import ProductContext
 import "./poisecollection.css";
 
 const PoiseCollection = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { products, loading } = useContext(ProductContext);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const fetchedProducts = [];
+  // Filter products for poisecollection
+  const poiseProducts = products
+    .filter(product => product.collectionId === "poisecollection")
+    .map(item => ({
+      id: item.id,
+      name: item.name || "Unknown",
+      price: typeof item.price === "number" ? item.price : parseFloat(item.price) || 0,
+      imageUrl: item.imageUrl || "https://via.placeholder.com/300", // Already a string from context
+    }));
 
-        const productsRef = collection(db, "collections", "poisecollection", "products");
-        const productsSnapshot = await getDocs(productsRef);
-
-        console.log("📌 Firestore Documents Retrieved:", productsSnapshot.docs.map(doc => doc.id));
-
-        if (productsSnapshot.empty) {
-          console.warn("⚠️ No products found in poisecollection > products");
-          console.log("Firestore path checked:", "collections/poisecollection/products");
-          setLoading(false);
-          return;
-        }
-
-        productsSnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log("🛍️ Product Data:", data);
-
-          const price = typeof data.price === "number" ? data.price : parseFloat(data.price) || 0;
-          const image = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
-            ? data.imageUrls[0]
-            : Array.isArray(data.imageUrl) && data.imageUrl.length > 0
-            ? data.imageUrl[0]
-            : data.imageUrl || data.image || "";
-
-          fetchedProducts.push({
-            id: doc.id,
-            name: data.name || "Unknown",
-            price, // Store as number
-            imageUrl: image,
-          });
-        });
-
-        console.log("✅ Processed Products:", fetchedProducts);
-        setProducts(fetchedProducts);
-        setLoading(false);
-      } catch (error) {
-        console.error("❌ Error fetching products:", error);
-        setError("Failed to fetch products. Please try again later.");
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  if (loading) {
+    return (
+      <div className="poise-container">
+        <h1>Poise Collection</h1>
+        <div className="poise-product-grid">
+          {[...Array(3)].map((_, index) => ( // Adjust number based on typical items
+            <div key={index} className="skeleton-product-card">
+              <div className="skeleton-image"></div>
+              <div className="skeleton-meta">
+                <div className="skeleton-name"></div>
+                <div className="skeleton-price"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="poise-container">
       <h1>Poise Collection</h1>
-      {loading ? (
-        <p>Loading products...</p>
-      ) : error ? (
-        <p className="error-message">{error}</p>
-      ) : (
-        <div className="poise-product-grid">
-          {products.length > 0 ? (
-            products.map((item) => (
-              <Link
-                to={`/product/poisecollection/${item.id}`}
-                key={item.id}
-                className="poise-product-card-container"
-              >
-                <figure className="poise-product-card">
-                  {item.imageUrl ? (
-                    <img
-                      src={item.imageUrl}
-                      alt={item.name}
-                      loading="lazy"
-                      className="poise-product-image"
-                    />
-                  ) : (
-                    <div className="no-image-placeholder">No Image Available</div>
-                  )}
-                  <figcaption className="poise-figcaption">
-                    <div className="poise-product-meta">
-                      <span className="poise-product-name">{item.name}</span>
-                    </div>
-                    <div className="poise-product-cost">
-                      <data>
-                        {item.price !== "N/A" && item.price >= 0
-                          ? `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                          : "Price Unavailable"}
-                      </data>
-                    </div>
-                  </figcaption>
-                </figure>
-              </Link>
-            ))
-          ) : (
-            <p>No products available.</p>
-          )}
-        </div>
-      )}
+      <div className="poise-product-grid">
+        {poiseProducts.length > 0 ? (
+          poiseProducts.map((item) => (
+            <Link
+              to={`/product/poisecollection/${item.id}`}
+              key={item.id}
+              className="poise-product-card-container"
+            >
+              <figure className="poise-product-card">
+                {item.imageUrl ? (
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    loading="lazy"
+                    className="poise-product-image"
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="no-image-placeholder">No Image Available</div>
+                )}
+                <figcaption className="poise-figcaption">
+                  <div className="poise-product-meta">
+                    <span className="poise-product-name">{item.name}</span>
+                  </div>
+                  <div className="poise-product-cost">
+                    <data>
+                      {item.price >= 0
+                        ? `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                        : "Price Unavailable"}
+                    </data>
+                  </div>
+                </figcaption>
+              </figure>
+            </Link>
+          ))
+        ) : (
+          <p>No products available.</p>
+        )}
+      </div>
       <div className="poise-see-all">
         <Link to="/clothes">See All</Link>
       </div>

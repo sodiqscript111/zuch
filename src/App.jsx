@@ -1,3 +1,4 @@
+// src/App.jsx
 import {
   createBrowserRouter,
   RouterProvider,
@@ -10,7 +11,9 @@ import Cart from "./Components/Cart/cart";
 import Shopall from "./Components/Shopall/shop";
 import Contact from "./Components/Contact/Contact";
 import About from "./Components/About/about";
-import AdminDashboard from "./Components/AdminDashboard /admindashboard";
+import AdminDashboard from "./Components/AdminDashboard /admindashboard"; // Fixed space in pathr
+import { ProductProvider } from "./context/productContext"; // Import ProductProvider
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -52,7 +55,11 @@ const router = createBrowserRouter([
 
 function App({ user }) {
   return (
-    <RouterProvider router={router} />
+    <ProductProvider>
+      <div className="app-wrapper">
+        <RouterProvider router={router} />
+      </div>
+    </ProductProvider>
   );
 }
 

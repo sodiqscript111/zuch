@@ -1,0 +1,115 @@
+/* src/components/clientFeedback.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap');
+
+.feedback-container {
+  padding: 50px 20px;
+  background: #fdfdfd; /* Off-white background */
+  text-align: center;
+}
+
+.feedback-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #2c2c2c;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.feedback-heading::before {
+  content: '';
+  width: 60px;
+  height: 2px;
+  background: #f5a623; /* Warm accent */
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted for multiple cards */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feedback-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  background: linear-gradient(135deg, #fff, #f9ebeb); /* Subtle gradient */
+}
+
+.feedback-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.feedback-avatar {
+  width: 60px;
+  height: 60px;
+  background: #e63946; /* Red accent */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.feedback-review {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #4a4a4a;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.feedback-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .feedback-heading {
+    font-size: 2rem;
+  }
+
+  .feedback-grid {
+    grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    gap: 20px;
+  }
+
+  .feedback-card {
+    padding: 20px 15px;
+  }
+
+  .feedback-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .feedback-review {
+    font-size: 0.9rem;
+  }
+
+  .feedback-name {
+    font-size: 1.1rem;
+  }
+}

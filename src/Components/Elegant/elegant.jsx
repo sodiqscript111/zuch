@@ -1,117 +1,83 @@
 // src/components/Elegant.jsx
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { db } from "../../utils/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { ProductContext } from "../../context/productContext"; // Import ProductContext
 import "./elegant.css";
 
 const Elegant = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { products, loading } = useContext(ProductContext);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const fetchedProducts = [];
+  // Filter products for customnative collection
+  const customNativeProducts = products
+    .filter(product => product.collectionId === "customnative")
+    .map(item => ({
+      id: item.id,
+      name: item.name || "Unknown",
+      price: typeof item.price === "number" ? item.price : parseFloat(item.price) || 0,
+      imageUrl: item.imageUrl || "https://via.placeholder.com/300", // Already a string from context
+    }));
 
-        const productsRef = collection(db, "collections", "customnative", "products");
-        const productsSnapshot = await getDocs(productsRef);
-
-        console.log("📌 Firestore Documents Retrieved:", productsSnapshot.docs.map(doc => doc.id));
-
-        if (productsSnapshot.empty) {
-          console.warn("⚠️ No products found in customnative > products");
-          console.log("Firestore path checked:", "collections/customnative/products");
-          setLoading(false);
-          return;
-        }
-
-        productsSnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log("🛍️ Product Data:", data);
-
-          const image = Array.isArray(data.imageUrls) && data.imageUrls.length > 0
-            ? data.imageUrls[0]
-            : Array.isArray(data.imageUrl) && data.imageUrl.length > 0
-            ? data.imageUrl[0]
-            : data.imageUrl || data.image || "";
-
-          const priceRaw = data.price;
-          const price = typeof priceRaw === "number" && !isNaN(priceRaw)
-            ? priceRaw
-            : parseFloat(priceRaw) && !isNaN(parseFloat(priceRaw))
-            ? parseFloat(priceRaw)
-            : 0; // Default to 0 if invalid
-
-          fetchedProducts.push({
-            id: doc.id,
-            name: data.name || "Unknown",
-            price, // Store as number
-            imageUrl: image,
-          });
-        });
-
-        console.log("✅ Processed Products:", fetchedProducts);
-        setProducts(fetchedProducts);
-        setLoading(false);
-      } catch (error) {
-        console.error("❌ Error fetching products:", error);
-        setError("Failed to fetch products. Please try again later.");
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  if (loading) {
+    return (
+      <div className="elegant-container-elegant">
+        <h1>Custom Native Collection</h1>
+        <div className="product-grid-elegant">
+          {[...Array(3)].map((_, index) => ( // Adjust number based on typical items
+            <div key={index} className="skeleton-product-card">
+              <div className="skeleton-image"></div>
+              <div className="skeleton-meta">
+                <div className="skeleton-name"></div>
+                <div className="skeleton-price"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="elegant-container-elegant">
       <h1>Custom Native Collection</h1>
-      {loading ? (
-        <p>Loading products...</p>
-      ) : error ? (
-        <p className="error-message">{error}</p>
-      ) : (
-        <div className="product-grid-elegant">
-          {products.length > 0 ? (
-            products.map((item) => (
-              <Link
-                to={`/product/customnative/${item.id}`}
-                key={item.id}
-                className="product-card-container-elegant"
-              >
-                <figure className="product-card-elegant">
-                  {item.imageUrl ? (
-                    <img
-                      src={item.imageUrl}
-                      alt={item.name}
-                      loading="lazy"
-                      className="product-image-elegant"
-                    />
-                  ) : (
-                    <div className="no-image-placeholder">No Image Available</div>
-                  )}
-                  <figcaption className="figcaption-elegant">
-                    <div className="product-meta-elegant">
-                      <span className="product-name-elegant">{item.name}</span>
-                    </div>
-                    <div className="product-cost-elegant">
-                      <data>
-                        {typeof item.price === "number" && !isNaN(item.price)
-                          ? `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                          : "Price Unavailable"}
-                      </data>
-                    </div>
-                  </figcaption>
-                </figure>
-              </Link>
-            ))
-          ) : (
-            <p>No products available.</p>
-          )}
-        </div>
-      )}
+      <div className="product-grid-elegant">
+        {customNativeProducts.length > 0 ? (
+          customNativeProducts.map((item) => (
+            <Link
+              to={`/product/customnative/${item.id}`}
+              key={item.id}
+              className="product-card-container-elegant"
+            >
+              <figure className="product-card-elegant">
+                {item.imageUrl ? (
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    loading="lazy"
+                    className="product-image-elegant"
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="no-image-placeholder">No Image Available</div>
+                )}
+                <figcaption className="figcaption-elegant">
+                  <div className="product-meta-elegant">
+                    <span className="product-name-elegant">{item.name}</span>
+                  </div>
+                  <div className="product-cost-elegant">
+                    <data>
+                      {typeof item.price === "number" && !isNaN(item.price)
+                        ? `₦${item.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                        : "Price Unavailable"}
+                    </data>
+                  </div>
+                </figcaption>
+              </figure>
+            </Link>
+          ))
+        ) : (
+          <p>No products available.</p>
+        )}
+      </div>
       <div className="see-all-elegant">
         <Link to="/clothes">See All</Link>
       </div>

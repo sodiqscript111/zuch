@@ -1,77 +1,35 @@
 // src/components/Navbar/navbar.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { CartContext } from "../../context/cart";
+import { ProductContext } from "../../context/productContext"; // New import
 import { motion, AnimatePresence } from "framer-motion";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { db } from "../../utils/firebase";
-import { collection, getDocs } from "firebase/firestore";
 import "./navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
-  const [collections, setCollections] = useState([]);
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
+  const { products, collections, loading } = useContext(ProductContext); // Use context
   const navigate = useNavigate();
 
-  // Fetch products and collections from Firestore
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const collectionsRef = collection(db, "collections");
-        const collectionsSnapshot = await getDocs(collectionsRef);
-        const collectionsList = collectionsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          name: `${doc.id.replace(/collection/i, '').replace(/^\w/, c => c.toUpperCase())} Collection`,
-        }));
-        setCollections(collectionsList);
+  const filteredProducts = useMemo(() => {
+    if (searchQuery.trim() === "") return [];
+    return products.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, products]);
 
-        const productsList = [];
-        for (const doc of collectionsSnapshot.docs) {
-          const productsRef = collection(db, "collections", doc.id, "products");
-          const productsSnapshot = await getDocs(productsRef);
-          productsSnapshot.forEach(productDoc => {
-            const data = productDoc.data();
-            productsList.push({
-              id: productDoc.id,
-              collectionId: doc.id,
-              name: data.name || "Unknown",
-              price: data.price || 0,
-              imageUrl: Array.isArray(data.imageUrl) && data.imageUrl.length > 0
-                ? data.imageUrl[0]
-                : data.imageUrl || "",
-            });
-          });
-        }
-        setAllProducts(productsList);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Handle search input
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    if (query.trim() === "") {
-      setSearchResults([]);
-    } else {
-      const filtered = allProducts.filter(product =>
-        product.name.toLowerCase().includes(query.toLowerCase())
-      );
-      setSearchResults(filtered);
-    }
+    setSearchResults(filteredProducts);
   };
 
   const handleSearchResultClick = (collectionId, productId) => {
@@ -106,6 +64,7 @@ const Navbar = () => {
 
   const navItems = [
     { path: "/shopall", label: "Shop" },
+    { path: "/collections", label: "Collections", hasDropdown: true },
     { path: "/about", label: "About Us" },
     { path: "/contact", label: "Contact" },
     { path: "https://instagram.com/Zuch_Collection", label: "Book Appointment", external: true },
@@ -114,7 +73,6 @@ const Navbar = () => {
   return (
     <nav className="modern-navbar">
       <div className="navbar-container">
-        {/* Left Section (Logo and Nav Links) */}
         <div className="navbar-left">
           <Link to="/" className="navbar-logo">
             <motion.img
@@ -148,7 +106,7 @@ const Navbar = () => {
                   <NavLink
                     to={item.path}
                     className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-                    onClick={item.hasDropdown ? toggleCollections : null} // Click only
+                    onClick={item.hasDropdown ? toggleCollections : null}
                   >
                     {item.label}
                   </NavLink>
@@ -182,7 +140,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right Section (Search and Cart) */}
         <div className="navbar-right">
           <div className="search-container">
             <motion.div
@@ -218,6 +175,7 @@ const Navbar = () => {
                         src={result.imageUrl || "https://via.placeholder.com/50"}
                         alt={result.name}
                         className="search-result-image"
+                        loading="lazy"
                       />
                       <div className="search-result-info">
                         <span>{result.name}</span>
@@ -251,7 +209,6 @@ const Navbar = () => {
           </motion.div>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
