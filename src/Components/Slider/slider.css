@@ -60,6 +60,7 @@
   height: 20%; /* 20% of the slide height for text */
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
   display: flex;
+
   align-items: center;
   justify-content: center;
   padding: 0 1rem;
@@ -67,7 +68,7 @@
 
 .collection-text h3 {
   font-family: 'Inter', sans-serif;
-  font-size: 1.5rem; /* Big text */
+  font-size: 0.1rem; /* Big text */
   font-weight: 700;
   color: #ffffff;
   text-align: center;
@@ -89,10 +90,13 @@
 @media (min-width: 768px) {
   .mySwiper {
     height: 60vh; /* 40% of viewport height on desktop */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle depth */
+  -webkit-font-smoothing: antialiased; /* Crisp rendering on Webkit browsers */
+  -moz-osx-font-smoothing: grayscale; /* Crisp rendering on Firefox macOS */
   }
 
   .collection-text h3 {
-    font-size: 3.6rem; /* Slightly larger on desktop */
+    font-size: 1.6rem; /* Slightly larger on desktop */
     text-align: left;
     width: 70%;
   }
@@ -105,7 +109,10 @@
   }
 
   .collection-text h3 {
-    font-size: 1.76766rem; /* Adjusted for mobile */
+    font-size: 1rem; /* Adjusted for mobile */
     text-align: left;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle depth */
+  -webkit-font-smoothing: antialiased; /* Crisp rendering on Webkit browsers */
+  -moz-osx-font-smoothing: grayscale; /* Crisp rendering on Firefox macOS */
   }
 }

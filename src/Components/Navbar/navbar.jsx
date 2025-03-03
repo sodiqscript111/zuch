@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/cart";
-import { ProductContext } from "../../context/productContext"; // New import
+import { ProductContext } from "../../context/productContext";
 import { motion, AnimatePresence } from "framer-motion";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -16,8 +16,20 @@ const Navbar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
-  const { products, collections, loading } = useContext(ProductContext); // Use context
+  const { products, collections, loading } = useContext(ProductContext);
   const navigate = useNavigate();
+
+  // Manual renaming map for collections
+  const collectionNameMap = {
+    "streetvouge": "Street Vogue Collection",
+    "beachtime": "Beach Time Collection",
+    "customnative": "Custom Native Collection",
+    "amor": "Amor Collection",
+    "nudecolection": "Nude Collection",
+    "zuchclassics": "Zuch Classics Collection",
+    "poise": "Poise Collection",
+    "lumincolection": "Lumin Collection",
+  };
 
   const filteredProducts = useMemo(() => {
     if (searchQuery.trim() === "") return [];
@@ -41,6 +53,8 @@ const Navbar = () => {
 
   const handleMenuToggle = () => setMenuOpen(prev => !prev);
   const toggleCollections = () => setIsCollectionsOpen(prev => !prev);
+  const openCollections = () => setIsCollectionsOpen(true);
+  const closeCollections = () => setIsCollectionsOpen(false);
 
   const menuVariants = {
     hidden: { x: "-100%", opacity: 0 },
@@ -64,7 +78,7 @@ const Navbar = () => {
 
   const navItems = [
     { path: "/shopall", label: "Shop" },
-    { path: "/collections", label: "Collections", hasDropdown: true },
+    { path: "/collections", label: "Collections", hasDropdown: true }, // Path kept for consistency, but not used as link
     { path: "/about", label: "About Us" },
     { path: "/contact", label: "Contact" },
     { path: "https://instagram.com/Zuch_Collection", label: "Book Appointment", external: true },
@@ -92,6 +106,8 @@ const Navbar = () => {
                 animate="visible"
                 variants={linkVariants}
                 custom={index}
+                onMouseEnter={item.hasDropdown ? openCollections : null}
+                onMouseLeave={item.hasDropdown ? closeCollections : null}
               >
                 {item.external ? (
                   <a
@@ -102,11 +118,17 @@ const Navbar = () => {
                   >
                     {item.label}
                   </a>
+                ) : item.hasDropdown ? (
+                  <span
+                    className="nav-link"
+                    onClick={toggleCollections} // Click support
+                  >
+                    {item.label}
+                  </span>
                 ) : (
                   <NavLink
                     to={item.path}
                     className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-                    onClick={item.hasDropdown ? toggleCollections : null}
                   >
                     {item.label}
                   </NavLink>
@@ -128,7 +150,7 @@ const Navbar = () => {
                             className="dropdown-item"
                             onClick={() => setIsCollectionsOpen(false)}
                           >
-                            {collection.name}
+                            {collectionNameMap[collection.id] || collection.name}
                           </Link>
                         ))}
                       </motion.div>
@@ -258,7 +280,7 @@ const Navbar = () => {
                                 className="mobile-dropdown-item"
                                 onClick={handleMenuToggle}
                               >
-                                {collection.name}
+                                {collectionNameMap[collection.id] || collection.name}
                               </Link>
                             ))}
                           </motion.div>
