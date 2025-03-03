@@ -13,52 +13,62 @@ import "./slider.css";
 
 const Slider = () => {
   const { collections, loading: contextLoading } = useContext(ProductContext);
-  const [collectionImages, setCollectionImages] = useState({});
+  const [categoryImages, setCategoryImages] = useState({});
   const [imageLoading, setImageLoading] = useState(true);
 
-  // Manual renaming map for collections
-  const collectionNameMap = {
-    "streetvouge": "Street Vogue Collection",
-    "beachtime": "Beach Time Collection",
-    "customnative": "Custom Native Collection",
-    "amor": "Amor Collection",
-    "nudecolection": "Nude Collection",
-    "zuchclassics": "Zuch Classics Collection",
-    "poise": "Poise Collection",
-    "lumincolection": "Lumin Collection",
-  };
+  // Define categories with slugs and all collection IDs
+  const categories = [
+    {
+      name: "Custom Wear",
+      slug: "custom-wear",
+      collectionIds: ["customnative", "zuchclassics"],
+    },
+    {
+      name: "Classic Wear",
+      slug: "classic-wear",
+      collectionIds: ["lumincolection", "poisecollection", "amor"],
+    },
+    {
+      name: "Casual Wear",
+      slug: "casual-wear",
+      collectionIds: ["nudecolection", "streetvouge", "beachtime"],
+    },
+  ];
 
   useEffect(() => {
-    const fetchCollectionImages = async () => {
+    const fetchCategoryImages = async () => {
       try {
         const images = {};
-        for (const col of collections) {
-          const productsRef = collection(db, "collections", col.id, "products");
-          const productsSnapshot = await getDocs(productsRef);
-
-          console.log(`Collection ${col.id}, Product Count: ${productsSnapshot.size}`);
-
+        for (const category of categories) {
           let imageUrl = "https://placehold.co/150"; // Default fallback
-          if (!productsSnapshot.empty) {
-            const firstProduct = productsSnapshot.docs[0].data();
-            console.log(`First Product for ${col.id}:`, firstProduct);
-            imageUrl = Array.isArray(firstProduct.imageUrl) && firstProduct.imageUrl.length > 0
-              ? firstProduct.imageUrl[0]
-              : firstProduct.imageUrl || "https://placehold.co/150";
+          for (const colId of category.collectionIds) {
+            const productsRef = collection(db, "collections", colId, "products");
+            const productsSnapshot = await getDocs(productsRef);
+
+            console.log(`Collection ${colId}, Product Count: ${productsSnapshot.size}`);
+
+            if (!productsSnapshot.empty) {
+              const firstProduct = productsSnapshot.docs[0].data();
+              console.log(`First Product for ${colId}:`, firstProduct);
+              imageUrl = Array.isArray(firstProduct.imageUrl) && firstProduct.imageUrl.length > 0
+                ? firstProduct.imageUrl[0]
+                : firstProduct.imageUrl || imageUrl;
+              if (imageUrl !== "https://placehold.co/150") break;
+            }
           }
-          images[col.id] = imageUrl;
-          console.log(`Set image for ${col.id}: ${imageUrl}`);
+          images[category.slug] = imageUrl;
+          console.log(`Set image for ${category.name}: ${imageUrl}`);
         }
-        setCollectionImages(images);
+        setCategoryImages(images);
       } catch (error) {
-        console.error("Error fetching collection images:", error);
+        console.error("Error fetching category images:", error);
       } finally {
         setImageLoading(false);
       }
     };
 
     if (!contextLoading && collections.length > 0) {
-      fetchCollectionImages();
+      fetchCategoryImages();
     }
   }, [collections, contextLoading]);
 
@@ -78,8 +88,7 @@ const Slider = () => {
     );
   }
 
-  console.log("Collections from ProductContext:", collections);
-  console.log("Collection Images:", collectionImages);
+  console.log("Category Images:", categoryImages);
 
   return (
     <div id="app">
@@ -94,37 +103,31 @@ const Slider = () => {
         className="mySwiper"
         breakpoints={{
           320: { slidesPerView: 1, slidesOffsetAfter: 30 },
-          768: { slidesPerView: Math.min(collections.length, 3), slidesOffsetAfter: 50 },
+          768: { slidesPerView: 3, slidesOffsetAfter: 50 },
         }}
       >
-        {collections.length > 0 ? (
-          collections.map((collection, index) => (
-            <SwiperSlide key={index} className="collection-slide">
-              <Link to={`/shopall/${collection.id}`} className="collection-link">
-                <div className="collection-content">
-                  <img
-                    src={collectionImages[collection.id] || "https://placehold.co/150"}
-                    alt={collection.name}
-                    className="collection-image"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => { 
-                      console.log(`Image failed for ${collection.name}:`, collectionImages[collection.id]);
-                      e.target.src = "https://placehold.co/150"; 
-                    }}
-                  />
-                  <div className="collection-text">
-                    <h3>{collectionNameMap[collection.id] || collection.name}</h3>
-                  </div>
+        {categories.map((category, index) => (
+          <SwiperSlide key={index} className="collection-slide">
+            <Link to={`/shopall/${category.slug}`} className="collection-link">
+              <div className="collection-content">
+                <img
+                  src={categoryImages[category.slug] || "https://placehold.co/150"}
+                  alt={category.name}
+                  className="collection-image"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => { 
+                    console.log(`Image failed for ${category.name}:`, categoryImages[category.slug]);
+                    e.target.src = "https://placehold.co/150"; 
+                  }}
+                />
+                <div className="collection-text">
+                  <h3>{category.name}</h3>
                 </div>
-              </Link>
-            </SwiperSlide>
-          ))
-        ) : (
-          <SwiperSlide>
-            <div className="no-collections">No collections available.</div>
+              </div>
+            </Link>
           </SwiperSlide>
-        )}
+        ))}
       </Swiper>
     </div>
   );

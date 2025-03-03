@@ -2,18 +2,28 @@
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../Navbar/navbar";
-import { ProductContext } from "../../context/productContext"; // Fixed case sensitivity
+import { ProductContext } from "../../context/productContext";
 import "./shop.css";
 
 const AllProducts = () => {
-  const { collectionId } = useParams();
+  const { collectionId } = useParams(); // Now can be slug (e.g., "custom-wear") or ID (e.g., "customnative")
   const { products, loading } = useContext(ProductContext);
 
+  // Map category slugs to multiple collection IDs
+  const categoryMap = {
+    "custom-wear": ["customnative","zuchclassics"],
+    "classic-wear": ["lumincolection", "poisecollection", "amorcollection"],
+    "casual-wear": ["nudecolection", "streetvouge", "beachtimecollection"],
+  };
+
+  // Filter products: if collectionId is a category slug, use categoryMap; otherwise, match directly
   const filteredProducts = collectionId
-    ? products.filter(product => product.collectionId === collectionId)
+    ? categoryMap[collectionId]
+      ? products.filter(product => categoryMap[collectionId].includes(product.collectionId))
+      : products.filter(product => product.collectionId === collectionId)
     : products;
 
-  // Debug: Log products to check imageUrl structure
+  console.log("Collection ID (Slug or ID):", collectionId);
   console.log("Filtered Products:", filteredProducts);
 
   if (loading) {
@@ -21,7 +31,7 @@ const AllProducts = () => {
       <div className="all-products-page">
         <Navbar />
         <h1 className="all-products-title">
-          {collectionId ? `${collectionId.replace(/collection/i, '').replace(/^\w/, c => c.toUpperCase())} Collection` : "All Products"}
+          {collectionId ? `${collectionId.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}` : "All Products"}
         </h1>
         <div className="products-grid">
           {[...Array(6)].map((_, index) => (
@@ -42,7 +52,7 @@ const AllProducts = () => {
     <div className="all-products-page">
       <Navbar />
       <h1 className="all-products-title">
-        {collectionId ? `${collectionId.replace(/collection/i, '').replace(/^\w/, c => c.toUpperCase())} Collection` : "All Products"}
+        {collectionId ? `${collectionId.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}` : "All Products"}
       </h1>
       <div className="products-grid">
         {filteredProducts.length === 0 ? (
@@ -55,12 +65,12 @@ const AllProducts = () => {
               className="product-item"
             >
               <img
-                src={typeof item.imageUrl === "string" ? item.imageUrl : item.imageUrl[0] || "https://via.placeholder.com/300"}
+                src={item.imageUrl || "https://placehold.co/300"}
                 alt={item.name}
                 className="product-img"
                 loading="lazy"
                 decoding="async"
-                onError={(e) => { e.target.src = "https://via.placeholder.com/300"; }} // Fallback if image fails
+                onError={(e) => { e.target.src = "https://placehold.co/300"; }}
               />
               <div className="product-info">
                 <h2 className="product-name">{item.name}</h2>
