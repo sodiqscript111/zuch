@@ -6,71 +6,59 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { ProductContext } from "../../context/productContext";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../utils/firebase";
+import { ProductContext } from "../../context/productContext"; // Ensure exact case match
 import "./slider.css";
 
 const Slider = () => {
-  const { collections, loading: contextLoading } = useContext(ProductContext);
-  const [categoryImages, setCategoryImages] = useState({});
+  const { collections, products, loading: contextLoading } = useContext(ProductContext);
+  const [collectionImages, setCollectionImages] = useState({});
   const [imageLoading, setImageLoading] = useState(true);
 
-  // Define categories with slugs and all collection IDs
-  const categories = [
-    {
-      name: "Custom Wear",
-      slug: "custom-wear",
-      collectionIds: ["customnative", "zuchclassics"],
-    },
-    {
-      name: "Classic Wear",
-      slug: "classic-wear",
-      collectionIds: ["lumincolection", "poisecollection", "amor"],
-    },
-    {
-      name: "Casual Wear",
-      slug: "casual-wear",
-      collectionIds: ["nudecolection", "streetvouge", "beachtime"],
-    },
-  ];
+  // Manual renaming map for display (matches Firestore IDs from your data)
+  const collectionNameMap = {
+    "streetvouge": "Street Vogue Collection",
+    "beachtime": "Beach Time Collection",
+    "customnative": "Custom Native Collection",
+    "amor": "Amor Collection",
+    "nudecolection": "Nude Collection",
+    "zuchclassics": "Zuch Classics Collection",
+    "poisecollection": "Poise Collection",
+    "lumincolection": "Lumin Collection",
+  };
 
   useEffect(() => {
-    const fetchCategoryImages = async () => {
+    const assignCollectionImages = () => {
       try {
         const images = {};
-        for (const category of categories) {
-          let imageUrl = "https://placehold.co/150"; // Default fallback
-          for (const colId of category.collectionIds) {
-            const productsRef = collection(db, "collections", colId, "products");
-            const productsSnapshot = await getDocs(productsRef);
-
-            console.log(`Collection ${colId}, Product Count: ${productsSnapshot.size}`);
-
-            if (!productsSnapshot.empty) {
-              const firstProduct = productsSnapshot.docs[0].data();
-              console.log(`First Product for ${colId}:`, firstProduct);
-              imageUrl = Array.isArray(firstProduct.imageUrl) && firstProduct.imageUrl.length > 0
-                ? firstProduct.imageUrl[0]
-                : firstProduct.imageUrl || imageUrl;
-              if (imageUrl !== "https://placehold.co/150") break;
-            }
+        for (const collection of collections) {
+          // Find first product with this collectionId from products array
+          const product = products.find(p => p.collectionId === collection.id);
+          let imageUrl = "https://placehold.co/150x150"; // Default fallback
+          if (product && product.imageUrl) {
+            imageUrl = Array.isArray(product.imageUrl) && product.imageUrl.length > 0
+              ? product.imageUrl[0]
+              : product.imageUrl;
+            console.log(`Assigned image for ${collection.id} from product:`, product);
+          } else {
+            console.warn(`No product with image found for ${collection.id}`);
           }
-          images[category.slug] = imageUrl;
-          console.log(`Set image for ${category.name}: ${imageUrl}`);
+          images[collection.id] = imageUrl;
+          console.log(`Set image for ${collection.id}: ${imageUrl}`);
         }
-        setCategoryImages(images);
+        setCollectionImages(images);
       } catch (error) {
-        console.error("Error fetching category images:", error);
+        console.error("Error assigning collection images:", error);
       } finally {
         setImageLoading(false);
       }
     };
 
-    if (!contextLoading && collections.length > 0) {
-      fetchCategoryImages();
+    if (!contextLoading && collections.length > 0 && products.length > 0) {
+      console.log("Collections:", collections.map(c => c.id));
+      console.log("Products available:", products.length);
+      assignCollectionImages();
     }
-  }, [collections, contextLoading]);
+  }, [collections, products, contextLoading]);
 
   if (contextLoading || imageLoading) {
     return (
@@ -88,7 +76,7 @@ const Slider = () => {
     );
   }
 
-  console.log("Category Images:", categoryImages);
+  console.log("Collection Images:", collectionImages);
 
   return (
     <div id="app">
@@ -103,26 +91,26 @@ const Slider = () => {
         className="mySwiper"
         breakpoints={{
           320: { slidesPerView: 1, slidesOffsetAfter: 30 },
-          768: { slidesPerView: 3, slidesOffsetAfter: 50 },
+          768: { slidesPerView: Math.min(collections.length, 3), slidesOffsetAfter: 50 },
         }}
       >
-        {categories.map((category, index) => (
+        {collections.map((collection, index) => (
           <SwiperSlide key={index} className="collection-slide">
-            <Link to={`/shopall/${category.slug}`} className="collection-link">
+            <Link to={`/shopall/${collection.id}`} className="collection-link">
               <div className="collection-content">
                 <img
-                  src={categoryImages[category.slug] || "https://placehold.co/150"}
-                  alt={category.name}
+                  src={collectionImages[collection.id] || "https://placehold.co/150x150"}
+                  alt={collectionNameMap[collection.id] || collection.name}
                   className="collection-image"
                   loading="lazy"
                   decoding="async"
                   onError={(e) => { 
-                    console.log(`Image failed for ${category.name}:`, categoryImages[category.slug]);
-                    e.target.src = "https://placehold.co/150"; 
+                    console.log(`Image failed for ${collection.id}: ${collectionImages[collection.id]}`);
+                    e.target.src = "https://placehold.co/150x150"; 
                   }}
                 />
                 <div className="collection-text">
-                  <h3>{category.name}</h3>
+                  <h3>{collectionNameMap[collection.id] || collection.name}</h3>
                 </div>
               </div>
             </Link>

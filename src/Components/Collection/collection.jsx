@@ -6,6 +6,7 @@ import Slider from '../Slider/slider';
 import PoiseCollection from '../poisecollection/poisecollection';
 import ServiceCards from '../Ourservice/service';
 import Feedback from '../Feedback/feedback';
+import CategoryList from '../CollectionList/collectionlist';
 import './collection.css';
 
 const Collection = () => {
@@ -21,8 +22,7 @@ const Collection = () => {
                         <Slider/>
                         <ServiceCards/>
                         <Elegant/>
-                        <Dapper/>
-                        <PoiseCollection/>
+                        <CategoryList/>
                         <Feedback/>
                     </div>
                 </div>
