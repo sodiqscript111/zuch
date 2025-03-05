@@ -5,10 +5,6 @@ import "./feedback.css";
 const ClientFeedback = () => {
   const feedback = [
     {
-      name: "Amina Okeke",
-      review: "Zuch’s designs brought my heritage to life! The vibrant Ankara patterns and perfect fit make every piece a celebration of African style.",
-    },
-    {
       name: "Chukwudi Eze",
       review: "The craftsmanship is unmatched. My custom kaftan fits like a dream and turns heads at every event!",
     },

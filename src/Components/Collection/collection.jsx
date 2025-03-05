@@ -1,9 +1,7 @@
 import React from 'react';
 import Poise from '../Poise/poise';
 import Elegant from '../Elegant/elegant';
-import Dapper from '../Dapper/dapper';
 import Slider from '../Slider/slider';
-import PoiseCollection from '../poisecollection/poisecollection';
 import ServiceCards from '../Ourservice/service';
 import Feedback from '../Feedback/feedback';
 import CategoryList from '../CollectionList/collectionlist';
@@ -20,9 +18,9 @@ const Collection = () => {
                 
                     <div className="othercollection">
                         <Slider/>
-                        <ServiceCards/>
                         <Elegant/>
                         <CategoryList/>
+                        <ServiceCards/>
                         <Feedback/>
                     </div>
                 </div>
