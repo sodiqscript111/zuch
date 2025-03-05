@@ -83,7 +83,7 @@ const Slider = () => {
       <h1 className="heading">Our Collections</h1>
       <Swiper
         slidesPerView={3}
-        spaceBetween={10}
+        spaceBetween={40}
         slidesOffsetAfter={50}
         navigation={true}
         pagination={{ clickable: true }}
