@@ -83,7 +83,6 @@ const Navbar = () => {
     {
       name: "Unisex",
       items: [
-        { name: "Unisex Collection", slug: "unisex" },
         { name: "Nude Collection", slug: "nudecolection" },
         { name: "NBZ", slug: "customnative", productId: "nbz" },
         { name: "Beach Time Collection", slug: "beachtime" },
