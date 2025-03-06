@@ -35,7 +35,7 @@ const Poise = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // 5 seconds
+    }, 10000); // 5 seconds
 
     return () => clearInterval(interval);
   }, [images.length]);
