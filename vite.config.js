@@ -1,13 +1,13 @@
 // vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import viteCompression from 'vite-plugin-compression'; // For asset compression
+import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig({
   plugins: [
     react(),
     viteCompression({
-      algorithm: 'gzip', // Compress assets like JS/CSS
+      algorithm: 'gzip',
       ext: '.gz',
     }),
   ],
@@ -23,14 +23,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split vendor libs to reduce main chunk size
           vendor: ['react', 'react-dom', 'react-router-dom'],
         },
       },
     },
-    assetsInlineLimit: 4096, // Inline small assets (<4KB)
+    assetsInlineLimit: 4096,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'], // Pre-bundle dependencies
+    include: ['react', 'react-dom'],
   },
 });
