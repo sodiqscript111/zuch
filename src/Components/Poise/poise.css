@@ -1,128 +1,146 @@
-/* poise-collection.css */
+/* src/components/poise.css */
 
 /* Main container */
 .poise-collection-container {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  background-position: center; /* Cleaner centering */
-  background-size: cover; /* Ensure image fills container */
+  background-position: 0% 20%;
+  background-size: cover;
   width: 100%;
-  min-height: 600px; /* Fixed height for consistency */
-  position: relative; /* For overlay positioning */
+  min-height: 80vh;
+  position: relative;
+  transition: background-image 0.5s ease-in-out; /* Smooth transition */
+}
+
+/* Define background images via classes */
+.poise-collection-container.image-0 {
+  background-image: url('../../assets/headerpicone.jpg');
+}
+
+.poise-collection-container.image-1 {
+  background-image: url('../../assets/headerpictwo.jpg');
+}
+
+.poise-collection-container.image-2 {
+  background-image: url('../../assets/headerpicthree.jpg');
+}
+
+.poise-collection-container.image-3 {
+  background-image: url('../../assets/headerpicfour.jpg');
 }
 
 /* Content wrapper */
 .poise-content {
-  padding: 2rem; /* More padding for elegance */
+  padding: 2rem;
   border-radius: 12px;
-  max-width: 450px; /* Slightly wider for balance */
-  margin: 2rem; /* Increased margin for breathing room */
+  max-width: 450px;
+  margin: 2rem;
   text-align: right;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Transparent gradient */
-  color: #fff; /* White text for contrast */
-  transition: transform 0.3s ease; /* Subtle animation */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  color: #fff;
+  transition: transform 0.3s ease;
 }
 
 .poise-collection-container:hover .poise-content {
-  transform: translateY(-10px); /* Lift effect on hover */
+  transform: translateY(-10px);
 }
 
 /* Heading */
 .poise-heading {
-  font-family: 'Inter', sans-serif; /* Modern font */
-  font-size: 1.5rem; /* Slightly larger for impact */
-  font-weight: 500; /* Medium weight for elegance */
-  color: #fff; /* White for gradient contrast */
-  margin: 0 0 0.75rem; /* Adjusted spacing */
-  letter-spacing: -0.02em; /* Tightened for style */
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
 }
 
 /* Description */
 .poise-description {
   font-family: 'Inter', sans-serif;
-  font-size: 1.125rem; /* Larger for readability */
-  margin: 0 0 1.25rem; /* More space below */
-  color: rgba(255, 255, 255, 0.9); /* Slightly opaque white */
+  font-size: 1.125rem;
+  margin: 0 0 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Link/Button */
 .poise-link {
   display: inline-block;
-  padding: 0.75rem 1.5rem; /* Larger clickable area */
+  padding: 0.75rem 1.5rem;
   background-color: #fff;
-  color: #1a1a1a; /* Dark text for contrast */
+  color: #1a1a1a;
   text-decoration: none;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  font-weight: 600; /* Bold but refined */
+  font-weight: 600;
   border-radius: 6px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .poise-link:hover {
-  background-color: #e0e0e0; /* Softer hover color */
-  transform: scale(1.05); /* Subtle grow effect */
+  background-color: #e0e0e0;
+  transform: scale(1.05);
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
   .poise-collection-container {
-      min-height: 400px; /* Reduced height */
-      position: relative; /* Remove fixed positioning unless needed */
-      align-items: flex-end; /* Keep content at bottom */
-      justify-content: center; /* Center horizontally */
+    min-height: 400px;
+    position: relative;
+    align-items: flex-end;
+    justify-content: center;
   }
 
   .poise-content {
-      padding: 1.5rem;
-      max-width: 90%;
-      margin: 1rem auto; /* Center with auto margins */
-      text-align: center; /* Center text */
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Same gradient */
-      border-radius: 8px;
+    padding: 1.5rem;
+    max-width: 90%;
+    margin: 1rem auto;
+    text-align: center;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    border-radius: 8px;
   }
 
   .poise-heading {
-      font-size: 1.75rem; /* Scaled down */
+    font-size: 1.75rem;
   }
 
   .poise-description {
-      font-size: 1rem;
+    font-size: 1rem;
   }
 
   .poise-link {
-      padding: 0.6rem 1.2rem;
-      font-size: 0.875rem;
-      background-color: #fff;
-      color: #1a1a1a; /* Keep white button with dark text */
+    padding: 0.6rem 1.2rem;
+    font-size: 0.875rem;
+    background-color: #fff;
+    color: #1a1a1a;
   }
 
   .poise-link:hover {
-      background-color: #e0e0e0; /* Consistent hover */
+    background-color: #e0e0e0;
   }
 }
 
 @media (max-width: 480px) {
   .poise-collection-container {
-      min-height: 300px; /* Further reduced */
+    min-height: 300px;
   }
 
   .poise-content {
-      padding: 1rem;
-      margin: 0.5rem auto;
+    padding: 1rem;
+    margin: 0.5rem auto;
   }
 
   .poise-heading {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .poise-description {
-      font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 
   .poise-link {
-      padding: 0.5rem 1rem;
-      font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
   }
 }
