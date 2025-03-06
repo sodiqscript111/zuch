@@ -1,14 +1,18 @@
 // src/components/Poise.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import headerOnePic from "../../assets/headerpicone.jpg"
+import headerTwoPic from "../../assets/headerpictwo.jpg"
+import headerThreePic from "../../assets/headerpicthree.jpg"
+import headerFourPic from "../../assets/headerpicfour.jpg"
 import './poise.css';
 
 const Poise = () => {
   const images = [
-    'https://i.ibb.co/bR26RNfk/POISE-WHITE-100k.webp',
-    'https://i.ibb.co/wDH2f6J/IMG-3663.jpg',
-    'https://i.ibb.co/DPPcQVsv/IMG-1461.jpg',
-    'https://i.ibb.co/TMgS4MQP/Lumin-blue-80k-1.jpg',
+    headerOnePic,
+    headerTwoPic,
+    headerThreePic,
+    headerFourPic,
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
