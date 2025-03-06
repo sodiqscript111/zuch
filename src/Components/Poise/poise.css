@@ -123,7 +123,7 @@
 
 @media (max-width: 480px) {
   .poise-collection-container {
-    min-height: 300px;
+    min-height: 80vh;
   }
 
   .poise-content {
