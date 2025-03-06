@@ -92,19 +92,34 @@
   overflow: hidden; /* Clean edges */
 }
 
+.dropdown-category {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee; /* Separator between Male and Unisex */
+}
+
+.dropdown-category-title {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  padding: 5px 20px;
+  text-transform: uppercase;
+}
+
 .dropdown-item {
   display: block;
-  padding: 8px 15px;
+  padding: 8px 20px; /* Updated padding from 8px 15px */
   font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
-  color: #333;
+  color: #666; /* Updated color from #333 */
   text-decoration: none;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease; /* Merged transitions */
 }
 
 .dropdown-item:hover {
   background: #f5f5f5;
-  color: #e63946;
+  color: #333; /* Updated hover color from #e63946 */
 }
 
 /* Right Section */
@@ -274,17 +289,33 @@
   padding-left: 15px;
 }
 
+.mobile-dropdown-category {
+  padding: 10px 0;
+}
+
+.mobile-dropdown-category-title {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333; /* Adjusted to match desktop (#fff was for dark mobile menu) */
+  padding: 5px 20px;
+  text-transform: uppercase;
+}
+
 .mobile-dropdown-item {
+  display: block;
+  padding: 8px 30px; /* Updated padding from 8px 0 */
   font-family: 'Poppins', sans-serif;
   font-size: 0.75rem;
-  color: #333;
+  color: #ccc; /* Kept your original color */
   text-decoration: none;
-  padding: 8px 0;
-  transition: color 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease; /* Merged transitions */
 }
 
 .mobile-dropdown-item:hover {
-  color: #1f1c1c;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff; /* Kept your original hover color */
 }
 
 /* Responsive Design */

@@ -1,82 +1,25 @@
 // src/components/Slider.jsx
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { ProductContext } from "../../context/productContext"; // Ensure exact case match
 import "./slider.css";
 
 const Slider = () => {
-  const { collections, products, loading: contextLoading } = useContext(ProductContext);
-  const [collectionImages, setCollectionImages] = useState({});
-  const [imageLoading, setImageLoading] = useState(true);
-
-  // Manual renaming map for display (matches Firestore IDs from your data)
-  const collectionNameMap = {
-    "streetvouge": "Street Vogue Collection",
-    "beachtime": "Beach Time Collection",
-    "customnative": "Custom Native Collection",
-    "amor": "Amor Collection",
-    "nudecolection": "Nude Collection",
-    "zuchclassics": "Zuch Classics Collection",
-    "poisecollection": "Poise Collection",
-    "lumincolection": "Lumin Collection",
-  };
-
-  useEffect(() => {
-    const assignCollectionImages = () => {
-      try {
-        const images = {};
-        for (const collection of collections) {
-          // Find first product with this collectionId from products array
-          const product = products.find(p => p.collectionId === collection.id);
-          let imageUrl = "https://placehold.co/150x150"; // Default fallback
-          if (product && product.imageUrl) {
-            imageUrl = Array.isArray(product.imageUrl) && product.imageUrl.length > 0
-              ? product.imageUrl[0]
-              : product.imageUrl;
-            console.log(`Assigned image for ${collection.id} from product:`, product);
-          } else {
-            console.warn(`No product with image found for ${collection.id}`);
-          }
-          images[collection.id] = imageUrl;
-          console.log(`Set image for ${collection.id}: ${imageUrl}`);
-        }
-        setCollectionImages(images);
-      } catch (error) {
-        console.error("Error assigning collection images:", error);
-      } finally {
-        setImageLoading(false);
-      }
-    };
-
-    if (!contextLoading && collections.length > 0 && products.length > 0) {
-      console.log("Collections:", collections.map(c => c.id));
-      console.log("Products available:", products.length);
-      assignCollectionImages();
-    }
-  }, [collections, products, contextLoading]);
-
-  if (contextLoading || imageLoading) {
-    return (
-      <div id="app">
-        <h1 className="heading">Our Collections</h1>
-        <div className="skeleton-slider">
-          {[...Array(3)].map((_, index) => (
-            <div key={index} className="skeleton-slide">
-              <div className="skeleton-image"></div>
-              <div className="skeleton-text"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  console.log("Collection Images:", collectionImages);
+  // Hardcoded collections with image URLs
+  const collections = [
+    { id: "streetvouge", name: "Street Vogue Collection", imageUrl: "https://i.ibb.co/8CPLg8y/IMG-3660.jpg" },
+    { id: "beachtime", name: "Beach Time Collection", imageUrl: "https://i.ibb.co/DgtPw0XD/BT-02-80-000.jpg" },
+    { id: "customnative", name: "Custom Native Collection", imageUrl: "https://i.ibb.co/XfggfzMS/COVER-PICTURE-2.jpg" },
+    { id: "amor", name: "Amor Collection", imageUrl: "https://i.ibb.co/XxspVB9f/AMOR-COLLECTION-COVER-1.jpg" },
+    { id: "nudecolection", name: "Nude Collection", imageUrl: "https://i.ibb.co/wr7DsVDT/NUDE-COVER-3.jpg" },
+    { id: "zuchclassics", name: "Zuch Classics Collection", imageUrl: "https://i.ibb.co/zWQQj6Fm/IMG-3553.jpg" },
+    { id: "poisecollection", name: "Poise Collection", imageUrl: "https://i.ibb.co/xqTxkYw7/POISE-WHITE-100k-1.jpg" },
+    { id: "lumincolection", name: "Lumin Collection", imageUrl: "https://i.ibb.co/kVFp7P6F/Lumin-Collection-Cover-2.jpg" },
+  ];
 
   return (
     <div id="app">
@@ -99,18 +42,18 @@ const Slider = () => {
             <Link to={`/shopall/${collection.id}`} className="collection-link">
               <div className="collection-content">
                 <img
-                  src={collectionImages[collection.id] || "https://placehold.co/150x150"}
-                  alt={collectionNameMap[collection.id] || collection.name}
+                  src={collection.imageUrl}
+                  alt={collection.name}
                   className="collection-image"
                   loading="lazy"
                   decoding="async"
                   onError={(e) => { 
-                    console.log(`Image failed for ${collection.id}: ${collectionImages[collection.id]}`);
+                    console.log(`Image failed for ${collection.id}: ${collection.imageUrl}`);
                     e.target.src = "https://placehold.co/150x150"; 
                   }}
                 />
                 <div className="collection-text">
-                  <h3>{collectionNameMap[collection.id] || collection.name}</h3>
+                  <h3>{collection.name}</h3>
                 </div>
               </div>
             </Link>

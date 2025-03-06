@@ -16,20 +16,8 @@ const Navbar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
-  const { products, collections, loading } = useContext(ProductContext);
+  const { products } = useContext(ProductContext);
   const navigate = useNavigate();
-
-  // Manual renaming map for collections
-  const collectionNameMap = {
-    "streetvouge": "Street Vogue Collection",
-    "beachtime": "Beach Time Collection",
-    "customnative": "Custom Native Collection",
-    "amor": "Amor Collection",
-    "nudecolection": "Nude Collection",
-    "zuchclassics": "Zuch Classics Collection",
-    "poise": "Poise Collection",
-    "lumincolection": "Lumin Collection",
-  };
 
   const filteredProducts = useMemo(() => {
     if (searchQuery.trim() === "") return [];
@@ -78,10 +66,30 @@ const Navbar = () => {
 
   const navItems = [
     { path: "/shopall", label: "Shop" },
-    { path: "/collections", label: "Collections", hasDropdown: true }, // Path kept for consistency, but not used as link
+    { path: "/collections", label: "Collections", hasDropdown: true },
     { path: "/about", label: "About Us" },
     { path: "/contact", label: "Contact" },
     { path: "https://instagram.com/Zuch_Collection", label: "Book Appointment", external: true },
+  ];
+
+  const collectionCategories = [
+    {
+      name: "Male",
+      items: [
+        { name: "Custom Native Collection", slug: "customnative" },
+        { name: "Zuch Classics Collection", slug: "zuchclassics" },
+      ],
+    },
+    {
+      name: "Unisex",
+      items: [
+        { name: "Unisex Collection", slug: "unisex" },
+        { name: "Nude Collection", slug: "nudecolection" },
+        { name: "NBZ", slug: "customnative", productId: "nbz" },
+        { name: "Beach Time Collection", slug: "beachtime" },
+        { name: "Urban Street Collection", slug: "streetvouge" },
+      ],
+    },
   ];
 
   return (
@@ -121,7 +129,7 @@ const Navbar = () => {
                 ) : item.hasDropdown ? (
                   <span
                     className="nav-link"
-                    onClick={toggleCollections} // Click support
+                    onClick={toggleCollections}
                   >
                     {item.label}
                   </span>
@@ -143,15 +151,20 @@ const Navbar = () => {
                         animate="visible"
                         exit="hidden"
                       >
-                        {collections.map((collection) => (
-                          <Link
-                            key={collection.id}
-                            to={`/shopall/${collection.id}`}
-                            className="dropdown-item"
-                            onClick={() => setIsCollectionsOpen(false)}
-                          >
-                            {collectionNameMap[collection.id] || collection.name}
-                          </Link>
+                        {collectionCategories.map((category) => (
+                          <div key={category.name} className="dropdown-category">
+                            <span className="dropdown-category-title">{category.name}</span>
+                            {category.items.map((item) => (
+                              <Link
+                                key={item.slug + (item.productId || "")}
+                                to={item.productId ? `/product/${item.slug}/${item.productId}` : `/shopall/${item.slug}`}
+                                className="dropdown-item"
+                                onClick={() => setIsCollectionsOpen(false)}
+                              >
+                                {item.name}
+                              </Link>
+                            ))}
+                          </div>
                         ))}
                       </motion.div>
                     )}
@@ -273,15 +286,20 @@ const Navbar = () => {
                             animate="visible"
                             exit="hidden"
                           >
-                            {collections.map((collection) => (
-                              <Link
-                                key={collection.id}
-                                to={`/shopall/${collection.id}`}
-                                className="mobile-dropdown-item"
-                                onClick={handleMenuToggle}
-                              >
-                                {collectionNameMap[collection.id] || collection.name}
-                              </Link>
+                            {collectionCategories.map((category) => (
+                              <div key={category.name} className="mobile-dropdown-category">
+                                <span className="mobile-dropdown-category-title">{category.name}</span>
+                                {category.items.map((item) => (
+                                  <Link
+                                    key={item.slug + (item.productId || "")}
+                                    to={item.productId ? `/product/${item.slug}/${item.productId}` : `/shopall/${item.slug}`}
+                                    className="mobile-dropdown-item"
+                                    onClick={handleMenuToggle}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                ))}
+                              </div>
                             ))}
                           </motion.div>
                         )}
