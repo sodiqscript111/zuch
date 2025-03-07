@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const filteredProducts = useMemo(() => {
     if (searchQuery.trim() === "") return [];
-    return products.filter(product =>
+    return products.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [searchQuery, products]);
@@ -39,8 +39,8 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  const handleMenuToggle = () => setMenuOpen(prev => !prev);
-  const toggleCollections = () => setIsCollectionsOpen(prev => !prev);
+  const handleMenuToggle = () => setMenuOpen((prev) => !prev);
+  const toggleCollections = () => setIsCollectionsOpen((prev) => !prev);
   const openCollections = () => setIsCollectionsOpen(true);
   const closeCollections = () => setIsCollectionsOpen(false);
 
@@ -76,6 +76,7 @@ const Navbar = () => {
     {
       name: "Male",
       items: [
+        { name: "Poise Collection", slug: "poisecollection" }, // Matches Firebase 'poise'
         { name: "Custom Native Collection", slug: "customnative" },
         { name: "Zuch Classics Collection", slug: "zuchclassics" },
       ],
@@ -83,6 +84,8 @@ const Navbar = () => {
     {
       name: "Unisex",
       items: [
+        { name: "Amor", slug: "amorcollection" }, // Matches Firebase 'amor'
+        { name: "Lumin", slug: "lumincolection" }, // Matches Firebase 'lumin'
         { name: "Nude Collection", slug: "nudecolection" },
         { name: "NBZ", slug: "customnative", productId: "nbz" },
         { name: "Beach Time Collection", slug: "beachtime" },
@@ -126,10 +129,7 @@ const Navbar = () => {
                     {item.label}
                   </a>
                 ) : item.hasDropdown ? (
-                  <span
-                    className="nav-link"
-                    onClick={toggleCollections}
-                  >
+                  <span className="nav-link" onClick={toggleCollections}>
                     {item.label}
                   </span>
                 ) : (
@@ -156,7 +156,11 @@ const Navbar = () => {
                             {category.items.map((item) => (
                               <Link
                                 key={item.slug + (item.productId || "")}
-                                to={item.productId ? `/product/${item.slug}/${item.productId}` : `/shopall/${item.slug}`}
+                                to={
+                                  item.productId
+                                    ? `/product/${item.slug}/${item.productId}`
+                                    : `/shopall/${item.slug}`
+                                }
                                 className="dropdown-item"
                                 onClick={() => setIsCollectionsOpen(false)}
                               >
@@ -213,7 +217,9 @@ const Navbar = () => {
                       />
                       <div className="search-result-info">
                         <span>{result.name}</span>
-                        <span>₦{result.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span>
+                          ₦{result.price.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -253,11 +259,7 @@ const Navbar = () => {
               exit="exit"
             >
               {navItems.map((item, index) => (
-                <motion.div
-                  key={item.path}
-                  custom={index}
-                  variants={linkVariants}
-                >
+                <motion.div key={item.path} custom={index} variants={linkVariants}>
                   {item.external ? (
                     <a
                       href={item.path}
@@ -270,10 +272,7 @@ const Navbar = () => {
                     </a>
                   ) : item.hasDropdown ? (
                     <>
-                      <div
-                        className="mobile-link mobile-collections"
-                        onClick={toggleCollections}
-                      >
+                      <div className="mobile-link mobile-collections" onClick={toggleCollections}>
                         {item.label}
                       </div>
                       <AnimatePresence>
@@ -291,7 +290,11 @@ const Navbar = () => {
                                 {category.items.map((item) => (
                                   <Link
                                     key={item.slug + (item.productId || "")}
-                                    to={item.productId ? `/product/${item.slug}/${item.productId}` : `/shopall/${item.slug}`}
+                                    to={
+                                      item.productId
+                                        ? `/product/${item.slug}/${item.productId}`
+                                        : `/shopall/${item.slug}`
+                                    }
                                     className="mobile-dropdown-item"
                                     onClick={handleMenuToggle}
                                   >
