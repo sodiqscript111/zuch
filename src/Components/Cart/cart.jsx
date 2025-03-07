@@ -1,7 +1,7 @@
-// components/Cart/cart.jsx
+// src/components/Cart/cart.jsx
 import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../../context/cart";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import { db } from "../../utils/firebase";
 import { collection, addDoc } from "firebase/firestore";
@@ -9,431 +9,257 @@ import "react-toastify/dist/ReactToastify.css";
 import "./cart.css";
 
 const Cart = () => {
-  const { cartItems, increaseQuantity, decreaseQuantity, removeItemFromCart } =
-    useContext(CartContext);
-
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    phone: "",
-    address: "",
-  });
+  const { cartItems, increaseQuantity, decreaseQuantity, removeItemFromCart } = useContext(CartContext);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState({ email: "", phone: "", address: "" });
   const [isPaystackLoaded, setIsPaystackLoaded] = useState(false);
 
   const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
-  console.log("Paystack Key:", paystackKey);
-
-  const amount = cartItems.reduce(
-    (total, item) => total + (item.price || 0) * (item.quantity || 0) * 100,
-    0
-  );
-  const reference = new Date().getTime().toString();
-
-  console.log("Amount (kobo):", amount);
-  console.log("Cart Items:", cartItems);
-  console.log("User Info:", userInfo);
+  const totalAmount = cartItems.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
+  const amountInKobo = totalAmount * 100;
+  const reference = `order_${new Date().getTime()}`;
 
   useEffect(() => {
-    console.log("Starting Paystack script load");
     const script = document.createElement("script");
     script.src = "https://js.paystack.co/v1/inline.js";
     script.async = true;
-    script.onload = () => {
-      console.log("Paystack script loaded successfully");
-      setIsPaystackLoaded(true);
-    };
-    script.onerror = (error) => {
-      console.error("Paystack script failed to load:", error);
-      toast.error("Failed to load Paystack. Check your network or ad blocker.");
-    };
+    script.onload = () => setIsPaystackLoaded(true);
+    script.onerror = () => toast.error("Failed to load Paystack.");
     document.body.appendChild(script);
-
-    return () => {
-      console.log("Cleaning up Paystack script");
-      document.body.removeChild(script);
-    };
+    return () => document.body.removeChild(script);
   }, []);
+
+  useEffect(() => {
+    console.log("STEP 5: Cart Items in Cart.jsx:", JSON.stringify(cartItems, null, 2));
+  }, [cartItems]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (!userInfo.email || !userInfo.phone || !userInfo.address) {
-      alert("Please fill in all fields.");
-      return;
-    }
-    setIsPopupOpen(false);
-  };
+  const validateForm = () => userInfo.email && userInfo.phone && userInfo.address && totalAmount > 0;
 
-  const sendNotification = async (ref) => {
+  const saveOrderToFirestore = async (ref) => {
     try {
-      const response = await fetch("/api/notify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          reference: ref,
-          email: userInfo.email,
-          phone: userInfo.phone,
-          address: userInfo.address,
-          cartItems: JSON.stringify(cartItems),
-        }),
-      });
-      const data = await response.json();
-      if (data.success) {
-        toast.success("Notification sent to your email!");
-      } else {
-        throw new Error(data.error);
-      }
-    } catch (error) {
-      console.error("Notification error:", error);
-      toast.error("Failed to send notification.");
-    }
-  };
-
-  const saveOrderToFirestore = async (reference) => {
-    try {
-      // Sanitize cartItems to remove undefined values
-      const sanitizedCartItems = cartItems.map(item => ({
-        id: item.id || "unknown",
-        name: item.name || "Unnamed Item",
-        price: item.price || 0,
-        quantity: item.quantity || 1,
-        imageUrl: Array.isArray(item.imageUrl) ? item.imageUrl : (item.imageUrl ? [item.imageUrl] : []),
-        options: item.options || { size: "N/A" },
-      }));
-
-      // Ensure all required fields are present and valid
       const orderData = {
-        reference: reference || "unknown",
-        email: userInfo.email || "",
-        phone: userInfo.phone || "",
-        address: userInfo.address || "",
-        cartItems: sanitizedCartItems.length > 0 ? sanitizedCartItems : [], // Ensure non-empty
+        reference: ref,
+        email: userInfo.email,
+        phone: userInfo.phone,
+        address: userInfo.address,
+        cartItems: cartItems.map((item) => ({
+          id: item.id,
+          name: item.name,
+          price: item.price || 0,
+          quantity: item.quantity || 1,
+          imageUrl: Array.isArray(item.imageUrl) && item.imageUrl.length > 0 ? item.imageUrl[0] : item.imageUrl || "https://placehold.co/150",
+          options: item.options || { size: "N/A" },
+        })),
         timestamp: new Date().toISOString(),
         status: "Pending",
       };
-
-      console.log("Order Data to Save:", orderData); // Debug log
-
-      const ordersRef = collection(db, "orders");
-      await addDoc(ordersRef, orderData);
-      console.log("Order saved to Firestore with reference:", reference);
-    } catch (err) {
-      console.error("Error saving order to Firestore:", err);
-      toast.error("Failed to save order: " + err.message);
+      await addDoc(collection(db, "orders"), orderData);
+      toast.success("Order saved!");
+    } catch (error) {
+      console.error("Firestore error:", error);
+      toast.error("Failed to save order.");
     }
-  };
-
-  const onSuccess = (response) => {
-    console.log("Payment Successful! Reference:", response);
-    toast.success(`Payment completed! Reference: ${response.reference}`);
-    sendNotification(response.reference);
-    saveOrderToFirestore(response.reference);
-  };
-
-  const onClose = () => {
-    console.log("Payment window closed.");
-    toast.info("Payment window closed.");
   };
 
   const handlePaystackPayment = () => {
     if (!isPaystackLoaded || !window.PaystackPop) {
-      toast.error("Paystack is not loaded yet. Please wait or refresh the page.");
-      setTimeout(() => {
-        if (window.PaystackPop) handlePaystackPayment();
-      }, 1000);
+      toast.error("Paystack not loaded yet.");
       return;
     }
-    if (!paystackKey || !userInfo.email || amount <= 0) {
-      toast.error("Please ensure all details are filled and cart is not empty.");
+    if (!validateForm()) {
+      toast.error("Please complete all fields.");
       return;
     }
 
     const handler = window.PaystackPop.setup({
       key: paystackKey,
       email: userInfo.email,
-      amount,
+      amount: amountInKobo,
       ref: reference,
-      metadata: {
-        phone: userInfo.phone,
-        address: userInfo.address,
-        cartItems: JSON.stringify(cartItems),
-      },
+      metadata: { phone: userInfo.phone, address: userInfo.address, cartItems: JSON.stringify(cartItems) },
       callback: (response) => {
         if (response.status === "success") {
-          onSuccess(response);
+          saveOrderToFirestore(response.reference);
+          toast.success(`Payment successful! Ref: ${response.reference}`);
+          setIsCheckoutOpen(false);
         }
       },
-      onClose: onClose,
+      onClose: () => toast.info("Payment cancelled."),
     });
-
     handler.openIframe();
   };
 
-  const isFormValid = userInfo.email && userInfo.phone && userInfo.address && paystackKey && amount > 0;
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-    exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
+    visible: { opacity: 1, y: 0 },
   };
 
-  const buttonVariants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.05 },
-    tap: { scale: 0.95 },
-  };
-
-  const popupVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
-    exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 },
   };
 
   return (
-    <div className="cart-container">
-      <motion.h2
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Your Cart
-      </motion.h2>
+    <motion.div className="cart-page" initial="hidden" animate="visible" variants={containerVariants}>
+      <h1 className="cart-title">Shopping Cart</h1>
       {cartItems.length === 0 ? (
-        <motion.p
-          className="cart-empty"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Your cart is empty.
-        </motion.p>
+        <p className="cart-empty">Your cart is empty. Start shopping!</p>
       ) : (
-        <motion.ul
-          className="cart-items"
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-        >
-          {cartItems.map((item) => (
-            <motion.li
-              key={item.id}
-              className="cart-item"
-              variants={itemVariants}
-              layout
-            >
-              <div className="cart-item-images">
-                {Array.isArray(item.imageUrl) && item.imageUrl.length > 0 ? (
-                  item.imageUrl.map((url, index) => (
-                    <motion.img
-                      key={index}
-                      src={url}
-                      alt={`${item.name} - Image ${index + 1}`}
-                      className="cart-item-image"
-                      variants={imageVariants}
-                      initial="hidden"
-                      animate="visible"
-                      transition={{ delay: index * 0.1 }}
-                    />
-                  ))
-                ) : item.imageUrl ? (
-                  <motion.img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className="cart-item-image"
-                    variants={imageVariants}
-                  />
-                ) : (
-                  <div className="no-image-placeholder">No Image Available</div>
-                )}
-              </div>
-              <div className="cart-item-details">
-                <strong className="cart-item-name">{item.name}</strong>
-                <p className="cart-item-price">₦{item.price}</p>
-                <p className="cart-item-quantity">Quantity: {item.quantity}</p>
-                <p className="cart-item-options">
-                  Options:{" "}
-                  {item.options && typeof item.options === "object" ? (
-                    Object.entries(item.options)
-                      .map(([key, value]) => {
-                        if (key === "size" && typeof value === "object") {
-                          return `${key}: ${Object.entries(value)
-                            .map(([k, v]) => `${k}: ${v}cm`)
-                            .join(", ")}`;
-                        }
-                        return `${key}: ${value}`;
-                      })
-                      .join(", ")
-                  ) : (
-                    "No options available"
-                  )}
-                </p>
-                <div className="cart-item-actions">
-                  <motion.button
-                    onClick={() => increaseQuantity(item)}
-                    className="quantity-btn increase"
-                    variants={buttonVariants}
-                    initial="rest"
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    +
-                  </motion.button>
-                  <motion.button
-                    onClick={() => decreaseQuantity(item)}
-                    className="quantity-btn decrease"
-                    variants={buttonVariants}
-                    initial="rest"
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    -
-                  </motion.button>
-                  <motion.button
-                    onClick={() => removeItemFromCart(item)}
-                    className="remove-btn"
-                    variants={buttonVariants}
-                    initial="rest"
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    Remove
-                  </motion.button>
-                </div>
-              </div>
-            </motion.li>
-          ))}
-        </motion.ul>
-      )}
-      <motion.h3
-        className="cart-total"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        Total Price: ₦
-        {cartItems
-          .reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0)
-          .toFixed(2)}
-      </motion.h3>
-
-      {cartItems.length > 0 && (
-        <motion.button
-          className="checkout-btn"
-          onClick={() => setIsPopupOpen(true)}
-          variants={buttonVariants}
-          initial="rest"
-          whileHover="hover"
-          whileTap="tap"
-        >
-          Proceed to Checkout
-        </motion.button>
-      )}
-
-      {isPopupOpen && (
-        <motion.div
-          className="cart-popup-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <motion.div
-            className="cart-popup"
-            variants={popupVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <h3>Enter Your Details</h3>
-            <form onSubmit={handleFormSubmit}>
-              <div className="form-group">
-                <label htmlFor="email">Email Address</label>
-                <motion.input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={userInfo.email}
-                  onChange={handleInputChange}
-                  placeholder="Enter your email"
-                  required
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="phone">Phone Number</label>
-                <motion.input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={userInfo.phone}
-                  onChange={handleInputChange}
-                  placeholder="Enter your phone number"
-                  required
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address">Delivery Address</label>
-                <motion.input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={userInfo.address}
-                  onChange={handleInputChange}
-                  placeholder="Enter your delivery address"
-                  required
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.3 }}
-                />
-              </div>
-              <div className="popup-actions">
-                <motion.button
-                  type="button"
-                  className="cancel-btn"
-                  onClick={() => setIsPopupOpen(false)}
-                  variants={buttonVariants}
-                  initial="rest"
-                  whileHover="hover"
-                  whileTap="tap"
+        <>
+          <ul className="cart-list">
+            <AnimatePresence>
+              {cartItems.map((item, index) => (
+                <motion.li
+                  key={`${item.id}-${index}`}
+                  className="cart-card"
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  layout
                 >
-                  Cancel
-                </motion.button>
-                {isFormValid ? (
+                  <div style={{ position: "relative" }}>
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "5px",
+                        left: "5px",
+                        background: "rgba(0,0,0,0.7)",
+                        color: "white",
+                        padding: "2px 5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {item.name} (ID: {item.id})
+                    </span>
+                    {item.id === "bt02" && (
+                      <img
+                        src="https://i.ibb.co/nXQqcHc/BT-02-80-00.jpg"
+                        alt="BT02 Test"
+                        className="cart-image test-image"
+                        style={{ marginLeft: "20px" }}
+                      />
+                    )}
+                  </div>
+                  <div className="cart-details">
+                    <h3 className="cart-item-name">{item.name}</h3>
+                    <p className="cart-item-price">₦{(item.price || 0).toLocaleString()}</p>
+                    <p className="cart-item-options">
+                      {item.options?.size ? `Size: ${item.options.size}` : "No options"}
+                    </p>
+                    <div className="cart-controls">
+                      <button onClick={() => decreaseQuantity(item)}>-</button>
+                      <span>{item.quantity || 1}</span>
+                      <button onClick={() => increaseQuantity(item)}>+</button>
+                      <button className="remove-btn" onClick={() => removeItemFromCart(item)}>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </ul>
+          <div className="cart-summary">
+            <h2>Total: ₦{totalAmount.toLocaleString()}</h2>
+            <motion.button
+              className="checkout-btn"
+              onClick={() => setIsCheckoutOpen(true)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Checkout
+            </motion.button>
+          </div>
+        </>
+      )}
+
+      <AnimatePresence>
+        {isCheckoutOpen && (
+          <motion.div
+            className="checkout-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="checkout-modal"
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              <h2>Checkout</h2>
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div className="form-field">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={userInfo.email}
+                    onChange={handleInputChange}
+                    placeholder="your@email.com"
+                    required
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={userInfo.phone}
+                    onChange={handleInputChange}
+                    placeholder="+234..."
+                    required
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={userInfo.address}
+                    onChange={handleInputChange}
+                    placeholder="Delivery address"
+                    required
+                  />
+                </div>
+                <div className="modal-actions">
+                  <button
+                    type="button"
+                    className="cancel-btn"
+                    onClick={() => setIsCheckoutOpen(false)}
+                  >
+                    Cancel
+                  </button>
                   <motion.button
                     type="button"
-                    className="paystack-btn"
+                    className="pay-btn"
                     onClick={handlePaystackPayment}
-                    variants={buttonVariants}
-                    initial="rest"
-                    whileHover="hover"
-                    whileTap="tap"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    disabled={!validateForm()}
                   >
-                    Pay with Paystack
+                    Pay Now
                   </motion.button>
-                ) : (
-                  <button disabled>Fill form to pay</button>
-                )}
-              </div>
-            </form>
+                </div>
+              </form>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
       <ToastContainer />
-    </div>
+    </motion.div>
   );
 };
 

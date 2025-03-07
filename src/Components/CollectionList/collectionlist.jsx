@@ -15,13 +15,13 @@ const CategoryList = () => {
     {
       name: "Classic Wear",
       slug: "classic-wear",
-      collectionIds: ["lumincolection", "poisecollection", "amor"],
+      collectionIds: ["lumincolection", "poisecollection", "amorcollection"],
       imageUrl: "https://i.ibb.co/kVFp7P6F/Lumin-Collection-Cover-2.jpg", // Replace with your URL
     },
     {
       name: "Casual Wear",
       slug: "casual-wear",
-      collectionIds: ["nudecolection", "streetvouge", "beachtime"],
+      collectionIds: ["nudecolection", "streetvouge", "beachtimecollection"],
       imageUrl: "https://i.ibb.co/6kF9vNj/NUDE-COVER-1.jpg", // Replace with your URL
     },
   ];

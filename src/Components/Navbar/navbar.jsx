@@ -88,7 +88,7 @@ const Navbar = () => {
         { name: "Lumin", slug: "lumincolection" }, // Matches Firebase 'lumin'
         { name: "Nude Collection", slug: "nudecolection" },
         { name: "NBZ", slug: "customnative", productId: "nbz" },
-        { name: "Beach Time Collection", slug: "beachtime" },
+        { name: "Beach Time Collection", slug: "beachtimecollection" },
         { name: "Urban Street Collection", slug: "streetvouge" },
       ],
     },

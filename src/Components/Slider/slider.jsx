@@ -12,9 +12,9 @@ const Slider = () => {
   // Hardcoded collections with image URLs
   const collections = [
     { id: "streetvouge", name: "Street Vogue Collection", imageUrl: "https://i.ibb.co/8CPLg8y/IMG-3660.jpg" },
-    { id: "beachtime", name: "Beach Time Collection", imageUrl: "https://i.ibb.co/DgtPw0XD/BT-02-80-000.jpg" },
+    { id: "beachtimecollection", name: "Beach Time Collection", imageUrl: "https://i.ibb.co/DgtPw0XD/BT-02-80-000.jpg" },
     { id: "customnative", name: "Custom Native Collection", imageUrl: "https://i.ibb.co/XfggfzMS/COVER-PICTURE-2.jpg" },
-    { id: "amor", name: "Amor Collection", imageUrl: "https://i.ibb.co/XxspVB9f/AMOR-COLLECTION-COVER-1.jpg" },
+    { id:  "amorcollection", name: "Amor Collection", imageUrl: "https://i.ibb.co/XxspVB9f/AMOR-COLLECTION-COVER-1.jpg" },
     { id: "nudecolection", name: "Nude Collection", imageUrl: "https://i.ibb.co/wr7DsVDT/NUDE-COVER-3.jpg" },
     { id: "zuchclassics", name: "Zuch Classics Collection", imageUrl: "https://i.ibb.co/zWQQj6Fm/IMG-3553.jpg" },
     { id: "poisecollection", name: "Poise Collection", imageUrl: "https://i.ibb.co/xqTxkYw7/POISE-WHITE-100k-1.jpg" },
