@@ -28,7 +28,7 @@ const CategoryList = () => {
 
   return (
     <div id="category-section">
-      <h1 className="category-heading">Our Categories</h1>
+      <h1 className="category-heading"></h1>
       <div className="category-grid">
         {categories.map((category, index) => (
           <div key={index} className="category-card">
