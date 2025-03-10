@@ -76,7 +76,7 @@ const ProductDetail = () => {
           price,
           description: data.description || "No description available",
           imageUrls: images,
-          standardSizes: data.standardSizes || ["S", "M", "L", "XL"],
+          standardSizes: data.standardSizes || ["S", "M", "L", "XL", "XXL"],
         });
         setLoading(false);
       } catch (error) {
