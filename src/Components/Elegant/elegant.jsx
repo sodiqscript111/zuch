@@ -43,7 +43,7 @@ const Elegant = () => {
         {poiseProducts.length > 0 ? (
           poiseProducts.map((item) => (
             <Link
-              to={`/product/poise/${item.id}`}
+              to={`/product/poisecollection/${item.id}`}
               key={item.id}
               className="product-card-container-elegant"
             >

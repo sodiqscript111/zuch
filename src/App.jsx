@@ -11,6 +11,7 @@ import Cart from "./Components/Cart/cart";
 import Shopall from "./Components/Shopall/shop";
 import Contact from "./Components/Contact/Contact";
 import About from "./Components/About/about";
+import Elegant from "./Components/Elegant/elegant";
 import AdminDashboard from "./Components/AdminDashboard /admindashboard"; // Fixed space in pathr
 import { ProductProvider } from "./context/productContext"; // Import ProductProvider
 
@@ -34,6 +35,9 @@ const router = createBrowserRouter([
   {
     path: "/shopall/:collectionId",
     element: <Shopall />,
+  },  {
+    path: "/elegant",
+    element: <Elegant/>,
   },
   {
     path: "/shopall",
