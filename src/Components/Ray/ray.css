@@ -1,0 +1,213 @@
+/* ray.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* Root-level container */
+.ray-container-ray {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 4rem 0;
+  background: #ffffff;
+}
+
+/* Product grid */
+.product-grid-ray {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+/* Heading */
+.ray-container-ray h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin: 2rem 0 3rem;
+  color: #000000;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+/* Product card container */
+.product-card-container-ray {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+/* Hover effect for card */
+.product-card-container-ray:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Product card */
+.product-card-ray {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 1rem 0;
+}
+
+/* Product image */
+.product-image-ray {
+  width: 90%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+/* Hover effect for image */
+.product-card-container-ray:hover .product-image-ray {
+  transform: scale(1.05);
+}
+
+/* Caption */
+.figcaption-ray {
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Product meta (name) */
+.product-meta-ray {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* Product name */
+.product-name-ray {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Product cost */
+.product-cost-ray {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #000000;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* See All link */
+.see-all-ray {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.see-all-ray a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #000000;
+  text-decoration: none;
+  padding: 0.8rem 2rem;
+  border-radius: 6px;
+  border: 2px solid #000000;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.see-all-ray a:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: scale(1.03);
+}
+
+/* Loading/Error/No Products Messages */
+.ray-container-ray p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #666;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Error message specific styling */
+.error-message {
+  color: #d32f2f;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .ray-container-ray {
+    width: 95%;
+    padding: 2rem 0;
+  }
+
+  .product-grid-ray {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .ray-container-ray h1 {
+    font-size: 2.2rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .product-image-ray {
+    width: 95%;
+  }
+
+  .product-meta-ray {
+    font-size: 1.2rem;
+  }
+
+  .product-cost-ray {
+    font-size: 1rem;
+  }
+
+  .see-all-ray {
+    margin-top: 2.5rem;
+  }
+
+  .see-all-ray a {
+    font-size: 1.2rem;
+    padding: 0.7rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid-ray {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .product-image-ray {
+    width: 98%;
+  }
+
+  .product-meta-ray {
+    font-size: 1.1rem;
+  }
+
+  .product-cost-ray {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-grid-ray {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

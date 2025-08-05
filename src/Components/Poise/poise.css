@@ -1,0 +1,149 @@
+/* src/components/poise.css */
+
+/* Main container */
+.poise-collection-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  background-position: 0% 20%; /* Desktop default */
+  background-size: cover;
+  width: 100%;
+  min-height: 80vh; /* Desktop default */
+  position: relative;
+  transition: background-image 0.5s ease-in-out;
+}
+
+/* Define background images via classes */
+.poise-collection-container.image-0 {
+  background-image: url('../../assets/headerpicone.jpg');
+}
+
+.poise-collection-container.image-1 {
+  background-image: url('../../assets/headerpictwo.jpg');
+}
+
+.poise-collection-container.image-2 {
+  background-image: url('../../assets/headerpicthree.jpg');
+}
+
+.poise-collection-container.image-3 {
+  background-image: url('../../assets/headerpicfour.jpg');
+}
+
+/* Content wrapper */
+.poise-content {
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 450px;
+  margin: 2rem;
+  text-align: right;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.poise-collection-container:hover .poise-content {
+  transform: translateY(-10px);
+}
+
+/* Heading */
+.poise-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+/* Description */
+.poise-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  margin: 0 0 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Link/Button */
+.poise-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #fff;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.poise-link:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .poise-collection-container {
+    height: 100vh; /* Full viewport height */
+    background-position: center; /* Center image */
+    background-size: cover; /* Ensure full coverage */
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .poise-content {
+    padding: 1.5rem;
+    max-width: 90%;
+    margin: 1rem auto;
+    text-align: center;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    border-radius: 8px;
+  }
+
+  .poise-heading {
+    font-size: 1.75rem;
+  }
+
+  .poise-description {
+    font-size: 1rem;
+  }
+
+  .poise-link {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.875rem;
+    background-color: #fff;
+    color: #1a1a1a;
+  }
+
+  .poise-link:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+@media (max-width: 480px) {
+  .poise-collection-container {
+    height: 80vh; /* Full viewport height */
+    background-position: center; /* Center image */
+    background-size: cover; /* Ensure full coverage */
+  }
+
+  .poise-content {
+    padding: 1rem;
+    margin: 0.5rem auto;
+  }
+
+  .poise-heading {
+    font-size: 1.5rem;
+  }
+
+  .poise-description {
+    font-size: 0.875rem;
+  }
+
+  .poise-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+}

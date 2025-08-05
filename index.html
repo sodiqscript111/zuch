@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://i.ibb.co/Fq362M1t/Whats-App-Image-2025-02-16-at-10-54-10-65e00f92.jpg" />
+    <!-- Preload LCP image -->
+    <link rel="preload" href="/assets/headerpicone.jpg" as="image" fetchpriority="high" />
+    <!-- Preconnect for third-party -->
+    <link rel="preconnect" href="https://js.paystack.co" />
+    <!-- Critical CSS -->
+    <style>
+      body { margin: 0; font-family: 'Inter', sans-serif; }
+      .container { width: 100%; max-width: 1200px; margin: 0 auto; }
+      .poise-collection-container { height: 80vh; background-size: cover; width: 100%; }
+      @media (max-width: 768px) { .poise-collection-container { height: 100vh; } }
+    </style>
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="/assets/style.css" media="print" onload="this.media='all'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zuch Collection</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx" defer></script>
+    <script src="https://js.paystack.co/v1/inline.js" defer></script>
+  </body>
+</html>

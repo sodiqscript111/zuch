@@ -1,0 +1,213 @@
+/* Elegant.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* Root-level container */
+.elegant-container-elegant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%; /* Clean, wide layout */
+  max-width: 1480px; /* Slightly larger cap */
+  margin: 0 auto;
+  padding: 4rem 0; /* Balanced vertical space */
+  background: #ffffff; /* Pure white background */
+}
+
+/* Product grid */
+.product-grid-elegant {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+  gap: 2.5rem; /* Elegant spacing */
+  width: 100%;
+  padding: 0 1rem; /* Minimal horizontal padding */
+}
+
+/* Heading */
+.elegant-container-elegant h1 {
+  font-family: 'Playfair Display', serif; /* Luxurious serif font */
+  font-size: 2.8rem; /* Bold yet refined */
+  font-weight: 600; /* Sophisticated weight */
+  margin: 2rem 0 3rem; /* Balanced spacing */
+  color: #000000; /* Black for theme */
+  letter-spacing: 0.02em; /* Slight expansion */
+  text-align: center; /* Centered */
+}
+
+/* Product card container */
+.product-card-container-elegant {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  border-radius: 12px; /* Gentle corners */
+}
+
+/* Hover effect for card */
+.product-card-container-elegant:hover {
+  transform: translateY(-5px); /* Subtle lift */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Minimal shadow */
+}
+
+/* Product card */
+.product-card-elegant {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all content */
+  width: 100%;
+  background: #ffffff; /* White card */
+  border-radius: 12px; /* Match container */
+  overflow: hidden;
+  padding: 1rem 0; /* Minimal padding, centered */
+}
+
+/* Product image */
+.product-image-elegant {
+  width: 90%; /* Larger image on desktop */
+  height: auto; /* Full natural height */
+  object-fit: contain; /* Preserve aspect ratio */
+  transition: transform 0.4s ease; /* Smooth zoom */
+}
+
+/* Hover effect for image */
+.product-card-container-elegant:hover .product-image-elegant {
+  transform: scale(1.05); /* Gentle zoom */
+}
+
+/* Caption */
+.figcaption-elegant {
+  padding: 1rem 0; /* Minimal, centered padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Product meta (name) */
+.product-meta-elegant {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; /* Reduced size for balance */
+  font-weight: 500; /* Refined weight */
+  color: #000000; /* Black for theme */
+  margin-bottom: 0.5rem;
+  text-align: center; /* Centered */
+}
+
+/* Product name */
+.product-name-elegant {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Product cost */
+.product-cost-elegant {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; /* Slightly smaller */
+  color: #000000; /* Black for theme */
+  font-weight: 400;
+  text-align: center; /* Centered */
+}
+
+/* See All link */
+.see-all-elegant {
+  margin-top: 3rem; /* Prominent spacing */
+  text-align: center;
+}
+
+.see-all-elegant a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; /* Balanced size */
+  font-weight: 600; /* Bold */
+  color: #000000; /* Black for theme */
+  text-decoration: none;
+  padding: 0.8rem 2rem; /* Spacious clickable area */
+  border-radius: 6px;
+  border: 2px solid #000000; /* Black border */
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.see-all-elegant a:hover {
+  background: #000000; /* Black fill */
+  color: #ffffff; /* White text */
+  transform: scale(1.03); /* Subtle lift */
+}
+
+/* Loading/Error/No Products Messages */
+.elegant-container-elegant p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #666; /* Soft gray for contrast */
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Error message specific styling */
+.error-message {
+  color: #d32f2f; /* Soft red for errors */
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .elegant-container-elegant {
+    width: 95%;
+    padding: 2rem 0;
+  }
+
+  .product-grid-elegant {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 1.5rem; /* Slightly reduced for mobile */
+  }
+
+  .elegant-container-elegant h1 {
+    font-size: 2.2rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .product-image-elegant {
+    width: 95%; /* Larger on mobile */
+  }
+
+  .product-meta-elegant {
+    font-size: 1.2rem;
+  }
+
+  .product-cost-elegant {
+    font-size: 1rem;
+  }
+
+  .see-all-elegant {
+    margin-top: 2.5rem;
+  }
+
+  .see-all-elegant a {
+    font-size: 1.2rem;
+    padding: 0.7rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid-elegant {
+    grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns */
+    gap: 1rem; /* Further reduced for smaller screens */
+  }
+
+  .product-image-elegant {
+    width: 98%; /* Max width on small screens */
+  }
+
+  .product-meta-elegant {
+    font-size: 1.1rem;
+  }
+
+  .product-cost-elegant {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-grid-elegant {
+    grid-template-columns: 1fr; /* Fallback to 1 column on very small screens */
+    gap: 1rem;
+  }
+}

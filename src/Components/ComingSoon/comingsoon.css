@@ -1,0 +1,130 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.coming-soon-container {
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Logo Styling */
+.logo {
+  width: 200px;
+  max-width: 100%; /* Default size */
+  height: auto;
+  display: block;
+  margin: 0 auto 20px; /* Centers the logo and adds spacing */
+}
+
+/* Responsive Logo */
+@media (max-width: 768px) {
+  .logo {
+    width: 120px; /* Smaller on tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 100px; /* Smaller on mobile screens */
+  }
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 20px 0;
+  color: #000;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+/* Carousel Styling */
+.carousel {
+  display: flex;
+  overflow: hidden;
+  width: 80%;
+  justify-self: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.carousel-inner {
+  display: flex;
+  width: fit-content;
+  animation: slide 20s linear infinite;
+}
+
+.carousel img {
+  width: 100%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* Pre-Order Button */
+.pre-order-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pre-order-button:hover {
+  background-color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .carousel img {
+    width: 100%;
+  }
+
+  .pre-order-button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .coming-soon-container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .pre-order-button {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
