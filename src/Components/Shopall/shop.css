@@ -9,12 +9,10 @@
 .all-products-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #333;
+  color: #222; /* Darker black shade */
   text-align: center;
   margin-bottom: 70px;
 }
-/* src/components/Shopall/shop.css */
-/* ... (existing styles remain unchanged) */
 
 /* Skeleton Loader */
 .skeleton-product {
@@ -68,25 +66,23 @@
   .skeleton-image {
     height: 200px;
   }
-
   .skeleton-name {
     height: 18px;
   }
-
   .skeleton-price {
     height: 14px;
   }
 }
-
 @media (max-width: 480px) {
   .skeleton-image {
     height: 180px;
   }
 }
 
+/* Product Grid */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -106,9 +102,9 @@
 }
 
 .product-img {
-  width: 70%; /* 70% of container width */
-  height: auto; /* Full natural height */
-  object-fit: contain; /* Preserve aspect ratio, show full image */
+  width: 70%;
+  height: auto;
+  object-fit: contain;
 }
 
 .product-info {
@@ -119,76 +115,77 @@
 .product-name {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #333;
+  color: #111;
   margin: 0 0 5px;
 }
 
+/* Price Styling */
 .product-price {
   font-size: 1rem;
   font-weight: 500;
-  color: #666;
+  color: #333;
   margin: 0;
 }
 
-.no-products {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #666;
-  padding: 20px;
-  grid-column: span 3; /* Span all columns on desktop */
+.product-price-original {
+  font-size: 0.9rem;
+  color: #777;
+  text-decoration: line-through;
+  margin-right: 8px;
 }
 
+.product-price-discount {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000; /* Pure black for emphasis */
+}
+
+/* No Products / Loading */
+.no-products,
 .loading {
   text-align: center;
   font-size: 1.2rem;
   color: #666;
   padding: 20px;
-  grid-column: span 3; /* Span all columns on desktop */
+  grid-column: span 3;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   .products-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    grid-template-columns: repeat(2, 1fr);
   }
-
   .no-products,
   .loading {
-    grid-column: span 2; /* Adjust span for 2 columns */
+    grid-column: span 2;
   }
 }
 
 @media (max-width: 768px) {
   .products-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile (already set, kept for clarity) */
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
-
   .product-img {
-    width: 80%; /* Slightly wider on mobile */
+    width: 80%;
   }
-
   .product-name {
     font-size: 1.1rem;
   }
-
   .product-price {
     font-size: 0.9rem;
   }
-
   .no-products,
   .loading {
-    grid-column: span 2; /* Adjust span for 2 columns */
+    grid-column: span 2;
   }
 }
 
-/* Extra small screens (e.g., very narrow phones) */
 @media (max-width: 480px) {
   .products-grid {
-    grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns */
-    gap: 10px; /* Slightly reduced for smaller screens */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
-
   .no-products,
   .loading {
     grid-column: span 2;
@@ -197,12 +194,25 @@
 
 @media (max-width: 360px) {
   .products-grid {
-    grid-template-columns: 1fr; /* Fallback to 1 column on very small screens */
+    grid-template-columns: 1fr;
     gap: 10px;
   }
-
   .no-products,
   .loading {
     grid-column: span 1;
   }
+}
+
+/* ==== ADDED SLASHED PRICE STYLING ==== */
+.slashed-price {
+  font-size: 0.9rem;
+  color: #777;
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+.current-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000; /* Pure black for emphasis */
 }

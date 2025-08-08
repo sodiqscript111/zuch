@@ -1,224 +1,201 @@
-/* Cart Page Styling */
+/* General Page Styling */
 .cart-page {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .cart-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
   text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  color: #000000;
 }
 
 .cart-empty {
   text-align: center;
-  font-size: 18px;
-  color: #777;
+  font-size: 1.1rem;
+  color: #555555;
 }
 
-/* Cart List */
+/* Cart Items */
 .cart-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  display: grid;
+  gap: 1rem;
 }
 
 .cart-card {
   display: flex;
   align-items: center;
-  background: white;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e5e5e5;
 }
 
 .cart-card:hover {
-  transform: scale(1.02);
-}
-
-.cart-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-right: 15px;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .cart-details {
-  flex-grow: 1;
+  flex: 1;
 }
 
 .cart-item-name {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .cart-item-price {
-  color: #e63946;
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222222;
+  margin-top: 0.25rem;
 }
 
-.cart-item-options {
-  font-size: 14px;
-  color: #555;
-}
-
-/* Cart Controls */
 .cart-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .cart-controls button {
-  background: #e63946;
-  color: white;
+  background: #f5f5f5;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 14px;
+  transition: background 0.2s ease;
+  color: #000000;
 }
 
 .cart-controls button:hover {
-  background: #d62839;
+  background: #e0e0e0;
 }
 
 .remove-btn {
-  background: #ff3d00;
-  padding: 5px 12px;
+  background: #f0f0f0;
+  color: #444444;
 }
 
 .remove-btn:hover {
-  background: #d63000;
+  background: #dcdcdc;
 }
 
-/* Cart Summary */
+/* Summary */
 .cart-summary {
+  margin-top: 2rem;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
   text-align: center;
-  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e5e5;
+}
+
+.cart-summary h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #000000;
 }
 
 .checkout-btn {
-  background: #28a745;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 6px;
+  background: #000000;
+  color: #ffffff;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.2s ease;
 }
 
 .checkout-btn:hover {
-  background: #218838;
+  background: #222222;
 }
 
-/* Checkout Modal */
-.checkout-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Modal */
 .checkout-modal {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  z-index: 50;
 }
 
 .checkout-modal h2 {
-  text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #000000;
 }
 
-.form-field {
+.checkout-modal form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  gap: 0.8rem;
 }
 
-.form-field label {
-  font-weight: bold;
-  margin-bottom: 5px;
+.checkout-modal input {
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-field input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.checkout-modal input:focus {
+  outline: none;
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
 }
 
 .modal-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 1rem;
 }
 
-.cancel-btn {
-  background: #ff3d00;
-  color: white;
-  padding: 8px 12px;
+.modal-actions button {
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 
-.cancel-btn:hover {
-  background: #d63000;
+.modal-actions button:first-child {
+  background: #f5f5f5;
+  color: #000000;
 }
 
-.pay-btn {
-  background: #28a745;
+.modal-actions button:last-child {
+  background: #000000;
   color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-.pay-btn:disabled {
-  background: #ccc;
+.modal-actions button:last-child:disabled {
+  background: #888888;
   cursor: not-allowed;
 }
 
-.pay-btn:hover {
-  background: #218838;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .cart-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cart-image {
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-  }
-
-  .cart-controls {
-    justify-content: space-between;
-    width: 100%;
-  }
+.modal-actions button:last-child:hover:not(:disabled) {
+  background: #222222;
 }

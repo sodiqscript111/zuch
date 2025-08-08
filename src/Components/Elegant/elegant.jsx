@@ -41,42 +41,51 @@ const Elegant = () => {
       <h1>Poise Collection</h1>
       <div className="product-grid-elegant">
         {poiseProducts.length > 0 ? (
-          poiseProducts.map((item) => (
-            <Link
-              to={`/product/poisecollection/${item.id}`}
-              key={item.id}
-              className="product-card-container-elegant"
-            >
-              <figure className="product-card-elegant">
-                {item.imageUrl ? (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    loading="lazy"
-                    className="product-image-elegant"
-                    decoding="async"
-                  />
-                ) : (
-                  <div className="no-image-placeholder">No Image Available</div>
-                )}
-                <figcaption className="figcaption-elegant">
-                  <div className="product-meta-elegant">
-                    <span className="product-name-elegant">{item.name}</span>
-                  </div>
-                  <div className="product-cost-elegant">
-                    <data>
-                      {typeof item.price === "number" && !isNaN(item.price)
-                        ? `₦${item.price.toLocaleString("en-NG", {
+          poiseProducts.map((item) => {
+            const slashedPrice = item.price * 1.2; // 20% higher slashed price
+            return (
+              <Link
+                to={`/product/poisecollection/${item.id}`}
+                key={item.id}
+                className="product-card-container-elegant"
+              >
+                <figure className="product-card-elegant">
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      loading="lazy"
+                      className="product-image-elegant"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="no-image-placeholder">No Image Available</div>
+                  )}
+                  <figcaption className="figcaption-elegant">
+                    <div className="product-meta-elegant">
+                      <span className="product-name-elegant">{item.name}</span>
+                    </div>
+                    <div className="product-cost-elegant">
+                      <data>
+                        <span className="slashed-price">
+                          ₦{slashedPrice.toLocaleString("en-NG", {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
-                          })}`
-                        : "Price Unavailable"}
-                    </data>
-                  </div>
-                </figcaption>
-              </figure>
-            </Link>
-          ))
+                          })}
+                        </span>
+                        <span className="current-price">
+                          ₦{item.price.toLocaleString("en-NG", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </span>
+                      </data>
+                    </div>
+                  </figcaption>
+                </figure>
+              </Link>
+            );
+          })
         ) : (
           <p>No products available.</p>
         )}
