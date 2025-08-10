@@ -24,7 +24,7 @@
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
 }
 
 .navbar-logo {
@@ -326,13 +326,13 @@
 
   .navbar-container {
     flex-direction: row;
-    justify-content: space-between;
+    gap: 70px;
     height: 50px;
   }
 
   .navbar-left {
     flex-direction: row;
-    gap: 15px;
+    gap: 5px;    
   }
 
   .nav-links {
@@ -340,7 +340,9 @@
   }
 
   .navbar-right {
-    gap: 15px;
+    gap: 5px;
+    width: 100%;
+  
   }
 
   .mobile-toggle {
